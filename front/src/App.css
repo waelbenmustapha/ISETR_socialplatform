@@ -25,6 +25,8 @@ border-radius:10px 10px 5px 5px ;
 
 .hover:hover{cursor: pointer;}
 
-.hr{  border-top: 1px solid #bbb;
+.hr{  border-top: 1px solid #bbb
 }
 input:focus-visible{  outline:0px }
+.suggestedfriend{
+margin-bottom:25px;}

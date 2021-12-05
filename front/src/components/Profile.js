@@ -347,7 +347,7 @@ function Profile() {
                     display: "flex",
                     flexDirection: "row",
                     alignContent: "center",
-                    
+
                     margin: "5px",
                   }}
                 >
@@ -359,29 +359,53 @@ function Profile() {
                       borderRadius: "50%",
                     }}
                   />
-                  <div style={{marginLeft: "15px",
+                  <div
+                    style={{
+                      marginLeft: "15px",
                       borderRadius: "10px",
-                      display:'flex',flexDirection:'row', 
+                      display: "flex",
+                      flexDirection: "row",
                       border: "0px",
                       backgroundColor: "#eeeeee",
-                      width: "100%",}}>
-                  <input
-                    style={{
-                      border:"0px"
-                    ,width:'100%',height:'90%',backgroundColor:'#eee',borderRadius: "10px",
-
+                      width: "100%",
                     }}
-                    placeholder="Write a comment..."
-                  />
-                  <FontAwesomeIcon className="hover" style={{alignSelf:'center',marginRight:'8px'}} icon={faFileImage}/>
-                  <FontAwesomeIcon className="hover" style={{alignSelf:'center',marginRight:'8px'}} icon={faFileVideo}/>
-                  <FontAwesomeIcon className="hover" style={{alignSelf:'center',marginRight:'8px'}} icon={faSmile}/>
+                  >
+                    <input
+                      style={{
+                        border: "0px",
+                        width: "100%",
+                        height: "90%",
+                        backgroundColor: "#eee",
+                        borderRadius: "10px",
+                      }}
+                      placeholder="Write a comment..."
+                    />
+                    <FontAwesomeIcon
+                      className="hover"
+                      style={{ alignSelf: "center", marginRight: "8px" }}
+                      icon={faFileImage}
+                    />
+                    <FontAwesomeIcon
+                      className="hover"
+                      style={{ alignSelf: "center", marginRight: "8px" }}
+                      icon={faFileVideo}
+                    />
+                    <FontAwesomeIcon
+                      className="hover"
+                      style={{ alignSelf: "center", marginRight: "8px" }}
+                      icon={faSmile}
+                    />
                   </div>
-                  <FontAwesomeIcon icon={faPaperPlane} style={{alignSelf:'center',paddingLeft:'10px'}} className="hover"/>
+                  <FontAwesomeIcon
+                    icon={faPaperPlane}
+                    style={{ alignSelf: "center", paddingLeft: "10px" }}
+                    className="hover"
+                  />
                 </div>
               </div>
             </div>
-          </div><div>
+          </div>
+          <div>
             <div
               style={{
                 backgroundColor: "white",
@@ -512,7 +536,7 @@ function Profile() {
                     display: "flex",
                     flexDirection: "row",
                     alignContent: "center",
-                    
+
                     margin: "5px",
                   }}
                 >
@@ -524,36 +548,351 @@ function Profile() {
                       borderRadius: "50%",
                     }}
                   />
-                  <div style={{marginLeft: "15px",
+                  <div
+                    style={{
+                      marginLeft: "15px",
                       borderRadius: "10px",
-                      display:'flex',flexDirection:'row', 
+                      display: "flex",
+                      flexDirection: "row",
                       border: "0px",
                       backgroundColor: "#eeeeee",
-                      width: "100%",}}>
-                  <input
-                    style={{
-                      border:"0px"
-                    ,width:'100%',height:'90%',backgroundColor:'#eee',borderRadius: "10px",
-
+                      width: "100%",
                     }}
-                    placeholder="Write a comment..."
-                  />
-                  <FontAwesomeIcon className="hover" style={{alignSelf:'center',marginRight:'8px'}} icon={faFileImage}/>
-                  <FontAwesomeIcon className="hover" style={{alignSelf:'center',marginRight:'8px'}} icon={faFileVideo}/>
-                  <FontAwesomeIcon className="hover" style={{alignSelf:'center',marginRight:'8px'}} icon={faSmile}/>
+                  >
+                    <input
+                      style={{
+                        border: "0px",
+                        width: "100%",
+                        height: "90%",
+                        backgroundColor: "#eee",
+                        borderRadius: "10px",
+                      }}
+                      placeholder="Write a comment..."
+                    />
+                    <FontAwesomeIcon
+                      className="hover"
+                      style={{ alignSelf: "center", marginRight: "8px" }}
+                      icon={faFileImage}
+                    />
+                    <FontAwesomeIcon
+                      className="hover"
+                      style={{ alignSelf: "center", marginRight: "8px" }}
+                      icon={faFileVideo}
+                    />
+                    <FontAwesomeIcon
+                      className="hover"
+                      style={{ alignSelf: "center", marginRight: "8px" }}
+                      icon={faSmile}
+                    />
                   </div>
-                  <FontAwesomeIcon icon={faPaperPlane} style={{alignSelf:'center',paddingLeft:'10px'}} className="hover"/>
+                  <FontAwesomeIcon
+                    icon={faPaperPlane}
+                    style={{ alignSelf: "center", paddingLeft: "10px" }}
+                    className="hover"
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div
-          style={{ height: "100%", flex: 1, backgroundColor: "white",borderRadius:"10px" }}
+          style={{
+            height: "100%",
+            flex: 1,
+            backgroundColor: "white",
+            borderRadius: "10px",
+          }}
         >
-
-<p>hii</p>
-
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <p
+              style={{
+                fontWeight: "600",
+                fontSize: "15px",
+                opacity: "0.75",
+                padding: "5px",
+              }}
+            >
+              You might know
+            </p>
+            <p
+              style={{
+                fontWeight: "600",
+                fontSize: "13px",
+                opacity: "0.75",
+                padding: "5px",
+                textAlign: "right",
+                color: "blue",
+              }}
+            >
+              See All
+            </p>
+          </div>
+          <p style={{ margin: "0px" }} className="hr"></p>
+          <div className="suggestedfriend"><div
+            style={{
+              margin: "10px",
+              display: "flex",
+              flexDirection: "row",
+              alignContent: "center",
+            }}
+          >
+            <img
+              src="https://www.bootdey.com/img/Content/avatar/avatar6.png"
+              style={{ height: "40px", width: "40px", borderRadius: "50%" }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-around",
+              }}
+            >
+              <p
+                className="hover"
+                style={{
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  opacity: "0.85",
+                  paddingLeft: "5px",
+                  margin: "0px",
+                }}
+              >
+                Med Wael Ben Mustapha
+              </p>
+              <p
+                style={{
+                  fontWeight: "500",
+                  fontSize: "13px",
+                  opacity: "0.85",
+                  paddingLeft: "5px",
+                  margin: "0px",
+                }}
+              >
+                Promotion 2018{" "}
+              </p>
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <div
+              className="hover"
+              style={{
+                height: "30px",
+                width: "80px",
+                border: "1px solid #bbb",
+                borderRadius: "5px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontWeight: "700",
+                color: "black",
+                fontSize: "13px",
+                opacity: "0.8",
+              }}
+            >
+              Ignore
+            </div>
+            <div
+              className="hover"
+              style={{
+                height: "30px",
+                width: "80px",
+                backgroundColor: "#377dff",
+                borderRadius: "5px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontWeight: "700",
+                color: "white",
+                fontSize: "13px",
+              }}
+            >
+              Follow
+            </div>
+          </div></div> <div className="suggestedfriend"><div
+            style={{
+              margin: "10px",
+              display: "flex",
+              flexDirection: "row",
+              alignContent: "center",
+            }}
+          >
+            <img
+              src="https://www.bootdey.com/img/Content/avatar/avatar6.png"
+              style={{ height: "40px", width: "40px", borderRadius: "50%" }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-around",
+              }}
+            >
+              <p
+                className="hover"
+                style={{
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  opacity: "0.85",
+                  paddingLeft: "5px",
+                  margin: "0px",
+                }}
+              >
+                Med Wael Ben Mustapha
+              </p>
+              <p
+                style={{
+                  fontWeight: "500",
+                  fontSize: "13px",
+                  opacity: "0.85",
+                  paddingLeft: "5px",
+                  margin: "0px",
+                }}
+              >
+                Promotion 2018{" "}
+              </p>
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <div
+              className="hover"
+              style={{
+                height: "30px",
+                width: "80px",
+                border: "1px solid #bbb",
+                borderRadius: "5px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontWeight: "700",
+                color: "black",
+                fontSize: "13px",
+                opacity: "0.8",
+              }}
+            >
+              Ignore
+            </div>
+            <div
+              className="hover"
+              style={{
+                height: "30px",
+                width: "80px",
+                backgroundColor: "#377dff",
+                borderRadius: "5px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontWeight: "700",
+                color: "white",
+                fontSize: "13px",
+              }}
+            >
+              Follow
+            </div>
+          </div></div> <div className="suggestedfriend"><div
+            style={{
+              margin: "10px",
+              display: "flex",
+              flexDirection: "row",
+              alignContent: "center",
+            }}
+          >
+            <img
+              src="https://www.bootdey.com/img/Content/avatar/avatar6.png"
+              style={{ height: "40px", width: "40px", borderRadius: "50%" }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-around",
+              }}
+            >
+              <p
+                className="hover"
+                style={{
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  opacity: "0.85",
+                  paddingLeft: "5px",
+                  margin: "0px",
+                }}
+              >
+                Med Wael Ben Mustapha
+              </p>
+              <p
+                style={{
+                  fontWeight: "500",
+                  fontSize: "13px",
+                  opacity: "0.85",
+                  paddingLeft: "5px",
+                  margin: "0px",
+                }}
+              >
+                Promotion 2018{" "}
+              </p>
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <div
+              className="hover"
+              style={{
+                height: "30px",
+                width: "80px",
+                border: "1px solid #bbb",
+                borderRadius: "5px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontWeight: "700",
+                color: "black",
+                fontSize: "13px",
+                opacity: "0.8",
+              }}
+            >
+              Ignore
+            </div>
+            <div
+              className="hover"
+              style={{
+                height: "30px",
+                width: "80px",
+                backgroundColor: "#377dff",
+                borderRadius: "5px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontWeight: "700",
+                color: "white",
+                fontSize: "13px",
+              }}
+            >
+              Follow
+            </div>
+          </div></div>
         </div>
       </div>
     </div>
