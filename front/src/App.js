@@ -1,8 +1,9 @@
-import "./App.css";
-import Home from "./views/home";
+import './App.css';
+import Profile from './components/Profile';
 
 function App() {
-  return <Home />;
+  return (
+<Profile/>  );
 }
 
 export default App;
