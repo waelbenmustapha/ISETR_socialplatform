@@ -1,14 +1,14 @@
 body {
-  margin: 10px;
-  font-family: Arial, Helvetica, sans-serif;
+  /* margin: 10px; */
+  /* font-family: Arial, Helvetica, sans-serif; */
 }
 
 .hero-image {
   background-image: url("https://upload.wikimedia.org/wikipedia/commons/1/1b/Square_200x200.png");
   background-color: #cccccc;
   height: 300px;
- 
-border-radius:10px 10px 5px 5px ;
+
+  border-radius: 10px 10px 5px 5px;
   background-repeat: no-repeat;
   background-size: 100% 300px;
   position: relative;
@@ -23,10 +23,16 @@ border-radius:10px 10px 5px 5px ;
   color: white;
 }
 
-.hover:hover{cursor: pointer;}
-
-.hr{  border-top: 1px solid #bbb
+.hover:hover {
+  cursor: pointer;
 }
-input:focus-visible{  outline:0px }
-.suggestedfriend{
-margin-bottom:25px;}
+
+.hr {
+  border-top: 1px solid #bbb;
+}
+input:focus-visible {
+  outline: 0px;
+}
+.suggestedfriend {
+  margin-bottom: 25px;
+}

@@ -17,7 +17,10 @@ import {
 
 function Profile() {
   return (
-    <div style={{ marginLeft: "200px" }}>
+    <div
+      // style={{ marginLeft: "200px" }}
+      className="col-start-2 col-end-6  row-start-2 row-end-10 rounded-lg shadow-2xl bg-gray-100 p-3  overflow-y-scroll no-scrollbar"
+    >
       <div
         style={{
           boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
