@@ -10,6 +10,7 @@ import {
   faCog,
   faRss,
   faSignOutAlt,
+  faSuitcase,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -21,6 +22,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import Main from "../views/Main";
 import Signin from "../views/auth/Signin";
+import Jobs from "../views/Jobs";
 
 export const nav_routes = [
   {
@@ -58,6 +60,12 @@ export const nav_routes = [
     name: "Profile",
     component: Profile,
     icon: faUser,
+  },
+  {
+    path: "/jobs",
+    name: "Jobs",
+    component: Jobs,
+    icon: faSuitcase,
   },
   {
     path: "/settings",
