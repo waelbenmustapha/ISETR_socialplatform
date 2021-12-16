@@ -1,24 +1,85 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import "./App.css";
+// import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { routes, nav_routes } from "./utils/routes";
+import Main from "./views/Main";
+import Settings from "./views/Settings";
+import Nav from "./widgets/Nav";
+import {
+  BrowserRouter as Router,
+  // Routes,
+  Route,
+  Link,
+  useParams,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 function App() {
+  const page = window.location.pathname.split("/")[1];
+
+  const [authenticated, setAuthenticated] = useState(true);
+
+  const getRoutes = () => {
+    return routes.map((route) => {
+      return <Route path={route.path} component={route.component} />;
+    });
+  };
+  const getNavRoutes = () => {
+    return nav_routes.map((route) => {
+      return <Route path={route.path} component={route.component} />;
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {/* Authenticated  */}
+      {authenticated && (
+        <div className=" h-screen bg-gray-100 overflow-hidden grid gap-3 font-test grid-cols-5 grid-rows-9 px-3 pt-3       ">
+          {/* header */}
+          <div className="bg-white flex justify-between items-center py-2 px-3 col-start-2 col-end-6 row-span-1  rounded-lg shadow-md ">
+            {/* search */}
+            <div className="flex border-2 rounded w-1/2">
+              <button className="flex items-center justify-center bg-white px-4 border-r">
+                <svg
+                  className="w-6 h-6 text-gray-600"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"></path>
+                </svg>
+              </button>
+              <input
+                type="text"
+                className="px-4 py-2 w-80"
+                placeholder="Search..."
+              />
+            </div>
+
+            {/* avatar */}
+            <div className="flex items-center justify-center ">
+              <span className="text-lg px-3 ">Lewandowski Robert </span>
+
+              <img
+                className="w-10 h-10 rounded-full"
+                src="https://images.pexels.com/photos/2589653/pexels-photo-2589653.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+                alt="avatar"
+              />
+            </div>
+          </div>
+          {/* nav */}
+          <Nav page={page} />
+          {/* main */}
+          <Switch>{getNavRoutes()}</Switch>
+        </div>
+      )}
+      {/* Not Authenticated */}
+      {!authenticated && <Switch>{getRoutes()}</Switch>}
+
+      {authenticated && <Route render={() => <Redirect to="/feed" />} />}
+
+      {!authenticated && <Route render={() => <Redirect to="/signin" />} />}
+    </Router>
   );
 }
 
