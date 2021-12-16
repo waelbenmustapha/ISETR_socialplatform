@@ -26,7 +26,7 @@ function Signin() {
           />
 
           <div className="ml-4">
-            <h1 className="text-xl font-bold">Radesbook</h1>
+            <h1 className="text-xl font-bold">IsetR</h1>
           </div>
         </div>
         {/* language */}
