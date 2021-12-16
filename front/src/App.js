@@ -17,7 +17,7 @@ import {
 function App() {
   const page = window.location.pathname.split("/")[1];
 
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(true);
 
   const getRoutes = () => {
     return routes.map((route) => {
