@@ -5,7 +5,7 @@ import dot from "../assets/icons/reddot.png";
 
 import friend from "../assets/icons/friend.png";
 function Notification_Item(props) {
-
+//convert minutes to days,hours,minutes
     function ConvertMinutes(num){
  var d = Math.floor(num/1440); // 60*24
  var h = Math.floor((num-(d*1440))/60);
