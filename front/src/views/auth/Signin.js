@@ -6,10 +6,33 @@ import {
   faLock,
   faMailBulk,
 } from "@fortawesome/free-solid-svg-icons";
+import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { useSignIn } from 'react-auth-kit'
 
 function Signin() {
+  const signIn = useSignIn()
+  const history = useHistory();
+
+  const [formData, setFormData] = useState({email: '', password: ''})
+  const onSubmit = (e) => {
+    e.preventDefault()
+    axios.post('http://localhost:1212/login', formData)
+        .then((res)=>{
+            if(res.status === 200){
+              console.log(res)
+                if(signIn({token: res.data.token,
+                           expiresIn:res.data.expiresIn,
+                           tokenType: "Bearer",
+                           authState: res.data.authUserState,
+                           })){ 
+history.push("/feed")}else {
+console.log("error")                }
+            }
+        })
+}
   return (
     <div className="w-screen h-screen  overflow-hidden  bg-white">
       {/* Header */}
@@ -71,6 +94,7 @@ function Signin() {
                 </div>
                 <input
                   type="email"
+                  onChange={(e)=>setFormData({...formData, email: e.target.value})}
                   className="px-4 py-2 w-full"
                   placeholder="Email"
                   id="email_form"
@@ -94,6 +118,7 @@ function Signin() {
                 type="password"
                 className="px-4 py-2 w-full"
                 placeholder="Password"
+                onChange={(e)=>setFormData({...formData, password: e.target.value})}
                 id="password_form"
               />
 
@@ -117,6 +142,7 @@ function Signin() {
             {/* Submit Button */}
             <div className="flex justify-center mt-5">
               <button
+              onClick={(e)=>onSubmit(e)}
                 className="bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 px-4 rounded"
                 type="submit"
               >
