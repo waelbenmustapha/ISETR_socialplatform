@@ -24,7 +24,7 @@ const [err,setError]=useState(false);
             if(res.status === 200){
               console.log(res)
                 if(signIn({token: res.data.token,
-                           expiresIn:1,
+                           expiresIn:10,
                            tokenType: "Bearer",
                            authState: res.data.authUserState,
                            })){ 
