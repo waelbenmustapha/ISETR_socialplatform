@@ -13,6 +13,8 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 function App() {
 
   const auth = useAuthUser()
@@ -33,10 +35,9 @@ function App() {
       return <Route path={route.path} component={route.component} />;
     });
   };
-
+ 
   useEffect(() => {
-    console.log("is he ?")
-   console.log(isAuthenticated());
+   
   }, [])
   return (
     <Router authType = {'cookie'}
@@ -68,9 +69,9 @@ function App() {
           </div>
 
           {/* avatar */}
-          <div onClick={() => {signOut()}}>Logout</div>
-          <p> {isAuthenticated()?"yes":"no"}</p>
+         
           <div className="flex items-center justify-center ">
+            <FontAwesomeIcon className="hover" onClick={()=>{signOut()}} icon={faSignOutAlt}/>
             <span className="text-lg px-3 ">{auth()?.name}</span>
 
             <img

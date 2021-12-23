@@ -15,23 +15,23 @@ import { useSignIn } from 'react-auth-kit'
 function Signin() {
   const signIn = useSignIn()
   const history = useHistory();
-
+const [err,setError]=useState(false);
   const [formData, setFormData] = useState({email: '', password: ''})
   const onSubmit = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:1212/login', formData)
+    axios.post('https://radesbook.herokuapp.com/api/user/login', formData)
         .then((res)=>{
             if(res.status === 200){
               console.log(res)
                 if(signIn({token: res.data.token,
-                           expiresIn:res.data.expiresIn,
+                           expiresIn:1,
                            tokenType: "Bearer",
                            authState: res.data.authUserState,
                            })){ 
-history.push("/feed")}else {
-console.log("error")                }
+}else {
+}
             }
-        })
+        }).catch(err=>{setError(true)})
 }
   return (
     <div className="w-screen h-screen  overflow-hidden  bg-white">
@@ -49,7 +49,7 @@ console.log("error")                }
           />
 
           <div className="ml-4">
-            <h1 className="text-xl font-bold">IsetR</h1>
+            <h1 className="text-xl font-bold">Alumni</h1>
           </div>
         </div>
         {/* language */}
@@ -72,10 +72,12 @@ console.log("error")                }
       >
         <div className="h-5/6 w-1/3 p-5  shadow-2xl">
           <div>
-            <span className="font-bold flex justify-center items-center text-xl uppercase">
+          <span className="font-bold flex justify-center items-center text-xl uppercase">
               Welcome Back
             </span>
+           
           </div>
+
           <form className="h-full flex flex-col justify-center">
             {/* Email */}
 
@@ -140,6 +142,9 @@ console.log("error")                }
             </div>
 
             {/* Submit Button */}
+           {err&&(<p style={{fontSize:'16px',margin:'10px',color:'red',textAlign:'center'}}>
+              Email or Password are Incorret
+            </p>)}
             <div className="flex justify-center mt-5">
               <button
               onClick={(e)=>onSubmit(e)}
