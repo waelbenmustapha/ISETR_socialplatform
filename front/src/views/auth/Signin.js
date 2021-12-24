@@ -19,7 +19,7 @@ const [err,setError]=useState(false);
   const [formData, setFormData] = useState({email: '', password: ''})
   const onSubmit = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:1212/login', formData)
+    axios.post('http://localhost:5500/api/user/login', formData)
         .then((res)=>{
             if(res.status === 200){
               console.log(res)

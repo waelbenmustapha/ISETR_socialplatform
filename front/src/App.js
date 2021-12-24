@@ -72,7 +72,7 @@ function App() {
          
           <div className="flex items-center justify-center ">
             <FontAwesomeIcon className="hover" onClick={()=>{signOut()}} icon={faSignOutAlt}/>
-            <span className="text-lg px-3 ">{auth()?.name}</span>
+            <span className="text-lg px-3 ">{auth().name}</span>
 
             <img
               className="w-10 h-10 rounded-full"
