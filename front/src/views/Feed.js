@@ -1,6 +1,5 @@
-import React from "react";
-import { useIsAuthenticated } from "react-auth-kit";
-import { useState,useRef} from "react/cjs/react.development";
+import React,{ useIsAuthenticated } from "react-auth-kit";
+import { useState,useRef} from "react";
 import AddPost from "../components/AddPost";
 import Post from "../components/Post";
 
