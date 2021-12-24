@@ -28,12 +28,12 @@ export default {
     },
     Twitter: {
       link: "https://www.twitter.com/",
-      text: "SamsFXJournal",
+      text: "NaderGuesmi",
       icon: <Twitter />,
     },
     linkedIn: {
       link: "https://www.linkedin.com/",
-      text: "SamFaz",
+      text: "NaderGuesmi",
       icon: <LinkedIn />,
     },
     Github: {
