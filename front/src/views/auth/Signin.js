@@ -19,12 +19,12 @@ const [err,setError]=useState(false);
   const [formData, setFormData] = useState({email: '', password: ''})
   const onSubmit = (e) => {
     e.preventDefault()
-    axios.post('https://radesbook.herokuapp.com/api/user/login', formData)
+    axios.post('http://localhost:1212/login', formData)
         .then((res)=>{
             if(res.status === 200){
               console.log(res)
                 if(signIn({token: res.data.token,
-                           expiresIn:10,
+                           expiresIn:1,
                            tokenType: "Bearer",
                            authState: res.data.authUserState,
                            })){ 
