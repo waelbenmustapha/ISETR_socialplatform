@@ -1,11 +1,33 @@
-const express = require('express')
+import express from "express";
+import cors from "cors";
+
+import { db_conn } from "./config/database.js";
+import userRoutes from "./routes/user_routes.js";
+import { verifyToken } from "./middlewares/user_middleware.js";
+
+const PORT = process.env.PORT || 5500;
+
 const app = express();
-const port = 8000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-});
+app.use(
+  express.json({
+    limit: "50mb",
+  })
+);
+app.use(
+  cors({
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+    credentials: true,
+    origin: "*",
+  })
+);
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}!`)
+app.use("/api/user", userRoutes);
+
+db_conn.connect(function (err) {
+  if (err) throw err;
+  console.log("Database is connected successfully !");
+  app.listen(PORT, () => {
+    console.log(`Server started on http://localhost:${PORT}`);
+  });
 });
