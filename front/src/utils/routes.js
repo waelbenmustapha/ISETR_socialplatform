@@ -10,6 +10,7 @@ import {
   faCog,
   faRss,
   faSignOutAlt,
+  faStream,
   faSuitcase,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +24,7 @@ import {
 import Main from "../views/Main";
 import Signin from "../views/auth/Signin";
 import Jobs from "../views/Jobs";
+import Wall from "../views/Wall";
 
 export const nav_routes = [
   {
@@ -32,11 +34,12 @@ export const nav_routes = [
     icon: faRss,
   },
   {
-    path: "/my-commynity",
-    name: "My Community",
-    component: My_Community,
-    icon: faUsers,
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
+    icon: faUser,
   },
+  
   {
     path: "/messages",
     name: "Messages",
@@ -50,16 +53,22 @@ export const nav_routes = [
     icon: faBell,
   },
   {
+    path: "/my-commynity",
+    name: "My Community",
+    component: My_Community,
+    icon: faUsers,
+  },
+  {
     path: "/explore",
     name: "Explore",
     component: Explore,
     icon: faCompass,
   },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: Profile,
-    icon: faUser,
+   {
+    path: "/wall",
+    name: "Wall",
+    component: Wall,
+    icon: faStream,
   },
   {
     path: "/jobs",
