@@ -1,10 +1,9 @@
-import express from "express";
 import bcrypt from "bcrypt";
 import dotEnv from "dotenv";
 import jwt from "jsonwebtoken";
 
 dotEnv.config();
-const router = express.Router();
+
 import { con } from "../config/database.js";
 
 export const getUsers = async (req, res) => {
@@ -73,6 +72,8 @@ export const registerUser = async (req, res) => {
     name,
     email,
     password: hash,
+
+
   };
   await con
     .insert(newUser)
@@ -115,6 +116,7 @@ export const loginUser = async (req, res) => {
       });
 
       const authUserState = {
+        id: user[0].id,
         name: user[0].name,
         email: user[0].email,
         token,
@@ -132,14 +134,17 @@ export const loginUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { name, email, password } = req.body;
-  const updatedUser = { name, email, password };
+  const { name, email, birthday, bio, phone, website, gender, address } = req.body;
+  const updatedUser = { name, email, birthday, bio, phone, website, gender, address };
   await con
     .update(updatedUser)
     .from("users")
     .where("id", id)
     .then(() => {
-      res.json("User updated");
+      res.status(200).json({
+        success: true,
+        message: "User updated"
+      });
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };
@@ -168,4 +173,3 @@ export const searchUsers = async (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-export default router;

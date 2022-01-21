@@ -6,7 +6,7 @@ import {
   faLock,
   faMailBulk,
 } from "@fortawesome/free-solid-svg-icons";
-import Loginuser from "../../api/Signin";
+// import Loginuser from "../../api/Signin";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
@@ -18,6 +18,33 @@ function Signin() {
   const history = useHistory();
   const [err, setError] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
+
+
+  const loginuser = async () => {
+    await axios
+      .post("http://localhost:5500/api/user/login", formData)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res);
+          if (
+            signIn({
+              token: res.data.token,
+              expiresIn: 10000,
+              tokenType: "Bearer",
+              authState: res.data.authUserState,
+            })
+          ) {
+          } else {
+          }
+        }
+      })
+      .catch((err) => {
+        setError(true);
+      });
+  }
+
+
+
   return (
     <div className="w-screen h-screen  overflow-hidden  bg-white">
       {/* Header */}
@@ -144,7 +171,7 @@ function Signin() {
             )}
             <div className="flex justify-center mt-5">
               <button
-                onClick={(e) => {e.preventDefault();Loginuser(formData)}
+                onClick={(e) => { e.preventDefault(); loginuser() }
                 }
                 className="bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 px-4 rounded"
                 type="submit"
