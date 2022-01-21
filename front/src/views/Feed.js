@@ -12,6 +12,7 @@ function  handleScroll (e) {
   const [Posts, setPosts] = useState([
     {
       User: {
+id:0,
         name: "wael Ben Mustapha",
         current:"Student",
         img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
@@ -41,7 +42,9 @@ function  handleScroll (e) {
     },
     {
 
-      User: { name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
       timeago: "124",
       description: "Searching for work , 5 years experience m3a NASA",
       img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",
@@ -67,6 +70,7 @@ function  handleScroll (e) {
       shares:'5'
     },{
       User: {
+id:0,
         name: "wael Ben Mustapha",
         current:"Student",
         img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
@@ -96,7 +100,9 @@ function  handleScroll (e) {
     },
     {
 
-      User: { name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
       timeago: "124",
       description: "Searching for work , 5 years experience m3a NASA",
       img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",
@@ -122,6 +128,7 @@ function  handleScroll (e) {
       shares:'5'
     },{
       User: {
+id:0,
         name: "wael Ben Mustapha",
         current:"Student",
         img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
@@ -151,7 +158,9 @@ function  handleScroll (e) {
     },
     {
 
-      User: { name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
       timeago: "124",
       description: "Searching for work , 5 years experience m3a NASA",
       img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",
@@ -177,6 +186,7 @@ function  handleScroll (e) {
       shares:'5'
     },{
       User: {
+id:0,
         name: "wael Ben Mustapha",
         current:"Student",
         img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
@@ -206,7 +216,9 @@ function  handleScroll (e) {
     },
     {
 
-      User: { name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
       timeago: "124",
       description: "Searching for work , 5 years experience m3a NASA",
       img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",
@@ -232,6 +244,7 @@ function  handleScroll (e) {
       shares:'5'
     },{
       User: {
+id:0,
         name: "wael Ben Mustapha",
         current:"Student",
         img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
@@ -261,7 +274,9 @@ function  handleScroll (e) {
     },
     {
 
-      User: { name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
       timeago: "124",
       description: "Searching for work , 5 years experience m3a NASA",
       img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",
@@ -287,6 +302,7 @@ function  handleScroll (e) {
       shares:'5'
     },{
       User: {
+id:0,
         name: "wael Ben Mustapha",
         current:"Student",
         img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
@@ -316,7 +332,9 @@ function  handleScroll (e) {
     },
     {
 
-      User: { name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
       timeago: "124",
       description: "Searching for work , 5 years experience m3a NASA",
       img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",

@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState}from "react";
 import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,10 +14,379 @@ import {
   faSmile,
   faVideo,
 } from "@fortawesome/free-solid-svg-icons";
+import Post from "../components/Post";
+import AddPost from "../components/AddPost";
 
 function Wall() {
+  const [limit,setlimit]=useState(3);
+  function  handleScroll (e) {
+      const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+      if (bottom) {  setlimit(limit+3) }
+    }
+  const [Posts, setPosts] = useState([
+    {
+      id:0,
+      User: {
+id:0,
+        name: "wael Ben Mustapha",
+        current:"Student",
+        img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
+      },
+      timeago: "12",
+      description: "Borgdéna bnina ",
+      img: "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
+      likes: "24",
+      comments: [
+        {timeago:'17',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "borj svp",
+        },
+        {
+          timeago:'168',
+          User: {
+            name: "nader",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "tbi3ha ??",
+        },
+      ],
+      shares:'7'
+    },
+    {
+      id:1,
+
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      timeago: "124",
+      description: "Searching for work , 5 years experience m3a NASA",
+      img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",
+      likes: "24",
+      comments: [
+        {
+          timeago:'25',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "Mawjoud khédma m 6h -> 22h b 460Dt/mois",
+        },
+        {
+          timeago:'785',
+          User: {
+            name: "nader guesmi",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "Hata ena nékhdém m3a nasa",
+        },
+      ],
+      shares:'5'
+    },{
+      id:2,
+      User: {
+id:0,
+        name: "wael Ben Mustapha",
+        current:"Student",
+        img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
+      },
+      timeago: "12",
+      description: "Borgdéna bnina ",
+      img: "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
+      likes: "24",
+      comments: [
+        {timeago:'17',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "borj svp",
+        },
+        {
+          timeago:'168',
+          User: {
+            name: "nader",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "tbi3ha ??",
+        },
+      ],
+      shares:'7'
+    },
+    {
+      id:3,
+
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      timeago: "124",
+      description: "Searching for work , 5 years experience m3a NASA",
+      img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",
+      likes: "24",
+      comments: [
+        {
+          timeago:'25',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "Mawjoud khédma m 6h -> 22h b 460Dt/mois",
+        },
+        {
+          timeago:'785',
+          User: {
+            name: "nader guesmi",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "Hata ena nékhdém m3a nasa",
+        },
+      ],
+      shares:'5'
+    },{
+      id:4,
+      User: {
+id:0,
+        name: "wael Ben Mustapha",
+        current:"Student",
+        img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
+      },
+      timeago: "12",
+      description: "Borgdéna bnina ",
+      img: "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
+      likes: "24",
+      comments: [
+        {timeago:'17',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "borj svp",
+        },
+        {
+          timeago:'168',
+          User: {
+            name: "nader",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "tbi3ha ??",
+        },
+      ],
+      shares:'7'
+    },
+    {
+id:5,
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      timeago: "124",
+      description: "Searching for work , 5 years experience m3a NASA",
+      img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",
+      likes: "24",
+      comments: [
+        {
+          timeago:'25',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "Mawjoud khédma m 6h -> 22h b 460Dt/mois",
+        },
+        {
+          timeago:'785',
+          User: {
+            name: "nader guesmi",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "Hata ena nékhdém m3a nasa",
+        },
+      ],
+      shares:'5'
+    },{
+      id:6,
+      User: {
+id:0,
+        name: "wael Ben Mustapha",
+        current:"Student",
+        img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
+      },
+      timeago: "12",
+      description: "Borgdéna bnina ",
+      img: "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
+      likes: "24",
+      comments: [
+        {timeago:'17',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "borj svp",
+        },
+        {
+          timeago:'168',
+          User: {
+            name: "nader",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "tbi3ha ??",
+        },
+      ],
+      shares:'7'
+    },
+    {
+      id:7,
+
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      timeago: "124",
+      description: "Searching for work , 5 years experience m3a NASA",
+      img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",
+      likes: "24",
+      comments: [
+        {
+          timeago:'25',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "Mawjoud khédma m 6h -> 22h b 460Dt/mois",
+        },
+        {
+          timeago:'785',
+          User: {
+            name: "nader guesmi",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "Hata ena nékhdém m3a nasa",
+        },
+      ],
+      shares:'5'
+    },{
+      id:8,
+      User: {
+id:0,
+        name: "wael Ben Mustapha",
+        current:"Student",
+        img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
+      },
+      timeago: "12",
+      description: "Borgdéna bnina ",
+      img: "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
+      likes: "24",
+      comments: [
+        {timeago:'17',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "borj svp",
+        },
+        {
+          timeago:'168',
+          User: {
+            name: "nader",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "tbi3ha ??",
+        },
+      ],
+      shares:'7'
+    },
+    {
+id:9,
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      timeago: "124",
+      description: "Searching for work , 5 years experience m3a NASA",
+      img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",
+      likes: "24",
+      comments: [
+        {
+          timeago:'25',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "Mawjoud khédma m 6h -> 22h b 460Dt/mois",
+        },
+        {
+          timeago:'785',
+          User: {
+            name: "nader guesmi",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "Hata ena nékhdém m3a nasa",
+        },
+      ],
+      shares:'5'
+    },{
+      id:10,
+      User: {
+id:0,
+        name: "wael Ben Mustapha",
+        current:"Student",
+        img: "https://media-exp1.licdn.com/dms/image/C5603AQEZIMZilsqA6A/profile-displayphoto-shrink_800_800/0/1608994757336?e=1645660800&v=beta&t=011XxwMzCyTwCTxIg-nCcgH2V76nCI5fcJr-VP1JtMQ",
+      },
+      timeago: "12",
+      description: "Borgdéna bnina ",
+      img: "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
+      likes: "24",
+      comments: [
+        {timeago:'17',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "borj svp",
+        },
+        {
+          timeago:'168',
+          User: {
+            name: "nader",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "tbi3ha ??",
+        },
+      ],
+      shares:'7'
+    },
+    {
+      id:11,
+
+      User: { 
+id:1,
+name: "Med Charabi", img: "https://avatars.githubusercontent.com/u/41237052?v=4",current:'Engineer at The National Aeronautics and Space Administration' },
+      timeago: "124",
+      description: "Searching for work , 5 years experience m3a NASA",
+      img: "https://i1.sndcdn.com/avatars-JUvAAPvAA86fmbVE-SH0i6g-t500x500.jpg",
+      likes: "24",
+      comments: [
+        {
+          timeago:'25',
+          User: {
+            name: "aziz sliti",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/14907658_656668014514626_3769250828390762571_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=174925&_nc_ohc=B2p-yU_NUnIAX-PVhtw&_nc_ht=scontent.ftun1-2.fna&oh=00_AT_pj8Yzamu-vnvds9UsEQH-ZgAt9nrJgadW8ptZdx8SxQ&oe=61E09C16",
+          },
+          comment: "Mawjoud khédma m 6h -> 22h b 460Dt/mois",
+        },
+        {
+          timeago:'785',
+          User: {
+            name: "nader guesmi",
+            img: "https://scontent.ftun1-2.fna.fbcdn.net/v/t1.6435-1/p200x200/152030984_3957529804303387_8666733395871630056_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=7206a8&_nc_ohc=3f8pTPMg5D8AX84UoJk&_nc_ht=scontent.ftun1-2.fna&oh=00_AT-ZJevAw70xhnI9JsDmNd--xdQNtz0lvy0m1IQ44c48XQ&oe=61DFBD38",
+          },
+          comment: "Hata ena nékhdém m3a nasa",
+        },
+      ],
+      shares:'5'
+    },
+  ]);
   return (
     <div
+    onScroll={(e)=>handleScroll(e)}
       // style={{ marginLeft: "200px" }}
       className="col-start-2 col-end-6  row-start-2 row-end-10 rounded-lg shadow-2xl bg-gray-100 p-3  overflow-y-scroll no-scrollbar"
     >
@@ -92,7 +461,7 @@ function Wall() {
       >
         <div
           style={{
-            flex: 1,
+            flex: 0.8,
             padding: "10px",
             borderRadius: "10px",
             backgroundColor: "white",
@@ -147,461 +516,18 @@ function Wall() {
               padding: "10px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignContent: "center",
-              }}
-            >
-              <img
-                src="https://www.bootdey.com/img/Content/avatar/avatar6.png"
-                style={{ height: "40px", width: "40px", borderRadius: "50%" }}
-              />
-              <input
-                style={{
-                  marginLeft: "15px",
-                  borderRadius: "10px",
-                  border: "0px",
-                  backgroundColor: "#eeeeee",
-                  width: "100%",
-                }}
-                placeholder="What's happening ?"
-              />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                paddingLeft: "5px",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <span>
-                <FontAwesomeIcon
-                  className="hover"
-                  style={{ marginRight: "7px" }}
-                  icon={faVideo}
-                />
-                live video
-              </span>
-              <span>
-                <FontAwesomeIcon
-                  className="hover"
-                  style={{ marginRight: "7px" }}
-                  icon={faImages}
-                />
-                Photo/Video
-              </span>
-              <span>
-                <FontAwesomeIcon
-                  className="hover"
-                  style={{ marginRight: "7px" }}
-                  icon={faSmile}
-                />
-                Feeling
-              </span>
-              <p
-                className="hover"
-                style={{
-                  width: "80px",
-                  height: "40px",
-                  lineHeight: "40px",
-                  textAlign: "center",
-                  backgroundColor: "#377dff",
-                  borderRadius: "8px",
-                  color: "white",
-                  fontWeight: "500",
-                }}
-              >
-                Post
-              </p>
-            </div>
-          </div>
-          <div>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "10px",
-                marginTop: "10px",
-                padding: "10px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignContent: "center",
-                }}
-              >
-                <img
-                  src="https://www.bootdey.com/img/Content/avatar/avatar6.png"
-                  style={{ height: "50px", width: "50px", borderRadius: "50%" }}
-                />
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      opacity: "0.85",
-                      paddingLeft: "5px",
-                      margin: "0px",
-                    }}
-                  >
-                    Med Wael Ben Mustapha
-                  </p>
-                  <p
-                    style={{
-                      fontWeight: "500",
-                      fontSize: "13px",
-                      opacity: "0.85",
-                      paddingLeft: "5px",
-                      margin: "0px",
-                    }}
-                  >
-                    Just Now
-                  </p>
-                </div>
-                <FontAwesomeIcon
-                  icon={faEllipsisH}
-                  style={{ marginLeft: "auto", padding: "5px" }}
-                  className="hover"
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  paddingLeft: "5px",
-                  justifyContent: "space-between",
-                }}
-              >
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-                  nec dolor sollicitudin lectus ornare lacinia id eget ante.
-                  Suspendisse malesuada, tellus ac laoreet ullamcorper, tortor
-                  mauris imperdiet purus, vitae semper metus magna vitae neque.
-                </p>
-                <img
-                  src="https://images.unsplash.com/photo-1569974498991-d3c12a504f95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmlnJTIwY2l0eXxlbnwwfHwwfHw%3D&w=1000&q=80"
-                  style={{ maxHeight: "100%", maxWidth: "100%" }}
-                />
-                <div style={{ flexDirection: "row", display: "flex" }}>
-                  <p style={{ fontSize: "14px", fontWeight: "500" }}>
-                    720 Like
-                  </p>
-                  <p
-                    style={{
-                      marginLeft: "auto",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      marginRight: "10px",
-                    }}
-                  >
-                    3 Comments
-                  </p>
-                  <p style={{ fontSize: "14px", fontWeight: "500" }}>
-                    17 Share
-                  </p>
-                </div>
-                <span className="hr"></span>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    flexDirection: "row",
-                  }}
-                >
-                  <p>
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ marginRight: "7px" }}
-                      icon={faHeart}
-                    />
-                    Like
-                  </p>
-                  <p>
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ marginRight: "7px" }}
-                      icon={faComment}
-                    />
-                    Like
-                  </p>
-                  <p>
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ marginRight: "7px" }}
-                      icon={faShare}
-                    />
-                    Like
-                  </p>
-                </div>
-                <span className="hr"></span>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignContent: "center",
+<AddPost />
 
-                    margin: "5px",
-                  }}
-                >
-                  <img
-                    src="https://www.bootdey.com/img/Content/avatar/avatar6.png"
-                    style={{
-                      height: "40px",
-                      width: "40px",
-                      borderRadius: "50%",
-                    }}
-                  />
-                  <div
-                    style={{
-                      marginLeft: "15px",
-                      borderRadius: "10px",
-                      display: "flex",
-                      flexDirection: "row",
-                      border: "0px",
-                      backgroundColor: "#eeeeee",
-                      width: "100%",
-                    }}
-                  >
-                    <input
-                      style={{
-                        border: "0px",
-                        width: "100%",
-                        height: "90%",
-                        backgroundColor: "#eee",
-                        borderRadius: "10px",
-                      }}
-                      placeholder="Write a comment..."
-                    />
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ alignSelf: "center", marginRight: "8px" }}
-                      icon={faFileImage}
-                    />
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ alignSelf: "center", marginRight: "8px" }}
-                      icon={faFileVideo}
-                    />
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ alignSelf: "center", marginRight: "8px" }}
-                      icon={faSmile}
-                    />
-                  </div>
-                  <FontAwesomeIcon
-                    icon={faPaperPlane}
-                    style={{ alignSelf: "center", paddingLeft: "10px" }}
-                    className="hover"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
-          <div>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "10px",
-                marginTop: "10px",
-                padding: "10px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignContent: "center",
-                }}
-              >
-                <img
-                  src="https://www.bootdey.com/img/Content/avatar/avatar6.png"
-                  style={{ height: "50px", width: "50px", borderRadius: "50%" }}
-                />
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      opacity: "0.85",
-                      paddingLeft: "5px",
-                      margin: "0px",
-                    }}
-                  >
-                    Med Wael Ben Mustapha
-                  </p>
-                  <p
-                    style={{
-                      fontWeight: "500",
-                      fontSize: "13px",
-                      opacity: "0.85",
-                      paddingLeft: "5px",
-                      margin: "0px",
-                    }}
-                  >
-                    Just Now
-                  </p>
-                </div>
-                <FontAwesomeIcon
-                  icon={faEllipsisH}
-                  style={{ marginLeft: "auto", padding: "5px" }}
-                  className="hover"
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  paddingLeft: "5px",
-                  justifyContent: "space-between",
-                }}
-              >
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-                  nec dolor sollicitudin lectus ornare lacinia id eget ante.
-                  Suspendisse malesuada, tellus ac laoreet ullamcorper, tortor
-                  mauris imperdiet purus, vitae semper metus magna vitae neque.
-                </p>
-                <img
-                  src="https://images.unsplash.com/photo-1569974498991-d3c12a504f95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmlnJTIwY2l0eXxlbnwwfHwwfHw%3D&w=1000&q=80"
-                  style={{ maxHeight: "100%", maxWidth: "100%" }}
-                />
-                <div style={{ flexDirection: "row", display: "flex" }}>
-                  <p style={{ fontSize: "14px", fontWeight: "500" }}>
-                    720 Like
-                  </p>
-                  <p
-                    style={{
-                      marginLeft: "auto",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      marginRight: "10px",
-                    }}
-                  >
-                    3 Comments
-                  </p>
-                  <p style={{ fontSize: "14px", fontWeight: "500" }}>
-                    17 Share
-                  </p>
-                </div>
-                <span className="hr"></span>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    flexDirection: "row",
-                  }}
-                >
-                  <p>
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ marginRight: "7px" }}
-                      icon={faHeart}
-                    />
-                    Like
-                  </p>
-                  <p>
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ marginRight: "7px" }}
-                      icon={faComment}
-                    />
-                    Like
-                  </p>
-                  <p>
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ marginRight: "7px" }}
-                      icon={faShare}
-                    />
-                    Like
-                  </p>
-                </div>
-                <span className="hr"></span>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignContent: "center",
+          {Posts.slice(0,limit).map((val) => (
+            <Post post={val} />
+          ))}
 
-                    margin: "5px",
-                  }}
-                >
-                  <img
-                    src="https://www.bootdey.com/img/Content/avatar/avatar6.png"
-                    style={{
-                      height: "40px",
-                      width: "40px",
-                      borderRadius: "50%",
-                    }}
-                  />
-                  <div
-                    style={{
-                      marginLeft: "15px",
-                      borderRadius: "10px",
-                      display: "flex",
-                      flexDirection: "row",
-                      border: "0px",
-                      backgroundColor: "#eeeeee",
-                      width: "100%",
-                    }}
-                  >
-                    <input
-                      style={{
-                        border: "0px",
-                        width: "100%",
-                        height: "90%",
-                        backgroundColor: "#eee",
-                        borderRadius: "10px",
-                      }}
-                      placeholder="Write a comment..."
-                    />
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ alignSelf: "center", marginRight: "8px" }}
-                      icon={faFileImage}
-                    />
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ alignSelf: "center", marginRight: "8px" }}
-                      icon={faFileVideo}
-                    />
-                    <FontAwesomeIcon
-                      className="hover"
-                      style={{ alignSelf: "center", marginRight: "8px" }}
-                      icon={faSmile}
-                    />
-                  </div>
-                  <FontAwesomeIcon
-                    icon={faPaperPlane}
-                    style={{ alignSelf: "center", paddingLeft: "10px" }}
-                    className="hover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <div
           style={{
             height: "100%",
-            flex: 1,
+            flex: 0.8,
             backgroundColor: "white",
             borderRadius: "10px",
           }}

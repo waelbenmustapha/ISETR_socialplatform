@@ -18,6 +18,29 @@ function Signin() {
   const history = useHistory();
   const [err, setError] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
+  function Loginuser(){
+    axios
+          .post("http://localhost:5500/api/user/login", formData)
+          .then((res) => {
+            if (res.status === 200) {
+              console.log(res);
+              if (
+                signIn({
+                  token: res.data.token,
+                  expiresIn: 20,
+                  tokenType: "Bearer",
+                  authState: res.data.authUserState,
+                })
+                
+              ) {
+                history.push("/feed");
+              } else {
+              }
+            }
+          })
+          .catch((err) => {
+            setError(true);
+          });}
   return (
     <div className="w-screen h-screen  overflow-hidden  bg-white">
       {/* Header */}
