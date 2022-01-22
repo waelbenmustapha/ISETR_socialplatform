@@ -1,10 +1,11 @@
 import { con } from "../config/database.js";
+import { createMessage, getUserLatestMessagesRoom } from "./messages_controller.js";
 
 const connectedUsers = [];
 
 
 // create chat room
-export const createRoom = async (name, type) => {
+export const createRoom = async (name, type, user_one_id, user_two_id) => {
 
     const newroom = { name }
     if (type === 'group') {
@@ -14,10 +15,28 @@ export const createRoom = async (name, type) => {
     // create room
 
     try {
-
+        // create room
         const newRoomID = await con
             .insert(newroom)
             .into("rooms");
+
+        // create room-user
+        const room_user_one = {
+            room_id: newRoomID[0],
+            user_id: user_one_id,
+        }
+        const room_user_two = {
+            room_id: newRoomID[0],
+            user_id: user_two_id,
+        }
+        await con
+            .insert(room_user_one)
+            .into("room-user");
+        await con
+            .insert(room_user_two)
+            .into("room-user");
+
+
         return newRoomID[0];
     } catch (error) {
         console.log(error);
@@ -65,22 +84,32 @@ export const getLatestUserRooms = async (req, res) => {
 
         });
 
+
+
+
+
 }
+
+
 
 
 // get room messages
 export const getRoomMessages = async (room_id) => {
 
-    await con
-        .select("*")
-        .from("messages")
-        .where("room_id", room_id)
-        .then((data) => {
-            return data;
-        }
-        ).catch((err) => {
-            return err;
-        });
+    try {
+
+        const room_messages = await con
+            .select("*")
+            .from("messages")
+            .where("room_id", room_id);
+        return { room_messages };
+
+    } catch (error) {
+
+        return {
+            error
+        };
+    }
 
 }
 
@@ -112,7 +141,7 @@ export const saveMessage = async (payload) => {
 }
 
 // check users have common room
-const checkCommonRoom = async (sender_id, receiver_id) => {
+export const checkCommonRoom = async (sender_id, receiver_id) => {
     // check sender and receiver have same room
     const sender_rooms = await con
         .select('room_id')
@@ -123,9 +152,16 @@ const checkCommonRoom = async (sender_id, receiver_id) => {
         .from('room-user')
         .where('user_id', receiver_id);
 
-    // check if sender and receiver have same room
-    const common_room = sender_rooms.filter(room => receiver_rooms.includes(room));
+    console.table(sender_rooms);
+    console.table(receiver_rooms);
 
+    // check if sender and receiver have common room id
+    const common_room = sender_rooms.filter(room => {
+        return receiver_rooms.some(r => r.room_id === room.room_id);
+    });
+    // const common_room = sender_rooms.filter(room => receiver_rooms.includes(room));
+
+    console.log('common_room ==>', common_room);
     return common_room;
 
 }
@@ -186,8 +222,9 @@ export const checkCommonRoomApi = async (req, res) => {
     const { sender_id, receiver_id } = req.body;
     const common_room = await checkCommonRoom(sender_id, receiver_id);
     if (common_room.length > 0) {
+        console.log('common_room id ==>', common_room[0].room_id);
         return res.status(200).json({
-            data: common_room[0],
+            room: common_room[0].room_id,
             message: "Common room found"
         });
     } else {
@@ -203,7 +240,13 @@ export const checkCommonRoomAndMessagesApi = async (req, res) => {
     if (common_room.length > 0) {
         const room_id = common_room[0].room_id;
         const messages = await getRoomMessages(room_id);
-
+        console.log('messages ==>', messages);
+        // error handling
+        if (messages.error) {
+            return res.status(400).json({
+                error: messages.error
+            });
+        }
         return res.status(200).json({
             data: messages,
             message: "Common room found"
@@ -248,8 +291,21 @@ export const getReceiverRoomId = (req, res) => {
     });
 }
 
+export const getUserLatestModifiedRoomApi = (req, res) => {
+    const { id } = req.params;
 
+    getUserLatestMessagesRoom(id).then(data => {
+        return res.status(200).json({
+            data
+        });
+    }).catch(err => {
+        return res.status(400).json(
+            {
+                error: err
+            })
+    });
 
+}
 
 
 
@@ -310,12 +366,17 @@ export const chatsocket = (socket) => {
             // receiver is connected
             // send message to receiver
             socket.to(receiverData.socket_id).emit('receive-message', payload);
+            // get Room id and save message
+            const common_room = checkCommonRoom(payload.sender_id, payload.receiver_id);
+
+            createMessage(payload)
             // save message to database
-            saveMessage(payload);
+            // saveMessage(payload);
         } else {
             // receiver is not connected
             // save message to database
-            saveMessage(payload);
+            // saveMessage(payload);
+            createMessage(payload);
         }
 
 

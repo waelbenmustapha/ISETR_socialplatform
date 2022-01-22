@@ -12,8 +12,64 @@ import { sendMessage } from "../../../state/actions/chat_room_actions";
 
 /* props{
   socket
- } 
+} 
 */
+
+const chatItms = [
+  {
+    key: 1,
+    image:
+      "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
+    type: "",
+    msg: "Hi Tim, How are you?",
+  },
+  {
+    key: 2,
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
+    type: "other",
+    msg: "I am fine.",
+  },
+  {
+    key: 3,
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
+    type: "other",
+    msg: "What about you?",
+  },
+  {
+    key: 4,
+    image:
+      "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
+    type: "",
+    msg: "Awesome these days.",
+  },
+  {
+    key: 5,
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
+    type: "other",
+    msg: "Finally. What's the plan?",
+  },
+  {
+    key: 6,
+    image:
+      "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
+    type: "",
+    msg: "what plan mate?",
+  },
+  {
+    key: 7,
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
+    type: "other",
+    msg: "I'm taliking about the tutorial",
+  },
+
+
+];
+
+
 export default function ChatContent({ socket }) {
   const auth = useAuthUser();
   const chatRoom = useSelector((state) => state.chatRoomReducer);
@@ -28,61 +84,7 @@ export default function ChatContent({ socket }) {
 
 
   const messagesEndRef = createRef(null);
-  // const chatItms = [
-  //   {
-  //     key: 1,
-  //     image:
-  //       "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-  //     type: "",
-  //     msg: "Hi Tim, How are you?",
-  //   },
-  //   {
-  //     key: 2,
-  //     image:
-  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
-  //     type: "other",
-  //     msg: "I am fine.",
-  //   },
-  //   {
-  //     key: 3,
-  //     image:
-  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
-  //     type: "other",
-  //     msg: "What about you?",
-  //   },
-  //   {
-  //     key: 4,
-  //     image:
-  //       "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-  //     type: "",
-  //     msg: "Awesome these days.",
-  //   },
-  //   {
-  //     key: 5,
-  //     image:
-  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
-  //     type: "other",
-  //     msg: "Finally. What's the plan?",
-  //   },
-  //   {
-  //     key: 6,
-  //     image:
-  //       "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-  //     type: "",
-  //     msg: "what plan mate?",
-  //   },
-  //   {
-  //     key: 7,
-  //     image:
-  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
-  //     type: "other",
-  //     msg: "I'm taliking about the tutorial",
-  //   },
 
-
-  // ];
-
-  // todo
   /**
    * 1- check room exist or not
    * 2- if exist get room messages
@@ -93,7 +95,7 @@ export default function ChatContent({ socket }) {
    *  
    */
 
-  const getRoomMessages = async () => {
+  const getCommonRoomMessages = async () => {
     setIsLoading(true);
     await axios.post(`http://localhost:5500/api/room/check-common-room-messages`,
       {
@@ -102,11 +104,17 @@ export default function ChatContent({ socket }) {
       }
     )
       .then(res => {
+
         console.log(res.data);
-        setRoomMessages(res.data);
-      }).catch(err => setRoomMessages([]))
+        setRoomMessages(res.data.data.room_messages);
+      }).catch(err => {
+        // first chat
+        setRoomMessages([])
+      })
       .finally(() => setIsLoading(false))
   }
+
+
 
 
   const scrollToBottom = () => {
@@ -138,17 +146,16 @@ export default function ChatContent({ socket }) {
   useEffect(() => {
     if (chatRoom !== null) {
       // fetch for room with same peer user
-      getRoomMessages()
-      // socket.on('receive-message', data => {
-      //   console.log(data);
-      // })
+      getCommonRoomMessages()
+      scrollToBottom();
+
 
     }
     // componentDidMount()
     // // test
     socket.on("receive-message", data => {
       console.log(data);
-      setRoomMessages([...roomMessages, data]);
+      setRoomMessages(old_msgs => [...old_msgs, data]);
     }
     )
 
@@ -187,8 +194,13 @@ export default function ChatContent({ socket }) {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (message !== "") {
-      // update room messages
-      setRoomMessages([...roomMessages, message]);
+      // update room messages 
+      const newMessage = {
+        "sender_id": auth().id,
+        "text": message,
+        // "receiver_id": chatRoom.user.id,
+      }
+      setRoomMessages([...roomMessages, newMessage]);
 
       // check receiver connect or not
       await axios.get(`http://localhost:5500/api/room/get-receiver-room-id/${chatRoom.user.id}`)
@@ -204,6 +216,8 @@ export default function ChatContent({ socket }) {
           console.log('save message to db');
           await axios.post(`http://localhost:5500/api/msg/add`, {
             sender_id: auth().id,
+            receiver_id: chatRoom.user.id,
+            text: message
           })
 
         })
@@ -243,9 +257,9 @@ export default function ChatContent({ socket }) {
 
     // getRoomMessages();
     // console.log(chatRoom)
-    return <h1>no chat</h1>
+    return <h1>no chat :: First message</h1>
   }
-  console.log(chatRoom)
+  console.log(roomMessages)
 
 
   return (
@@ -271,6 +285,20 @@ export default function ChatContent({ socket }) {
       </div>
       <div className="content__body">
         <div className="chat__items">
+
+
+          {
+            roomMessages.map((msg, index) => {
+              return (<ChatItem key={index}
+                msg={msg.text}
+                // image={msg.sender_id === auth().id ? auth().image : chatRoom.user.image}
+                image={chatItms[0].image}
+                animationDelay={index + 2}
+                user={msg.sender_id === auth().id ? "me" : "other"}
+              />)
+
+            })
+          }
           {/* {chatItms.map((itm, index) => {
             return (
               <ChatItem
@@ -294,7 +322,7 @@ export default function ChatContent({ socket }) {
             type="text"
             placeholder="Type a message here"
             onChange={e => setMessage(e.target.value)}
-          // value={state.msg}
+            value={message}
           />
           <button className="btnSendMsg" id="sendMsgBtn"
             onClick={handleSendMessage}

@@ -2,14 +2,82 @@ import dotEnv from "dotenv";
 
 dotEnv.config();
 import { con } from "../config/database.js";
-import { createRoom, saveMessage } from "./room_controller.js";
+import { checkCommonRoom, createRoom, saveMessage } from "./room_controller.js";
 
 
 
 
 
+export const createMessage = async (payload) => {
+  const { text, file, sender_id, receiver_id, room_id } = payload;
 
+  if (room_id === undefined || room_id === null) {
 
+    // check common room exist or not
+    const common_room = await checkCommonRoom(sender_id, receiver_id);
+    console.log('common_room', common_room);
+    if (common_room.length > 0) {
+      // commpon room exist
+      const founded_room_id = common_room[0].room_id;
+      const payload = { text, sender_id: parseInt(sender_id), room_id: founded_room_id };
+
+      saveMessage(payload)
+        .then(res => {
+          return {
+            status: "success",
+            data: res
+          };
+
+        })
+        .catch(err => {
+          return {
+            error: err
+          };
+        });
+    } else {
+      {
+        // common room not exist
+        // create room
+        createRoom(null, null, sender_id, receiver_id)
+          .then(data => {
+            // create room-user
+
+            // save message
+            console.log('room _id', data);
+            const payload = { text, sender_id: parseInt(sender_id), room_id: data };
+            saveMessage(payload)
+              .then(res => {
+                return {
+                  status: "success",
+                  data: data,
+                }
+              }).catch(err => {
+                return {
+                  error: err
+                };
+              });
+
+          })
+
+      }
+    }
+  } else {
+    const newMessage = { text, file, sender_id: parseInt(sender_id), room_id };
+
+    saveMessage(newMessage)
+      .then(res => {
+        return {
+          status: "success",
+          data: data,
+        }
+      }).catch(err => {
+        return {
+          error: err
+        };
+      });
+  }
+
+}
 
 
 export const getMessages = async (req, res) => {
@@ -33,6 +101,38 @@ export const getMessages = async (req, res) => {
 
 };
 
+
+export const getUserLatestMessagesRoom = async (user_id) => {
+
+  const messagesTable = 'messages';
+  const roomUserTable = 'room-user';
+
+  try {
+
+    const rooms = await con.queryBuilder(
+      ``` select DISTINCT  ms.room_id, ms.created_at from messages ms
+  inner join  ``room-user`` rs
+  on ms.room_id = rs.room_id and rs.user_id = 1 
+  group by ms.created_at, ms.room_id
+  order by ms.created_at DESC 
+ ```
+    );
+
+    console.log(rooms);
+
+    return { rooms };
+
+
+
+
+  } catch (error) {
+    console.log(error);
+    return {
+      error
+    }
+  }
+
+}
 
 export const getCommentsWithLimits = async (req, res) => {
   const { page } = req.query;
@@ -67,35 +167,64 @@ export const getComment = async (req, res) => {
 };
 
 export const addMessage = async (req, res) => {
-  const { text, file, sender_id, room_id } = req.body;
+  const { text, file, sender_id, receiver_id, room_id } = req.body;
 
   if (room_id === undefined || room_id === null) {
-    // create room
-    createRoom(null, null)
-      .then(data => {
-        // save message
-        console.log('room _id', data);
-        const payload = { text, sender_id: parseInt(sender_id), room_id: data };
-        saveMessage(payload)
-          .then(data => {
-            return res.status(200).json({
-              status: "success",
-              data: data,
-            });
-          })
-          .catch(err => {
-            return res.status(400).json({
-              error: err,
-            });
-          }
-          )
-      }
-      ).catch(err => {
-        return res.status(400).json({
-          error: err,
+
+    // check common room exist or not
+    const common_room = await checkCommonRoom(sender_id, receiver_id);
+    console.log('common_room', common_room);
+    if (common_room.length > 0) {
+      const room_id = common_room[0].room_id;
+
+      const payload = { text, sender_id: parseInt(sender_id), room_id: room_id };
+      saveMessage(payload)
+        .then(data => {
+          return res.status(200).json({
+            status: "success",
+            data: data,
+          });
+        })
+        .catch(err => {
+          return res.status(400).json({
+            error: err,
+          });
+        }
+        )
+
+    } else {
+
+
+      // create room
+      createRoom(null, null, sender_id, receiver_id)
+        .then(data => {
+
+          // create room-user
+
+          // save message
+          console.log('room _id', data);
+          const payload = { text, sender_id: parseInt(sender_id), room_id: data };
+          saveMessage(payload)
+            .then(data => {
+              return res.status(200).json({
+                status: "success",
+                data: data,
+              });
+            })
+            .catch(err => {
+              return res.status(400).json({
+                error: err,
+              });
+            }
+            )
+
+        }
+        ).catch(err => {
+          return res.status(400).json({
+            error: err,
+          });
         });
-      })
-      ;
+    }
 
   } else {
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { checkCommonRoomAndMessagesApi, checkCommonRoomApi, createRoom, getAllRoomsApi, getLatestUserRooms, getReceiverRoomId, getRoomApi, getRoomMessagesApi } from "../controllers/room_controller.js";
+import { checkCommonRoomAndMessagesApi, checkCommonRoomApi, createRoom, getAllRoomsApi, getLatestUserRooms, getReceiverRoomId, getRoomApi, getRoomMessagesApi, getUserLatestModifiedRoomApi } from "../controllers/room_controller.js";
 import {
   deleteUser,
   getUser,
@@ -24,6 +24,7 @@ router.get("/", getAllRoomsApi);
 router.get("/:id", getRoomApi);
 router.get("/room-messages/:id", getRoomMessagesApi);
 router.get("/get-receiver-room-id/:id", getReceiverRoomId);
+router.get("/get-user-latest-room/:id", getUserLatestModifiedRoomApi);
 
 
 
