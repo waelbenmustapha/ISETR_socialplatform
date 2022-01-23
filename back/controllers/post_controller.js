@@ -80,6 +80,40 @@ export const getPostsWithLimits = async (req, res) => {
 
 };
 
+
+export const getMyFeedPostsWithLimits = async (req, res) => {
+  const { user_id } = req.params;
+  const { page } = req.query;
+
+  try {
+    // get followers and my posts
+
+    const posts = await con
+      .raw(`SELECT po.* from followers as fl
+      LEFT JOIN posts po
+      
+      on fl.user_id = ?
+      WHERE fl.follower_id = po.user_id or po.user_id = ?
+      
+      order BY po.date DESC
+      
+      LIMIT ?, 5
+      ;`, [user_id, user_id, page * 5])
+
+    return res.status(200).json({
+      success: true,
+      data: posts[0]
+    });
+
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      error: error,
+    })
+  }
+
+};
+
 export const getPost = async (req, res) => {
   const { id } = req.params;
   await con
