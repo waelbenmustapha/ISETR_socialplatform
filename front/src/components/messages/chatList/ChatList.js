@@ -105,6 +105,21 @@ export default function ChatList() {
 
   useEffect(() => {
 
+    const getLatestUserRooms = async () => {
+      setIsLoading(true);
+      await axios.get(`http://localhost:5500/api/room/get-user-latest-room/${userid}?offset=0`)
+        .then(res => {
+          console.log(res.data)
+          if (res.data.success) {
+            setRooms(res.data.latest_rooms)
+          }
+        }).catch(err => {
+          alert(err)
+        }).finally(() => setIsLoading(false))
+    }
+
+    getLatestUserRooms();
+
     getUserRooms();
 
   }, []);
@@ -204,18 +219,21 @@ export default function ChatList() {
 
       </div>
       <div className="chatlist__items">
-        {/* {allChatUsers.map((item, index) => {
-          return (
-            <ChatListItems
-              name={item.name}
-              key={item.id}
-              animationDelay={index + 1}
-              active={item.active ? "active" : ""}
-              isOnline={item.isOnline ? "active" : ""}
-              image={item.image}
-            />
-          );
-        })} */}
+        {
+          console.log('rooms', rooms),
+          rooms.map((room, index) => {
+            return (
+              <ChatListItems
+                name={allChatUsers[0].name}
+                key={allChatUsers[0].id}
+                animationDelay={index + 1}
+                active={allChatUsers[0].active ? "active" : ""}
+                isOnline={allChatUsers[0].isOnline ? "active" : ""}
+                image={allChatUsers[0].image}
+              />
+            );
+          })
+        }
       </div>
     </div>
   )

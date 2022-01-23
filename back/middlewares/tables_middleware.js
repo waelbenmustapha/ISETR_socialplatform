@@ -35,7 +35,7 @@ export const checkRoomTable = async (req, res, next) => {
             table.increments("id").primary();
             table.string("name");
             table.string('type').defaultTo("one-to-one");
-
+            table.date("created_at").defaultTo(con.fn.now());
 
         });
         next();

@@ -73,9 +73,11 @@ export const getMyFollowers = async (user_id) => {
             user_id: user_id,
         });
 
+        const followers = await con.select("*").from("users").whereIn("id", myFollowers.map(f => f.follower_id));
+
         return {
             success: true,
-            data: myFollowers
+            data: followers
         };
     } catch (error) {
         console.log(error);
@@ -93,9 +95,11 @@ export const getUsersIFollow = async (user_id) => {
             follower_id: user_id,
         });
 
+        const followers = await con.select("*").from("users").whereIn("id", myFollowers.map(f => f.user_id));
+
         return {
             success: true,
-            data: myFollowers
+            data: followers
         };
     } catch (error) {
         console.log(error);

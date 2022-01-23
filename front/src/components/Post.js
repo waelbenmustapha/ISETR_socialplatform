@@ -11,13 +11,47 @@ import {
 import ConvertMinutes from "../utils/Converminutes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react/cjs/react.development";
 import Comment_Item from "./Comment_Item";
+import axios from "axios";
+import { useAuthHeader } from "react-auth-kit";
 
 function Post(props) {
   const [showcomments, setshowcomments] = useState(false);
+  const [userLoading, setUserLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState(null);
+  const authHeader = useAuthHeader();
 
- 
+  const getPostUserInfo = async () => {
+    console.log(props.post)
+    const user_id = props.post.user_id;
+
+    await axios.get(`http://localhost:5500/api/user/${user_id}`, {
+      headers: {
+        authorization: authHeader().substring(7),
+      },
+    })
+      .then((res) => {
+        setUserInfo(res.data);
+
+      }).catch((err) => {
+        alert(err);
+      }).finally(() => {
+        setUserLoading(false);
+      });
+  }
+
+  useEffect(() => {
+    getPostUserInfo();
+
+  }, [])
+
+  if (userLoading) {
+    return <div></div>
+  }
+
+
+
   return (
     <div>
       <div
@@ -35,8 +69,9 @@ function Post(props) {
             alignContent: "center",
           }}
         >
+
           <img
-            src={props.post.User.img}
+            src={userInfo.avatar}
             style={{ height: "50px", width: "50px", borderRadius: "50%" }}
           />
           <div
@@ -55,7 +90,7 @@ function Post(props) {
                 margin: "0px",
               }}
             >
-              {props.post.User.name}
+              {userInfo.name}
             </p>
             <p
               style={{
@@ -66,7 +101,7 @@ function Post(props) {
                 margin: "0px",
               }}
             >
-              {props.post.User.current}
+              {/* {props.post.User.current} */}
             </p>
             <p
               style={{
@@ -77,7 +112,7 @@ function Post(props) {
                 margin: "0px",
               }}
             >
-              {ConvertMinutes(props.post.timeago)} ago
+              {/* {ConvertMinutes(props.post.timeago)} ago */}
             </p>
           </div>
           <FontAwesomeIcon
@@ -95,11 +130,14 @@ function Post(props) {
             justifyContent: "space-between",
           }}
         >
-          <p>{props.post.description}</p>
-          <img
-            src={props.post.img}
-            style={{ maxHeight: "400px", maxWidth: "400px",margin:'0 auto' }}
-          />
+          <p>{props.post.text}</p>
+          {
+            props.post.image &&
+            <img
+              src={props.post.img}
+              style={{ maxHeight: "400px", maxWidth: "400px", margin: '0 auto' }}
+            />
+          }
           <div style={{ flexDirection: "row", display: "flex" }}>
             <p style={{ fontSize: "14px", fontWeight: "500" }}>
               {props.post.likes} Like
@@ -113,7 +151,7 @@ function Post(props) {
                 marginRight: "10px",
               }}
             >
-              {props.post.comments.length} Comments
+              {/* {props.post.comments.length} Comments */}
             </p>
             <p style={{ fontSize: "14px", fontWeight: "500" }}>
               {props.post.shares} Share
@@ -153,7 +191,7 @@ function Post(props) {
             </p>
           </div>
           <span className="hr"></span>
-          {showcomments ? props.post.comments.map((comm)=><Comment_Item comment={comm}/>) : null}
+          {showcomments ? props.post.comments.map((comm) => <Comment_Item comment={comm} />) : null}
           <div
             style={{
               display: "flex",
@@ -187,7 +225,7 @@ function Post(props) {
                   border: "0px",
                   width: "100%",
                   height: "90%",
-                  padding:'10px',
+                  padding: '10px',
                   backgroundColor: "#eee",
                   borderRadius: "10px",
                 }}
@@ -210,7 +248,7 @@ function Post(props) {
               />
             </div>
             <FontAwesomeIcon
-            size="2x"
+              size="2x"
               icon={faPaperPlane}
               style={{ alignSelf: "center", paddingLeft: "10px" }}
               className="hover"

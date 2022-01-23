@@ -37,8 +37,8 @@ export const getUser = async (req, res) => {
     .select("*")
     .from("users")
     .where("id", id)
-    .then((book) => {
-      res.json(book);
+    .then((users) => {
+      res.json(users[0]);
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };

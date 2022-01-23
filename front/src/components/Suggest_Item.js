@@ -1,6 +1,12 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useAuthHeader } from "react-auth-kit";
 
-function Suggest_Item() {
+function Suggest_Item({ user, tabIndex }) {
+  console.log(tabIndex);
+
+
+
   return (
     <div class=" w-60 h-40 bg-white  p-3 grid  grid-cols-3 grid-rows-3 gap-3 max-w-xs overflow-hidden rounded-lg shadow-lg">
       <div className=" col-span-1 row-span-2">
@@ -15,7 +21,7 @@ function Suggest_Item() {
           <p>
             <b>
               <a href="#" className="text-gray-600">
-                @Randovan Skiaal
+                @{user.name}
               </a>
             </b>
           </p>
@@ -26,14 +32,33 @@ function Suggest_Item() {
           </p>
         </div>
       </div>
-      <div className=" flex justify-around items-center gap-3 col-span-3 row-span-2">
-        <button class="w-full h-11 px-6 text-gray-500 border-2 transition-colors duration-150  rounded-lg focus:shadow-outline hover:bg-blue-600 hover:text-white">
-          Ignore
-        </button>
-        <button class="w-full h-11 px-6 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800">
-          Follow
-        </button>
-      </div>
+
+      {
+
+        tabIndex === 0 ? (<></>) :
+          tabIndex === 1 ?
+            <div className=" flex justify-around items-center gap-3 col-span-3 row-span-2">
+
+              <button class="w-full h-11 px-6 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800">
+                unfollow
+              </button>
+
+
+            </div>
+            : <div className=" flex justify-around items-center gap-3 col-span-3 row-span-2">
+
+
+              <button class="w-full h-11 px-6 text-gray-500 border-2 transition-colors duration-150  rounded-lg focus:shadow-outline hover:bg-blue-600 hover:text-white">
+                Ignore
+              </button>
+              <button class="w-full h-11 px-6 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800">
+                Follow
+              </button>
+
+            </div>
+
+      }
+
     </div>
   );
 }

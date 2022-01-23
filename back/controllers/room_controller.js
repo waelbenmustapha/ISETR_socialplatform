@@ -130,6 +130,13 @@ export const saveMessage = async (payload) => {
         const newMessageResp = await con
             .insert(newMessage)
             .into("messages")
+        // update room created_at date for latest user rooms
+        const room_user = await con
+            .update({
+                created_at: con.fn.now()
+            }).from("rooms")
+            .where("id", room_id);
+
         console.log(newMessageResp);
         return newMessageResp;
 
@@ -175,6 +182,40 @@ export const getUserRoomID = (receiver_id) => {
     }
     return null;
 
+}
+
+// get Latest user rooms
+export const latestUserRooms = async (user_id, offset) => {
+
+    try {
+        const user_rooms = await con
+            .select('room_id')
+            .from('room-user')
+            .where('user_id', user_id)
+
+        console.log(user_rooms);
+
+        const latest_rooms = await con
+            .select('*')
+            .from('rooms')
+            .whereIn('id', user_rooms.map(room => room.room_id))
+            .orderBy('created_at', 'desc')
+            .limit(10)
+            .offset(offset);
+
+        return {
+            success: true,
+            latest_rooms
+        };
+
+
+
+    } catch (error) {
+        return {
+            success: false,
+            error
+        };
+    }
 }
 
 
@@ -291,13 +332,11 @@ export const getReceiverRoomId = (req, res) => {
     });
 }
 
-export const getUserLatestModifiedRoomApi = (req, res) => {
+export const getUserLatestModifiedRoomApi = async (req, res) => {
     const { id } = req.params;
-
-    getUserLatestMessagesRoom(id).then(data => {
-        return res.status(200).json({
-            data
-        });
+    const { offset } = req.query;
+    await latestUserRooms(id, offset).then(data => {
+        return res.status(200).json(data);
     }).catch(err => {
         return res.status(400).json(
             {
