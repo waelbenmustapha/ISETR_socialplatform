@@ -3,6 +3,7 @@ import cors from "cors";
 
 import { db_conn } from "./config/database.js";
 import userRoutes from "./routes/user_routes.js";
+import resumeRoutes from"./routes/resume_routes.js";
 import { verifyToken } from "./middlewares/user_middleware.js";
 
 const PORT = process.env.PORT || 5500;
@@ -23,6 +24,8 @@ app.use(
 );
 
 app.use("/api/user", userRoutes);
+app.use("/api/resume", resumeRoutes);
+
 
 db_conn.connect(function (err) {
   if (err) throw err;

@@ -112,6 +112,7 @@ export const loginUser = async (req, res) => {
       // create jwt token
       const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET, {
         expiresIn: "2",
+        algorithm:'HS256'
       });
 
       const authUserState = {
@@ -125,7 +126,7 @@ export const loginUser = async (req, res) => {
         .json({ authUserState, token: token, expiresIn: "2" });
     })
     .catch((err) =>
-      res.status(200).json({
+      res.status(400).json({
         message: err,
       })
     );
