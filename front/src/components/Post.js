@@ -10,13 +10,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ConvertMinutes from "../utils/Converminutes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {useAuthUser} from 'react-auth-kit'
+
 import React from "react";
 import { useState } from "react/cjs/react.development";
 import Comment_Item from "./Comment_Item";
-
+import '../styles/Post.css';
 function Post(props) {
-  const [showcomments, setshowcomments] = useState(false);
+  const auth = useAuthUser()
 
+  const [showcomments, setshowcomments] = useState(false);
+const [showsettings,setshowsettings]=useState(false);
  
   return (
     <div>
@@ -80,13 +84,25 @@ function Post(props) {
               {ConvertMinutes(props.post.timeago)} ago
             </p>
           </div>
+          {props.post.User.id === 0 && 
+          <div   style={{ marginLeft: "auto", padding: "5px",position:'relative' }}
+          >
           <FontAwesomeIcon
-            icon={faEllipsisH}
+          className="hover"
+          icon={faEllipsisH}
+            onClick={()=>{setshowsettings(!showsettings)}}
             size="2x"
-            style={{ marginLeft: "auto", padding: "5px" }}
-            className="hover"
           />
+         {showsettings && <div className="postSettingsBox">
+           
+         <div className="hover">Delete Post</div>
+         <div className="hover">Hide Post</div>
+           
+           </div>}
+          </div>
+          }
         </div>
+        
         <div
           style={{
             display: "flex",
@@ -164,7 +180,7 @@ function Post(props) {
             }}
           >
             <img
-              src="https://www.bootdey.com/img/Content/avatar/avatar6.png"
+              src={auth().img}
               style={{
                 height: "40px",
                 width: "40px",
@@ -198,11 +214,7 @@ function Post(props) {
                 style={{ alignSelf: "center", marginRight: "8px" }}
                 icon={faFileImage}
               />
-              <FontAwesomeIcon
-                className="hover"
-                style={{ alignSelf: "center", marginRight: "8px" }}
-                icon={faFileVideo}
-              />
+           
               <FontAwesomeIcon
                 className="hover"
                 style={{ alignSelf: "center", marginRight: "8px" }}

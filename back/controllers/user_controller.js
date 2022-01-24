@@ -118,6 +118,7 @@ export const loginUser = async (req, res) => {
       const authUserState = {
         name: user[0].name,
         email: user[0].email,
+        img : user[0].img,
         token,
       };
       return res
