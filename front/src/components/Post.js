@@ -10,6 +10,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ConvertMinutes from "../utils/Converminutes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {useAuthUser} from 'react-auth-kit'
+
 import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
 import Comment_Item from "./Comment_Item";
@@ -53,6 +55,13 @@ function Post(props) {
 
 
 
+import '../styles/Post.css';
+function Post(props) {
+  const auth = useAuthUser()
+
+  const [showcomments, setshowcomments] = useState(false);
+const [showsettings,setshowsettings]=useState(false);
+ 
   return (
     <div>
       <div
@@ -116,13 +125,25 @@ function Post(props) {
               {/* {ConvertMinutes(props.post.timeago)} ago */}
             </p>
           </div>
+          {props.post.User.id === 0 && 
+          <div   style={{ marginLeft: "auto", padding: "5px",position:'relative' }}
+          >
           <FontAwesomeIcon
-            icon={faEllipsisH}
+          className="hover"
+          icon={faEllipsisH}
+            onClick={()=>{setshowsettings(!showsettings)}}
             size="2x"
-            style={{ marginLeft: "auto", padding: "5px" }}
-            className="hover"
           />
+         {showsettings && <div className="postSettingsBox">
+           
+         <div className="hover">Delete Post</div>
+         <div className="hover">Hide Post</div>
+           
+           </div>}
+          </div>
+          }
         </div>
+        
         <div
           style={{
             display: "flex",
@@ -237,11 +258,7 @@ function Post(props) {
                 style={{ alignSelf: "center", marginRight: "8px" }}
                 icon={faFileImage}
               />
-              <FontAwesomeIcon
-                className="hover"
-                style={{ alignSelf: "center", marginRight: "8px" }}
-                icon={faFileVideo}
-              />
+           
               <FontAwesomeIcon
                 className="hover"
                 style={{ alignSelf: "center", marginRight: "8px" }}
