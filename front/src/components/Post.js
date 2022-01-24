@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ConvertMinutes from "../utils/Converminutes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {useAuthUser} from 'react-auth-kit'
+import '../styles/Post.css';
 
 import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
@@ -19,30 +19,12 @@ import axios from "axios";
 import { useAuthHeader, useAuthUser } from "react-auth-kit";
 
 function Post(props) {
+ 
   const [showcomments, setshowcomments] = useState(false);
   const [userLoading, setUserLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(null);
   const authHeader = useAuthHeader();
   const auth = useAuthUser();
-
-  const getPostUserInfo = async () => {
-    console.log(props.post)
-    const user_id = props.post.user_id;
-
-    await axios.get(`http://localhost:5500/api/user/${user_id}`, {
-      headers: {
-        authorization: authHeader().substring(7),
-      },
-    })
-      .then((res) => {
-        setUserInfo(res.data);
-
-      }).catch((err) => {
-        alert(err);
-      }).finally(() => {
-        setUserLoading(false);
-      });
-  }
 
   useEffect(() => {
     getPostUserInfo();
@@ -55,13 +37,26 @@ function Post(props) {
 
 
 
-import '../styles/Post.css';
-function Post(props) {
-  const auth = useAuthUser()
 
-  const [showcomments, setshowcomments] = useState(false);
-const [showsettings,setshowsettings]=useState(false);
- 
+  const [showsettings,setshowsettings]=useState(false);
+const getPostUserInfo = async () => {
+  console.log(props.post)
+  const user_id = props.post.user_id;
+
+  await axios.get(`http://localhost:5500/api/user/${user_id}`, {
+    headers: {
+      authorization: authHeader().substring(7),
+    },
+  })
+    .then((res) => {
+      setUserInfo(res.data);
+
+    }).catch((err) => {
+      alert(err);
+    }).finally(() => {
+      setUserLoading(false);
+    });
+}
   return (
     <div>
       <div
