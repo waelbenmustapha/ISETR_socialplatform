@@ -13,20 +13,7 @@ const Profile = (props) => {
   return (
     <div className="profile-container_shadow">
       <div className="profile_name">
-      <h1>
-                                {" "}
 
-                                <Typical
-                                    loop={Infinity}
-                                    steps={
-                                        [
-                                            "Hello",
-                                            1000,
-                                            "Welcome to my profile",
-                                           1000
-                                        ]
-                                    } />
-                            </h1>
         
       </div>
 
