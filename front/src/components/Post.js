@@ -14,13 +14,14 @@ import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
 import Comment_Item from "./Comment_Item";
 import axios from "axios";
-import { useAuthHeader } from "react-auth-kit";
+import { useAuthHeader, useAuthUser } from "react-auth-kit";
 
 function Post(props) {
   const [showcomments, setshowcomments] = useState(false);
   const [userLoading, setUserLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(null);
   const authHeader = useAuthHeader();
+  const auth = useAuthUser();
 
   const getPostUserInfo = async () => {
     console.log(props.post)
@@ -202,7 +203,7 @@ function Post(props) {
             }}
           >
             <img
-              src="https://www.bootdey.com/img/Content/avatar/avatar6.png"
+              src={auth().avatar}
               style={{
                 height: "40px",
                 width: "40px",

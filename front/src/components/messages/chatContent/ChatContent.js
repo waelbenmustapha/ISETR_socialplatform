@@ -257,7 +257,7 @@ export default function ChatContent({ socket }) {
 
     // getRoomMessages();
     // console.log(chatRoom)
-    return <h1>no chat :: First message</h1>
+    return <h1>Select Chat</h1>
   }
   console.log(roomMessages)
 
@@ -269,7 +269,7 @@ export default function ChatContent({ socket }) {
           <div className="current-chatting-user">
             <Avatar
               isOnline="active"
-              image="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU"
+              image={chatRoom.user.avatar.length > 0 ? chatRoom.user.avatar : "https://i.imgur.com/7yUvePI.png"}
             />
             <p>{chatRoom.user.name} </p>
           </div>
@@ -292,7 +292,10 @@ export default function ChatContent({ socket }) {
               return (<ChatItem key={index}
                 msg={msg.text}
                 // image={msg.sender_id === auth().id ? auth().image : chatRoom.user.image}
-                image={chatItms[0].image}
+                image={msg.sender_id === auth().id ? auth().avatar :
+                  chatRoom.user.avatar.length > 0 ?
+                    chatRoom.user.avatar : "https://i.imgur.com/7yUvePI.png"
+                }
                 animationDelay={index + 2}
                 user={msg.sender_id === auth().id ? "me" : "other"}
               />)

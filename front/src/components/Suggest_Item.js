@@ -1,10 +1,24 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useAuthHeader } from "react-auth-kit";
+import { useAuthUser } from "react-auth-kit";
 
 function Suggest_Item({ user, tabIndex }) {
   console.log(tabIndex);
+  const auth = useAuthUser();
 
+  const followUser = async (e, user_id) => {
+    e.preventDefault();
+    await axios.post(`http://localhost:5500/api/follow/send-request`, {
+      user_id: auth().id,
+      follower_id: user_id
+    })
+      .then((res) => {
+        console.log(res.data);
+      }).catch((err) => {
+        alert(err);
+      });
+
+  }
 
 
   return (
@@ -12,7 +26,7 @@ function Suggest_Item({ user, tabIndex }) {
       <div className=" col-span-1 row-span-2">
         <img
           class="inline object-cover w-14 h-14 rounded-full"
-          src="https://images.pexels.com/photos/2589653/pexels-photo-2589653.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+          src={user.avatar.length > 0 ? user.avatar : "https://i.imgur.com/7yUvePI.png"}
           alt="Profile image"
         />
       </div>
@@ -51,7 +65,9 @@ function Suggest_Item({ user, tabIndex }) {
               <button class="w-full h-11 px-6 text-gray-500 border-2 transition-colors duration-150  rounded-lg focus:shadow-outline hover:bg-blue-600 hover:text-white">
                 Ignore
               </button>
-              <button class="w-full h-11 px-6 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800">
+              <button class="w-full h-11 px-6 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800"
+                onClick={(e) => followUser(e, user.id)}
+              >
                 Follow
               </button>
 

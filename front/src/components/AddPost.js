@@ -58,7 +58,7 @@ function AddPost() {
           }}
         >
           <img
-            src="https://www.bootdey.com/img/Content/avatar/avatar6.png"
+            src={auth().avatar}
             style={{ height: "40px", width: "40px", borderRadius: "50%" }}
           />
           <input

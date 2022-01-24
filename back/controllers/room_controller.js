@@ -218,6 +218,33 @@ export const latestUserRooms = async (user_id, offset) => {
     }
 }
 
+// get rooms user
+export const getRoomUsers = async (room_id) => {
+    try {
+        const room_users = await con
+            .raw(`
+            SELECT * from  ` + '`room-user`' + `ru
+        RIGHT JOIN users us
+        on ru.room_id = ?
+        
+       WHERE  ru.user_id = us.id ;
+            `, [room_id]);
+
+        return {
+            success: true,
+            data: room_users[0]
+        };
+
+    } catch (error) {
+        return {
+            success: false,
+            error
+        };
+    }
+}
+
+
+
 
 // apis functions
 
@@ -343,6 +370,21 @@ export const getUserLatestModifiedRoomApi = async (req, res) => {
                 error: err
             })
     });
+
+}
+
+export const getRoomUsersInfoApi = async (req, res) => {
+    const { id } = req.params;
+
+    await getRoomUsers(parseInt(id)).then(data => {
+        return res.status(200).json(data);
+    }).catch(err => {
+        return res.status(400).json(
+            {
+                error: err
+            })
+    }
+    );
 
 }
 

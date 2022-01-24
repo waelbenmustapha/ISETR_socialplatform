@@ -134,7 +134,7 @@ function App() {
 
               <img
                 className="w-10 h-10 rounded-full"
-                src="https://images.pexels.com/photos/2589653/pexels-photo-2589653.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+                src={auth().avatar.length > 0 ? auth().avatar : "https://i.imgur.com/7yUvePI.png"}
                 alt="avatar"
               />
             </div>

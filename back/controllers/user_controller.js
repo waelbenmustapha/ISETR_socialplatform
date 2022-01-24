@@ -123,7 +123,7 @@ export const loginUser = async (req, res) => {
       };
       return res
         .status(200)
-        .json({ authUserState, token: token, expiresIn: "2" });
+        .json({ authUserState: user[0], token: token, expiresIn: "2" });
     })
     .catch((err) =>
       res.status(200).json({

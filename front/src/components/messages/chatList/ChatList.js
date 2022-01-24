@@ -120,7 +120,7 @@ export default function ChatList() {
 
     getLatestUserRooms();
 
-    getUserRooms();
+    // getUserRooms();
 
   }, []);
 
@@ -165,7 +165,6 @@ export default function ChatList() {
 
 
   const renderSuggestions = () => {
-    console.log(usersSuggestion);
 
     if (usersSuggestion.length === 0) {
       return null;
@@ -194,7 +193,7 @@ export default function ChatList() {
 
 
   return (
-    <div className="main__chatlist">
+    <div className="main__chatlist flex flex-col">
       <button className="btn bg-yellow-200">
         <i class="fa fa-plus" aria-hidden="true"></i>                    <span>New conversation</span>
       </button>
@@ -218,12 +217,16 @@ export default function ChatList() {
 
 
       </div>
-      <div className="chatlist__items">
+      <div className="chatlist__items"
+        style={{ marginTop: `${usersSuggestion.length * 70}px` }}
+      >
         {
           console.log('rooms', rooms),
           rooms.map((room, index) => {
+            console.log(room);
             return (
               <ChatListItems
+                room={room}
                 name={allChatUsers[0].name}
                 key={allChatUsers[0].id}
                 animationDelay={index + 1}

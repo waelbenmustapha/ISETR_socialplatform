@@ -11,8 +11,10 @@ export const usersYouMightKnow = async (user_id) => {
 
         // check if user have at least one follow
         const userFollower = await con.select("*").from("followers").where({
-            user_id: user_id,
+            user_id,
         });
+
+        console.table(userFollower);
         if (userFollower.length === 0) {
             // if user have no follow, return all users
             const users = await con.select("*").from("users")
@@ -25,24 +27,14 @@ export const usersYouMightKnow = async (user_id) => {
             };
 
         }
-        // user have followers =>  get all the users that he don't follow
-        // const users = await con
-        //     .select("us.*")
-        //     .from("followers fl")
-        //     .leftJoin("users us")
-        //     .on("fl.user_id", '=', user_id)
-        //     .whereNot({ "us.id": user_id })
-        //     .andWhereNot("fl.follower_id", "us.id")
-        //     ;
 
-        //     const users = await db_conn.query(`
-        //   ``  SELECT * from followers fl
-        //     LEFT JOIN users us
-        //     on ( ( fl.user_id = 1) )
+        console.table(userFollower);
+        const usersNonFollowing = await con
+            .select("*")
+            .from("users")
+            .whereNotIn("id", userFollower.map(follower => follower.follower_id))
+            .andWhereNot({ id: user_id })
 
-        //     where us.id != 1 and  us.id != fl.follower_id  
-        //     ;
-        //     ``     `);
 
         const users = await con.raw(`
         SELECT us.* from followers fl
@@ -55,7 +47,8 @@ export const usersYouMightKnow = async (user_id) => {
 
         return {
             success: true,
-            data: users[0] // users[0] is an array of objects
+            // data: users[0] // users[0] is an array of objects
+            data: usersNonFollowing
         };
     }
     catch (error) {
@@ -213,7 +206,7 @@ export const getUsersYouMightKnowApi = async (req, res) => {
     const { id } = req.params;
     usersYouMightKnow(parseInt(id))
         .then((followers) => {
-            console.log(followers);
+            // console.log(followers);
             return res.status(200).json(followers);
         }
         )
