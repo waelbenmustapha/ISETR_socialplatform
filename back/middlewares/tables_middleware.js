@@ -27,6 +27,8 @@ export const checkUsersTable = async (req, res, next) => {
 };
 
 
+
+
 export const checkRoomTable = async (req, res, next) => {
     const tableExists = await con.schema.hasTable("rooms");
     if (!tableExists) {
@@ -85,6 +87,41 @@ export const checkMessagesTable = async (req, res, next) => {
 
 };
 
+
+export const checkGroupTable = async (req, res, next) => {
+    const tableExists = await con.schema.hasTable("groups");
+    if (!tableExists) {
+        // create table
+        await con.schema.createTable("groups", (table) => {
+            table.increments("id").primary();
+            table.string("name").notNullable();
+            table.string("description").defaultTo("");
+            table.string("image").defaultTo("");
+            table.dateTime("created_at").defaultTo(con.fn.now());
+            table.integer("admin_id").notNullable().references("id").inTable("users");
+
+        });
+        next();
+    } else {
+        next();
+    }
+};
+
+export const checkGroupUserTable = async (req, res, next) => {
+    const tableExists = await con.schema.hasTable("group-user");
+    if (!tableExists) {
+        // create table
+        await con.schema.createTable("group-user", (table) => {
+            table.increments("id").primary();
+            table.integer("group_id").notNullable().references("id").inTable('groups');
+            table.integer("user_id").notNullable().references("id").inTable('users');
+
+        });
+        next();
+    } else {
+        next();
+    }
+};
 
 export const checkPostsTable = async (req, res, next) => {
     // check if table exists

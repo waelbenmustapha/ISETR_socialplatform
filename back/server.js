@@ -10,6 +10,7 @@ import postRoutes from "./routes/post_routes.js";
 import commentRoutes from "./routes/comment_routes.js";
 import roomRoutes from "./routes/room_routes.js";
 import msgRoutes from "./routes/messages_routes.js";
+import groupRoutes from "./routes/group_routes.js";
 import { verifyToken } from "./middlewares/token_middleware.js";
 import { chatsocket } from "./controllers/room_controller.js";
 
@@ -44,10 +45,11 @@ socket.on('connection', chatsocket);
 // apis
 app.use("/api/user", userRoutes);
 app.use("/api/follow", followerRoutes);
+app.use("/api/follow", followerRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/comment", commentRoutes);
 app.use("/api/room", roomRoutes);
-app.use("/api/msg", msgRoutes);
+app.use("/api/group", groupRoutes);
 
 db_conn.connect(function (err) {
   if (err) throw err;

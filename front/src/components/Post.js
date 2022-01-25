@@ -19,14 +19,35 @@ import axios from "axios";
 import { useAuthHeader, useAuthUser } from "react-auth-kit";
 
 function Post(props) {
- 
+
   const [showcomments, setshowcomments] = useState(false);
   const [userLoading, setUserLoading] = useState(true);
+  const [showsettings, setshowsettings] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const authHeader = useAuthHeader();
   const auth = useAuthUser();
 
   useEffect(() => {
+    const getPostUserInfo = async () => {
+      console.log(props.post)
+      const user_id = props.post.user_id;
+
+      await axios.get(`http://localhost:5500/api/user/${user_id}`, {
+        headers: {
+          authorization: authHeader().substring(7),
+        },
+      })
+        .then((res) => {
+          setUserInfo(res.data);
+
+        }).catch((err) => {
+          alert(err);
+        }).finally(() => {
+          setUserLoading(false);
+        });
+    }
+
+
     getPostUserInfo();
 
   }, [])
@@ -38,25 +59,7 @@ function Post(props) {
 
 
 
-  const [showsettings,setshowsettings]=useState(false);
-const getPostUserInfo = async () => {
-  console.log(props.post)
-  const user_id = props.post.user_id;
 
-  await axios.get(`http://localhost:5500/api/user/${user_id}`, {
-    headers: {
-      authorization: authHeader().substring(7),
-    },
-  })
-    .then((res) => {
-      setUserInfo(res.data);
-
-    }).catch((err) => {
-      alert(err);
-    }).finally(() => {
-      setUserLoading(false);
-    });
-}
   return (
     <div>
       <div
@@ -120,25 +123,25 @@ const getPostUserInfo = async () => {
               {/* {ConvertMinutes(props.post.timeago)} ago */}
             </p>
           </div>
-          {props.post.User.id === 0 && 
-          <div   style={{ marginLeft: "auto", padding: "5px",position:'relative' }}
-          >
-          <FontAwesomeIcon
-          className="hover"
-          icon={faEllipsisH}
-            onClick={()=>{setshowsettings(!showsettings)}}
-            size="2x"
-          />
-         {showsettings && <div className="postSettingsBox">
-           
-         <div className="hover">Delete Post</div>
-         <div className="hover">Hide Post</div>
-           
-           </div>}
-          </div>
-          }
+          {/* {props.post.User.id === 0 &&
+            <div style={{ marginLeft: "auto", padding: "5px", position: 'relative' }}
+            >
+              <FontAwesomeIcon
+                className="hover"
+                icon={faEllipsisH}
+                onClick={() => { setshowsettings(!showsettings) }}
+                size="2x"
+              />
+              {showsettings && <div className="postSettingsBox">
+
+                <div className="hover">Delete Post</div>
+                <div className="hover">Hide Post</div>
+
+              </div>}
+            </div>
+          } */}
         </div>
-        
+
         <div
           style={{
             display: "flex",
@@ -208,7 +211,7 @@ const getPostUserInfo = async () => {
             </p>
           </div>
           <span className="hr"></span>
-          {showcomments ? props.post.comments.map((comm) => <Comment_Item comment={comm} />) : null}
+          {/* {showcomments ? props.post.comments.map((comm) => <Comment_Item comment={comm} />) : null} */}
           <div
             style={{
               display: "flex",
@@ -253,7 +256,7 @@ const getPostUserInfo = async () => {
                 style={{ alignSelf: "center", marginRight: "8px" }}
                 icon={faFileImage}
               />
-           
+
               <FontAwesomeIcon
                 className="hover"
                 style={{ alignSelf: "center", marginRight: "8px" }}

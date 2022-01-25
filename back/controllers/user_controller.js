@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import dotEnv from "dotenv";
 import jwt from "jsonwebtoken";
 
@@ -119,7 +119,7 @@ export const loginUser = async (req, res) => {
         id: user[0].id,
         name: user[0].name,
         email: user[0].email,
-        img : user[0].img,
+        img: user[0].img,
         token,
       };
       return res
