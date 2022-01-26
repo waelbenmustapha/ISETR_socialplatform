@@ -428,7 +428,10 @@ export const addGroupApi = async (req, res) => {
     const { errors } = validationResult(req);
     if (!(errors.length === 0)) {
 
-        return res.status(400).json(errors)
+        return res.status(400).json({
+            success: false,
+            errors
+        })
     }
 
     const user_exist = await checkUserExist(admin_id);

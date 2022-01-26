@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 dotEnv.config();
 const router = express.Router();
 import { con } from "../config/database.js";
+import { validationResult } from "express-validator";
 
 
 
@@ -53,6 +54,15 @@ export const getComment = async (req, res) => {
 export const addComment = async (req, res) => {
   const { comment, user_id, post_id } = req.body;
 
+  // error check
+  const { errors } = validationResult(req);
+  if (!(errors.length === 0)) {
+
+    return res.status(400).json({
+      success: false,
+      errors
+    })
+  }
 
 
   const newComment = { comment, user_id, post_id };

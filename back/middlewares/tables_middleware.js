@@ -131,11 +131,11 @@ export const checkPostsTable = async (req, res, next) => {
         await con.schema.createTable("posts", (table) => {
             table.increments("id").primary();
             table.integer("user_id").notNullable().references("id").inTable("users").onDelete("CASCADE");
+            table.integer("group_id").defaultTo(null).references("id").inTable("groups").onDelete("CASCADE");
             table.text("text");
             table.dateTime("date").defaultTo(con.fn.now());
             table.string("image").defaultTo(null);
-            table.integer("likes").defaultTo(0);
-            table.integer("shares").defaultTo(0);
+
         });
         next();
     } else {
@@ -152,7 +152,7 @@ export const checkCommentsTable = async (req, res, next) => {
             table.increments("id").primary();
             table.integer("user_id").notNullable().references("id").inTable("users").onDelete("CASCADE");
             table.integer("post_id").notNullable().references("id").inTable("posts").onDelete("CASCADE");
-            table.text("comment");
+            table.text("comment").notNullable();
             table.dateTime("date").defaultTo(con.fn.now());
             table.integer("likes").defaultTo(0);
         });

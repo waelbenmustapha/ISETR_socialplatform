@@ -3,12 +3,12 @@ import express from "express";
 
 import { checkGroupTable, checkGroupUserTable } from '../middlewares/tables_middleware.js'
 import { addGroupApi, addUserToGroupApi, deleteAllGroups, deleteAllGroupsApi, deleteGroupApi, getAllGroupsApi, getGroupApi, getGroupInfo, getGroupMembersApi, getUserGroupsApi, removeUserFromGroupApi, searchGroupsApi, updateGroupApi, updateGroupInfo } from "../controllers/group_controller.js";
-import { addGroupMemberValidation, addValidation } from "../validators/group_validtors.js";
+import { addGroupMemberValidation, addGroupValidation } from "../validators/validtors.js";
 
 const router = express.Router();
 
 router.get("/", checkGroupTable, getAllGroupsApi);
-router.post("/", addValidation, addGroupApi);
+router.post("/", addGroupValidation, addGroupApi);
 router.delete("/", deleteAllGroupsApi);
 
 router.get('/search', searchGroupsApi)
