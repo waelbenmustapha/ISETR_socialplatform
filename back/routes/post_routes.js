@@ -20,6 +20,7 @@ router.delete("/:id", deletePost);
 
 router.post("/like", likePostValidator, checkLikesTable, likePost);
 router.get("/search/post", searchPosts);
+router.get("/likes/:id", searchPosts);
 
 export default router;
 

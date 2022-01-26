@@ -35,6 +35,26 @@ export const checkPostAlreadyLiked = async (post_id, user_id) => {
 
 }
 
+export const getPostLikes = async (post_id) => {
+
+  const likesCount = await con
+    .count('*')
+    .from('likes')
+    .where('post_id', post_id);
+
+  // console.log(likesCount[0]['count(*)']);
+  return likesCount[0]['count(*)']
+}
+export const getPostShares = async (post_id) => {
+
+  const sharesCount = await con
+    .count('*')
+    .from('shares')
+    .where('post_id', post_id);
+
+  return sharesCount[0]['count(*)']
+}
+
 
 export const getPosts = async (req, res) => {
   await con
@@ -147,16 +167,31 @@ export const getMyFeedPostsWithLimits = async (req, res) => {
 
 export const getPost = async (req, res) => {
   const { id } = req.params;
-  await con
-    .select("*")
-    .from("posts")
-    .where("id", id)
-    .then((post) => {
-      return res.status(200).json(post);
+  try {
+
+    const post_data = await con
+      .select("*")
+      .from("posts")
+      .where("id", id);
+    const post_likes = await getPostLikes(id);
+    const shares_count = await getPostShares(id);
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        post: post_data[0],
+        likes: post_likes,
+        shares: shares_count
+      },
     })
-    .catch((err) => res.status(400).json({
-      error: err,
-    }));
+
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      error: error,
+    })
+  }
+
 };
 
 export const getGroupPosts = async (req, res) => {
@@ -288,8 +323,6 @@ export const likePost = async (req, res) => {
 
   const { post_id, user_id } = req.body;
 
-
-
   const user_exist = await checkUserExist(user_id);
   if (!user_exist) {
     return res.status(404).json({
@@ -298,6 +331,7 @@ export const likePost = async (req, res) => {
     })
 
   }
+
 
   const post_exist = await checkPostExist(post_id);
   if (!post_exist) {

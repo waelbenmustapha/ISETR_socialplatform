@@ -9,6 +9,7 @@ import followerRoutes from "./routes/followers_routes.js";
 import postRoutes from "./routes/post_routes.js";
 import commentRoutes from "./routes/comment_routes.js";
 import roomRoutes from "./routes/room_routes.js";
+import shareRoutes from "./routes/share_routes.js";
 import msgRoutes from "./routes/messages_routes.js";
 import groupRoutes from "./routes/group_routes.js";
 import { verifyToken } from "./middlewares/token_middleware.js";
@@ -50,6 +51,7 @@ app.use("/api/post", postRoutes);
 app.use("/api/comment", commentRoutes);
 app.use("/api/room", roomRoutes);
 app.use("/api/group", groupRoutes);
+app.use("/api/share", shareRoutes);
 
 db_conn.connect(function (err) {
   if (err) throw err;

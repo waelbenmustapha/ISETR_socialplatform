@@ -162,6 +162,23 @@ export const checkCommentsTable = async (req, res, next) => {
     }
 };
 
+export const checkCommentsLikesTable = async (req, res, next) => {
+    // check if table exists
+    const tableExists = await con.schema.hasTable("comment-likes");
+    if (!tableExists) {
+        // create table
+        await con.schema.createTable("comment-likes", (table) => {
+            table.increments("id").primary();
+            table.integer("user_id").notNullable().references("id").inTable("users").onDelete("CASCADE");
+            table.integer("comment_id").notNullable().references("id").inTable("comments").onDelete("CASCADE");
+            table.dateTime("date").defaultTo(con.fn.now());
+
+        });
+        next();
+    } else {
+        next();
+    }
+}
 
 export const checkLikesTable = async (req, res, next) => {
     // check if table exists
@@ -171,7 +188,7 @@ export const checkLikesTable = async (req, res, next) => {
         await con.schema.createTable("likes", (table) => {
             table.increments("id").primary();
             table.integer("user_id").notNullable().references("id").inTable("users").onDelete("CASCADE");
-            table.integer("post_id").notNullable().references("id").inTable("posts").onDelete("CASCADE");
+            table.integer("post_id").references("id").inTable("posts").onDelete("CASCADE");
             table.dateTime("date").defaultTo(con.fn.now());
 
         });
@@ -180,6 +197,8 @@ export const checkLikesTable = async (req, res, next) => {
         next();
     }
 }
+
+
 
 
 export const checkSharesTable = async (req, res, next) => {
@@ -191,6 +210,7 @@ export const checkSharesTable = async (req, res, next) => {
             table.increments("id").primary();
             table.integer("user_id").notNullable().references("id").inTable("users").onDelete("CASCADE");
             table.integer("post_id").notNullable().references("id").inTable("posts").onDelete("CASCADE");
+            table.text("text");
             table.dateTime("date").defaultTo(con.fn.now());
 
         });
@@ -200,6 +220,23 @@ export const checkSharesTable = async (req, res, next) => {
     }
 }
 
+export const checkShareLikesTable = async (req, res, next) => {
+    // check if table exists
+    const tableExists = await con.schema.hasTable("share-likes");
+    if (!tableExists) {
+        // create table
+        await con.schema.createTable("share-likes", (table) => {
+            table.increments("id").primary();
+            table.integer("user_id").notNullable().references("id").inTable("users").onDelete("CASCADE");
+            table.integer("share_id").references("id").inTable("shares").onDelete("CASCADE");
+            table.dateTime("date").defaultTo(con.fn.now());
+
+        });
+        next();
+    } else {
+        next();
+    }
+}
 
 export const checkNotificationsTable = async (req, res, next) => {
     // check if table exists

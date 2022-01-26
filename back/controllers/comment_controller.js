@@ -6,6 +6,46 @@ dotEnv.config();
 const router = express.Router();
 import { con } from "../config/database.js";
 import { validationResult } from "express-validator";
+import { checkUserExist } from "./group_controller.js";
+
+
+export const checkCommentExist = async (comment_id) => {
+
+  const comments = con
+    .select('*')
+    .from('comments')
+    .where('id', comment_id);
+
+  return !(comments.length === 0)
+
+
+
+}
+
+export const checkCommentAlreadyLiked = async (comment_id, user_id) => {
+
+  const likeComment = await con
+    .select('*')
+    .from('comment-likes')
+    .where({
+      comment_id,
+      user_id
+    })
+
+  return !(likeComment.length === 0)
+
+
+}
+
+export const checkCommentOwner = async (comment_id, user_id) => {
+
+  const owner_id = await con
+    .select('user_id')
+    .from('comment-likes')
+    .where({ user_id, comment_id })
+
+  return !(owner_id.length === 0)
+}
 
 
 
@@ -57,7 +97,6 @@ export const addComment = async (req, res) => {
   // error check
   const { errors } = validationResult(req);
   if (!(errors.length === 0)) {
-
     return res.status(400).json({
       success: false,
       errors
@@ -87,16 +126,31 @@ export const updateComment = async (req, res) => {
   const { id } = req.params;
   const { comment } = req.body;
   const updatedComment = { comment };
+
+  // check user is the owner of comment
+  const user_id = req.user.id;
+  const comment_owner = await checkCommentOwner(id, user_id);
+
+  if (comment_owner) {
+    return res.status(400).json({
+      success: false,
+      error: 'User not able to update this comment'
+    })
+
+  }
+
   await con
     .update(updatedComment)
     .from("comments")
     .where("id", id)
     .then(() => {
       return res.status(200).json({
+        success: true,
         message: "Comment updated successfully",
       })
     })
     .catch((err) => res.status(400).json({
+      success: false,
       message: err,
     }));
 }
@@ -120,31 +174,81 @@ export const deleteComment = async (req, res) => {
 
 
 export const likeComment = async (req, res) => {
-  const { id } = req.params;
+  // check body errors
 
-  await con
-    .select("*")
-    .from("comments")
-    .where("id", id)
-    .then((comment) => {
-      const likes = comment[0].likes + 1;
-      const updatedComment = { likes };
-      con
-        .update(updatedComment)
-        .from("comments")
-        .where("id", id)
-        .then(() => {
-          return res.status(200).json({
-            message: "Comment liked successfully",
-          })
+  const { errors } = validationResult(req);
+  if (!(errors.length === 0)) {
+
+    return res.status(400).json({
+      success: false,
+      errors
+    })
+  }
+
+  const { comment_id, user_id } = req.body;
+
+  const user_exist = await checkUserExist(user_id);
+  if (!user_exist) {
+    return res.status(404).json({
+      success: false,
+      error: 'User does\'nt exist!'
+    })
+
+  }
+
+  const comment_exist = await checkCommentExist(comment_id);
+  if (!comment_exist) {
+    return res.status(404).json({
+      success: false,
+      error: 'Comment does\'nt exist!'
+    })
+
+  }
+
+  const alreadyLiked = await checkCommentAlreadyLiked(comment_id, user_id);
+  if (alreadyLiked) {
+    //  dislike == remove
+    try {
+      await con
+        .delete()
+        .from('comment-likes')
+        .where({
+          user_id,
+          comment_id
         })
-        .catch((err) => res.status(400).json({
-          message: err,
-        }));
+
+      return res.status(200).json({
+        success: true,
+        message: 'Comment disliked successfully!'
+      })
+
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error
+      })
+    }
+  }
+
+  // like == insert
+  await con
+    .insert({
+      user_id,
+      comment_id
+    })
+    .into("comment-likes")
+    .then((data) => {
+      return res.status(201).json({
+        success: true,
+        message: "Comment liked successfully",
+      })
+
     })
     .catch((err) => res.status(400).json({
-      message: err,
+      success: false,
+      error: err
     }));
+
 };
 
 export const unlikeComment = async (req, res) => {

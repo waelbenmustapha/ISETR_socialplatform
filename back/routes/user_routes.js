@@ -12,6 +12,7 @@ import {
 } from "../controllers/user_controller.js";
 import { checkRoomUserTable, checkUsersTable } from "../middlewares/tables_middleware.js";
 import { verifyToken } from "../middlewares/token_middleware.js";
+import { loginValidation } from "../validators/validtors.js";
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.get("/:id", getUser);
 router.get("/latest-rooms/:id", checkRoomUserTable, getLatestUserRooms);
 // router.get("/room-messages/", checkRoomUserTable, getLatestUserRooms);
 router.post("/register", checkUsersTable, registerUser);
-router.post("/login", loginUser);
+router.post("/login", loginValidation, loginUser);
 router.patch("/:id", updateUser);
 router.delete("/:id", deleteUser);
 router.get("/search/:term", searchUsers);

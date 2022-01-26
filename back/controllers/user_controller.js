@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import dotEnv from "dotenv";
+import { validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 
 dotEnv.config();
@@ -94,6 +95,16 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
+  // check errors
+  const { errors } = validationResult(req)
+  if (!(errors.length === 0)) {
+    return res.status(400).json({
+      success: false,
+      errors
+    })
+
+  }
+
   // check if user exists
   await con
     .select("*")
@@ -104,7 +115,7 @@ export const loginUser = async (req, res) => {
         return res.status(404).json({
           message: "User does not exist",
         });
-      } else if (!bcrypt.compare(password, user[0].password)) {
+      } else if (!(bcrypt.compare(password, user[0].password))) {
         return res.status(404).json({
           message: "Invalid password",
         });
