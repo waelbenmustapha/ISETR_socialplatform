@@ -151,9 +151,14 @@ export const getMyFeedPostsWithLimits = async (req, res) => {
       LIMIT ?, 5
       ;`, [user_id, user_id, page * 5])
 
+
+     console.log(posts)
+
     return res.status(200).json({
       success: true,
+      
       data: posts[0]
+
     });
 
   } catch (error) {

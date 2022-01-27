@@ -19,17 +19,23 @@ import axios from "axios";
 import { useAuthHeader, useAuthUser } from "react-auth-kit";
 
 function Post(props) {
-
+const [minutes,setminutes]=useState(0);
   const [showcomments, setshowcomments] = useState(false);
   const [userLoading, setUserLoading] = useState(true);
   const [showsettings, setshowsettings] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const authHeader = useAuthHeader();
   const auth = useAuthUser();
-
   useEffect(() => {
     const getPostUserInfo = async () => {
       console.log(props.post)
+
+      var sqldate = new Date(props.post.date);
+      var currentTime = new Date();
+
+      var difference=currentTime-sqldate;
+      var minutes = Math.floor((difference/1000)/60);
+setminutes(minutes);
       const user_id = props.post.user_id;
 
       await axios.get(`http://localhost:5500/api/user/${user_id}`, {
@@ -87,6 +93,7 @@ function Post(props) {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-around",
+              
             }}
           >
             <p
@@ -103,13 +110,13 @@ function Post(props) {
             <p
               style={{
                 fontWeight: "500",
-                fontSize: "12px",
+                fontSize: "10px",
                 opacity: "0.85",
                 paddingLeft: "10px",
                 margin: "0px",
               }}
             >
-              {/* {props.post.User.current} */}
+             Full Stack Developer
             </p>
             <p
               style={{
@@ -120,7 +127,8 @@ function Post(props) {
                 margin: "0px",
               }}
             >
-              {/* {ConvertMinutes(props.post.timeago)} ago */}
+              
+            {minutes} ago 
             </p>
           </div>
           {/* {props.post.User.id === 0 &&

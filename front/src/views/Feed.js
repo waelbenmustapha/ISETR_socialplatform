@@ -383,7 +383,7 @@ console.log(res.data)
   }
 
   return (
-    <div onScroll={(e) => handleScroll(e)} className="col-start-2 col-end-6  row-start-2 row-end-10 rounded-lg shadow-2xl bg-gray-100 p-3  overflow-y-scroll no-scrollbar">
+    <div onScroll={(e) => handleScroll(e)} style={{width:'1200px',margin:'0px auto'}} className="col-start-2 col-end-6  row-start-2 row-end-10 rounded-lg shadow-2xl bg-gray-100 p-3  overflow-y-scroll no-scrollbar">
       <div style={{ display: "flex", flexDirection: "row", gap: "10px" }} >
         <div style={{ flex: "3" }}  >
           <AddPost />
@@ -398,7 +398,18 @@ console.log(res.data)
               return <Post post={post} />
             })}
         </div>
-        <div style={{ border: "1px solid", flex: "1" }}>EVENTS</div>
+        <div style={{ borderRadius:'8px', flex: "1" ,backgroundColor:'white',display:'flex',flexDirection:'column'}}>
+        <div style={{borer:'1px solid'}}>
+<p>event 1</p>
+<p>time</p>
+          </div>
+          
+           
+          <div>
+
+</div>
+
+        </div>
       </div>
     </div>
   );
