@@ -4,7 +4,7 @@ import axios from 'axios';
 import React from 'react'
 import { useAuthUser } from 'react-auth-kit';
 import { useState } from 'react/cjs/react.development';
-
+import images from "../images/images.png"
 function AddPost() {
   const auth = useAuthUser()
   const postText = React.createRef();
@@ -80,35 +80,17 @@ function AddPost() {
             margin: '10px',
             display: "flex",
             flexDirection: "row",
-            paddingLeft: "5px",
+padding:'15px 15px 0px 15px',
             justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <span>
-            <FontAwesomeIcon
-              className="hover"
-              style={{ marginRight: "7px" }}
-              icon={faVideo}
-            />
-            live video
-          </span>
-          <span>
-            <FontAwesomeIcon
-              className="hover"
-              style={{ marginRight: "7px" }}
-              icon={faImages}
-            />
+        
+          <span className='hovercolororange'>
+           <img src={images} style={{height:'25px',width:'25px',display:'inline',marginRight:'5px'}}/>
             Photo/Video
           </span>
-          <span>
-            <FontAwesomeIcon
-              className="hover"
-              style={{ marginRight: "7px" }}
-              icon={faSmile}
-            />
-            Feeling
-          </span>
+         
           <p
             className="hover"
             style={{

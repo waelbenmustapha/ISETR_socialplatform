@@ -11,7 +11,9 @@ import {
 import ConvertMinutes from "../utils/Converminutes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../styles/Post.css';
-
+import like from "../images/like.png"
+import comment from "../images/comment.png"
+import share from "../images/share.png"
 import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
 import Comment_Item from "./Comment_Item";
@@ -128,7 +130,7 @@ setminutes(minutes);
               }}
             >
               
-            {minutes} ago 
+            {ConvertMinutes(minutes)} ago 
             </p>
           </div>
           {/* {props.post.User.id === 0 &&
@@ -158,17 +160,17 @@ setminutes(minutes);
             justifyContent: "space-between",
           }}
         >
-          <p>{props.post.text}</p>
+          <p style={{padding:'25px'}}>{props.post.text}</p>
           {
             props.post.image &&
             <img
-              src={props.post.img}
-              style={{ maxHeight: "400px", maxWidth: "400px", margin: '0 auto' }}
+              src={props.post.image}
+              style={{ maxHeight: "400px", maxWidth: "600px", margin: '0 auto' }}
             />
           }
           <div style={{ flexDirection: "row", display: "flex" }}>
             <p style={{ fontSize: "14px", fontWeight: "500" }}>
-              {props.post.likes} Like
+              {props.post.likes}74 Like
             </p>
             <p
               onClick={() => setshowcomments(!showcomments)}
@@ -182,41 +184,28 @@ setminutes(minutes);
               {/* {props.post.comments.length} Comments */}
             </p>
             <p style={{ fontSize: "14px", fontWeight: "500" }}>
-              {props.post.shares} Share
+             15 {props.post.shares} Share
             </p>
           </div>
           <span className="hr"></span>
           <div
             style={{
+              padding:'10px',
               display: "flex",
               justifyContent: "space-between",
               flexDirection: "row",
             }}
           >
-            <p>
-              <FontAwesomeIcon
-                className="hover"
-                style={{ marginRight: "7px" }}
-                icon={faHeart}
-              />
+            <div className="hovercolororange"  style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={like} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
               Like
-            </p>
-            <p>
-              <FontAwesomeIcon
-                className="hover"
-                style={{ marginRight: "7px" }}
-                icon={faComment}
-              />
+            </a></div>
+
+            <div className="hovercolororange"  style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={comment} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
               Comment
-            </p>
-            <p>
-              <FontAwesomeIcon
-                className="hover"
-                style={{ marginRight: "7px" }}
-                icon={faShare}
-              />
+            </a></div>
+            <div className="hovercolororange"  style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={share} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
               Share
-            </p>
+            </a></div>
           </div>
           <span className="hr"></span>
           {/* {showcomments ? props.post.comments.map((comm) => <Comment_Item comment={comm} />) : null} */}
@@ -259,23 +248,13 @@ setminutes(minutes);
                 }}
                 placeholder="Write a comment..."
               />
-              <FontAwesomeIcon
-                className="hover"
-                style={{ alignSelf: "center", marginRight: "8px" }}
-                icon={faFileImage}
-              />
-
-              <FontAwesomeIcon
-                className="hover"
-                style={{ alignSelf: "center", marginRight: "8px" }}
-                icon={faSmile}
-              />
+             
             </div>
             <FontAwesomeIcon
               size="2x"
               icon={faPaperPlane}
               style={{ alignSelf: "center", paddingLeft: "10px" }}
-              className="hover"
+              className="hovercolororange"
             />
           </div>
         </div>
