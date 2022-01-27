@@ -362,7 +362,7 @@ function Feed() {
     await axios.get(`http://localhost:5500/api/post/feed/${auth().id}?page=${offset}`)
       .then(res => {
         if (res.data.success) {
-
+console.log(res.data)
           setPosts(res.data.data);
         }
       }).catch(err => {

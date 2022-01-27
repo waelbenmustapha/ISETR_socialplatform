@@ -17,7 +17,7 @@ function AddPost() {
       setSubmitLoading(false)
       return;
     } else {
-      await axios.post('http://localhost:5500/api/post/add', {
+      await axios.post('http://localhost:5500/api/post/', {
         text: postText.current.value,
         user_id: auth().id,
       })
