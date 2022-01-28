@@ -17,14 +17,14 @@ function Resume(props) {
   const [modalOpenAEX, setModalOpenAEX] = useState(false);
   const [experiences, setExperience] = useState([]);
   const [educations, setEducation] = useState([]);
-//Get Education Data
+
+
+  //Get Education Data
   async function getEd() {
     try {
       const res = await axios.get('http://localhost:5500/api/resume/getEducation')
         .then(res => {
           setEducation(res.data)
-
-
         })
     } catch (error) {
       return alert(error.message);
@@ -35,7 +35,7 @@ function Resume(props) {
     getEd()
 
   }, [educations])
-//Get Experience Data
+  //Get Experience Data
   async function getEx() {
     try {
       const res = await axios.get('http://localhost:5500/api/resume/getExperience')
@@ -53,6 +53,24 @@ function Resume(props) {
     getEx()
 
   }, [experiences])
+  // DeleteExprience
+  const handleDeleteExperience = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5500/api/resume/DeleteExperience/${id}`);
+      return alert("Experience Deleted");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // DeleteEducation
+  const handleDeleteEducation = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5500/api/resume/DeleteEducation/${id}`);
+      return alert("Education Deleted");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="main_resume">
@@ -77,16 +95,16 @@ function Resume(props) {
           {/*Experiences + Education*/}
           <Grid container className="section">
             <Grid item className="section_title top_30">
-              <span></span>
-              <h2 className="title">Resume
-              </h2>
+              <div class='card'>
+                <span></span>
+                <h2 className="title">Resume 
+                </h2>
+              </div>
             </Grid>
-
             <Grid container className="top_30">
               {/*Experiences*/}
               <Grid item md={6} className="experience pb_30">
                 <Timeline className="timeline">
-
                   <TimelineItem>
                     <TimelineSeparator>
                       <TimelineDot className="timeline_dot_header">
@@ -108,7 +126,6 @@ function Resume(props) {
                         </h2>
                         {modalOpenAEX && <AddExperience setOpenModalAEX={setModalOpenAEX} />}
 
-
                       </Typography>
                     </TimelineContent>
                   </TimelineItem>
@@ -123,11 +140,16 @@ function Resume(props) {
                       </TimelineSeparator>
                       <TimelineContent className="timeline_content">
                         <Typography className="timeline_title">
-                          <h2 className="title">
-                            {experience.title}
+                          <div class='card'>
+                            <h2 className="title">
+                              {experience.title}<button class='task__remove-icon'
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleDeleteExperience(experience.id);
+                                }}> <img src="https://img.icons8.com/ios/20/000000/delete--v2.png" /></button>
+                            </h2>
 
-                          </h2>
-
+                          </div>
                         </Typography>
                         <Typography variant="caption" className="timeline_date">
                           {experience.DateStart}-{experience.DateEnd}
@@ -178,7 +200,16 @@ function Resume(props) {
                       </TimelineSeparator>
                       <TimelineContent className="timeline_content">
                         <Typography className="timeline_title">
-                          <h2 className="title">{education.title}</h2>
+                          <div class='card'>
+                            <h2 className="title">
+                              {education.title}<button class='task__remove-icon'
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleDeleteEducation(education.id);
+                                }}> <img src="https://img.icons8.com/ios/20/000000/delete--v2.png" /></button>
+                            </h2>
+
+                          </div>
                         </Typography>
                         <Typography variant="caption" className="timeline_date">
                           {education.DateStart}-{education.DateEnd}

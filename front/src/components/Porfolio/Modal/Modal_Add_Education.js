@@ -42,7 +42,7 @@ function AddEducation({ setOpenModalAED }) {
             onChange={(e) =>
               setFormData({ ...formData, DateEnd: e.target.value })} />
           <label for="EndDate" class="form__label"></label>
-          <input type="text" class="form__input" id="description" placeholder="Description" required=""
+          <textarea type="text" class="form__input" id="description" placeholder="Description" required=""
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })} />
           <label for="description" class="form__label"></label>

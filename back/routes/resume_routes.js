@@ -15,10 +15,10 @@ const router = express.Router();
 
 router.get("/getEducation", getEducation);
 router.get("/getExperience", getExperience);
-router.patch("/:id", UpdateExperience);
-router.patch("/:id", UpdateEducation);
-router.delete("/:id", DeleteEducation);
-router.delete("/:id", DeleteExperience);
+router.patch("UpdateExperience/:educationid", UpdateExperience);
+router.patch("UpdateEducation/:experienceid", UpdateEducation);
+router.delete("/DeleteEducation/:educationid", DeleteEducation);
+router.delete("/DeleteExperience/:experienceid", DeleteExperience);
 router.post("/InsertEducation",InsertEducation);
 router.post("/InsertExperience", InsertExperience);
 export default router;
