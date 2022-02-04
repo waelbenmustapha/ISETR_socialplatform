@@ -12,6 +12,7 @@ import "./Resume.css";
 import { Grid } from "@material-ui/core";
 import AddExperience from "../Modal/Modal_Add_Experience";
 import AddEducation from "../Modal/Modal_Add_Education";
+import { EditText, EditTextarea } from 'react-edit-text';
 function Resume(props) {
   const [modalOpenAED, setModalOpenAED] = useState(false);
   const [modalOpenAEX, setModalOpenAEX] = useState(false);
@@ -91,13 +92,12 @@ function Resume(props) {
               </Grid>
             </Grid>
           </Grid>
-
           {/*Experiences + Education*/}
           <Grid container className="section">
             <Grid item className="section_title top_30">
               <div class='card'>
                 <span></span>
-                <h2 className="title">Resume 
+                <h2 className="title">Resume
                 </h2>
               </div>
             </Grid>
@@ -115,7 +115,8 @@ function Resume(props) {
                     <TimelineContent>
                       <Typography variant="h6" className="timeline_header">
                         <h2 className="title">
-                          Work Experience<button
+                          Work Experience
+                          <button
                             className="openModalBtn"
                             onClick={() => {
                               setModalOpenAEX(true);
@@ -124,8 +125,8 @@ function Resume(props) {
                             <img src="https://img.icons8.com/ios/20/000000/add--v2.png" />
                           </button>
                         </h2>
-                        {modalOpenAEX && <AddExperience setOpenModalAEX={setModalOpenAEX} />}
-
+                        {modalOpenAEX &&
+                          <AddExperience closeModal={() => setModalOpenAEX(false)} />}
                       </Typography>
                     </TimelineContent>
                   </TimelineItem>
@@ -176,16 +177,19 @@ function Resume(props) {
                     </TimelineSeparator>
                     <TimelineContent>
                       <Typography variant="h6" className="timeline_header">
-                        <h2 className="title">Education<button
-                          className="openModalBtn"
-                          onClick={() => {
-                            setModalOpenAED(true);
-                          }}
-                        >
-                          <img src="https://img.icons8.com/ios/20/000000/add--v2.png" />
-                        </button>
+
+                        <h2 className="title">Education
+                          <button
+                            className="openModalBtn"
+                            onClick={() => {
+                              setModalOpenAED(true);
+                            }}
+                          >
+                            <img src="https://img.icons8.com/ios/20/000000/add--v2.png" />
+                          </button>
                         </h2>
-                        {modalOpenAED && <AddEducation setOpenModalAED={setModalOpenAED} />}
+                        {modalOpenAED &&
+                          <AddEducation closeModal={() => setModalOpenAED(false)} />}
                       </Typography>
                     </TimelineContent>
                   </TimelineItem>

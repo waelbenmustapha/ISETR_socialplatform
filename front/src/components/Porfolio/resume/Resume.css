@@ -163,15 +163,5 @@
 
 /*END CONTACT*/
 
-.title{
-    display:flex;
-}
 
-.task__remove-icon {
-    display: none;
-    margin: auto;
-  }
-  
-  .card:hover .task__remove-icon {
-    display: block;
-  }
+

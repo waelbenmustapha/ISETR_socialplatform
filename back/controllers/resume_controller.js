@@ -82,3 +82,23 @@ export const InsertEducation = async (req, res) => {
         })
         .catch((err) => res.status(400).json("Error :" + err));
 };
+/* --- UserInfo Controllers ---- */
+export const InsertUserInfo = async (req, res) => {
+    await con
+        .from('userinfo')
+        .insert({ 'picture': req.body.picture, 'name': req.body.name, 'birthday': req.body.birthday,'email': req.body.description,'subtitle': req.body.subtitle,'facebook': req.body.facebook,'linkedin': req.body.github})
+        .then(() => {
+            res.json("Info Added");
+        })
+        .catch((err) => res.status(400).json("Error :" + err));
+};
+export const getUserInfo = async (req, res) => {
+        await con
+            .select("*")
+            .from("userinfo")
+       
+            .then((userinfo) => {
+                res.json(userinfo);
+            })
+            .catch((err) => res.status(400).json("Error :" + err));
+    };

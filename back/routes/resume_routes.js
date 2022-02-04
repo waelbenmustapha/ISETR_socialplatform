@@ -7,7 +7,9 @@ import {
     DeleteEducation,
     DeleteExperience,
     InsertEducation,
-    InsertExperience
+    InsertExperience,
+    InsertUserInfo,
+    getUserInfo
 }
     from "../controllers/resume_controller.js";
 import {verifyToken} from'../middlewares/user_middleware.js';
@@ -16,9 +18,13 @@ const router = express.Router();
 router.get("/getEducation", getEducation);
 router.get("/getExperience", getExperience);
 router.patch("UpdateExperience/:educationid", UpdateExperience);
-router.patch("UpdateEducation/:experienceid", UpdateEducation);
+router.patch("UpdateEducation/:experienceid",UpdateEducation);
 router.delete("/DeleteEducation/:educationid", DeleteEducation);
-router.delete("/DeleteExperience/:experienceid", DeleteExperience);
+router.delete("/DeleteExperience/:experienceid",DeleteExperience);
 router.post("/InsertEducation",InsertEducation);
-router.post("/InsertExperience", InsertExperience);
+router.post("/InsertExperience",InsertExperience);
+router.post("/InsertUserInfo",InsertUserInfo);
+router.get("/getUserInfo", getUserInfo);
+
+
 export default router;
