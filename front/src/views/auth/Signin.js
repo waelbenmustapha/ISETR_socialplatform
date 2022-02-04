@@ -24,16 +24,19 @@ function Signin() {
           .then((res) => {
             if (res.status === 200) {
               console.log(res);
+           
               if (
                 signIn({
                   token: res.data.token,
                   expiresIn: 20,
                   tokenType: "Bearer",
                   authState: res.data.authUserState,
+                  
                 })
                 
               ) {
-                history.push("/feed");
+                
+                history.push("/profile");
               } else {
               }
             }

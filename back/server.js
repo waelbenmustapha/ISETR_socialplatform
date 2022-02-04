@@ -5,6 +5,7 @@ import { createServer } from "http";
 
 import { db_conn } from "./config/database.js";
 import userRoutes from "./routes/user_routes.js";
+import resumeRoutes from"./routes/resume_routes.js";
 import followerRoutes from "./routes/followers_routes.js";
 import postRoutes from "./routes/post_routes.js";
 import commentRoutes from "./routes/comment_routes.js";
@@ -45,7 +46,8 @@ socket.on('connection', chatsocket);
 
 // apis
 app.use("/api/user", userRoutes);
-app.use("/api/follow", followerRoutes);
+app.use("/api/resume", resumeRoutes);
+
 app.use("/api/follow", followerRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/comment", commentRoutes);

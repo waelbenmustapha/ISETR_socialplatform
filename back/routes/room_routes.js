@@ -6,17 +6,17 @@ import { verifyToken } from "../middlewares/token_middleware.js";
 
 const router = express.Router();
 
-// router.get("/", verifyToken, getUsers);
-// router.get("/limit/", verifyToken, getUsersWithLimits);
+// router.get("/", getUsers);
+// router.get("/limit/", getUsersWithLimits);
 // router.post("/add", checkRoomTable, createRoom);
-router.post("/check-common-room", checkRoomTable, verifyToken, checkCommonRoomApi);
-router.post("/check-common-room-messages", checkRoomTable, verifyToken, checkCommonRoomAndMessagesApi);
-router.get("/", verifyToken, getAllRoomsApi);
-router.get("/:id", verifyToken, getRoomApi);
-router.get("/room-messages/:id", verifyToken, getRoomMessagesApi);
-router.get("/get-receiver-room-id/:id", verifyToken, getReceiverRoomId);
-router.get("/get-user-latest-room/:id", verifyToken, getUserLatestModifiedRoomApi);
-router.get("/get-room-user-info/:id", verifyToken, getRoomUsersInfoApi);
+router.post("/check-common-room", checkRoomTable, checkCommonRoomApi);
+router.post("/check-common-room-messages", checkRoomTable, checkCommonRoomAndMessagesApi);
+router.get("/", getAllRoomsApi);
+router.get("/:id", getRoomApi);
+router.get("/room-messages/:id",  getRoomMessagesApi);
+router.get("/get-receiver-room-id/:id", getReceiverRoomId);
+router.get("/get-user-latest-room/:id", getUserLatestModifiedRoomApi);
+router.get("/get-room-user-info/:id", getRoomUsersInfoApi);
 
 
 

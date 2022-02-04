@@ -138,7 +138,7 @@ export const loginUser = async (req, res) => {
         .json({ authUserState: user[0], token: token, expiresIn: "2" });
     })
     .catch((err) =>
-      res.status(200).json({
+      res.status(400).json({
         message: err,
       })
     );

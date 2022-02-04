@@ -1,0 +1,123 @@
+*,
+*:focus{outline: none}
+
+.form{
+  align-items: center;
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: 40px;  font-family: sans-serif;
+  background: #fff
+}
+.form-item{
+  position: relative;
+  margin-bottom: 15px
+}
+.form-item input{
+  display: block;
+  width: 400px;
+  height: 40px;
+  background: transparent;
+  border: solid 1px #ccc;
+  transition: all .3s ease;
+  padding: 0 15px
+}
+.form-item input:focus{
+  border-color: blue
+}
+.form-item label{
+  position: absolute;
+  cursor: text;
+  z-index: 2;
+  top: 13px;
+  left: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  background: #fff;
+  padding: 0 10px;
+  color: #999;
+  transition: all .3s ease
+}
+.form-item input:focus + label,
+.form-item input:valid + label{
+  font-size: 11px;
+  top: -5px
+}
+.form-item input:focus + label{
+  color: blue
+}
+.overlay {
+  position: fixed;
+  display: block;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.618);
+  z-index: 999;
+  cursor: pointer;
+}
+
+.content {
+  
+  align-items: center;
+  text-align: center;
+  margin: 15% auto;
+  background-color: white;
+  border-radius: 0.25rem;
+  width: 50vw;
+  padding: 2rem;
+  position: relative;
+}
+
+
+/* CSS */
+.button{
+  background: #FF4742;
+  border: 1px solid #FF4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.button:hover,
+.button:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF4742;
+}
+
+.button:active {
+  opacity: .5;
+}
+.cls_button{
+  color: #000000;
+  padding: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  position: absolute;
+  top: 0.3rem;
+  right: 0.5rem;
+}
