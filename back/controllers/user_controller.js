@@ -1,10 +1,10 @@
-import express from "express";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import dotEnv from "dotenv";
+import { validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 
 dotEnv.config();
-const router = express.Router();
+
 import { con } from "../config/database.js";
 
 export const getUsers = async (req, res) => {
@@ -38,8 +38,8 @@ export const getUser = async (req, res) => {
     .select("*")
     .from("users")
     .where("id", id)
-    .then((book) => {
-      res.json(book);
+    .then((users) => {
+      res.json(users[0]);
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };
@@ -73,6 +73,8 @@ export const registerUser = async (req, res) => {
     name,
     email,
     password: hash,
+
+
   };
   await con
     .insert(newUser)
@@ -93,6 +95,16 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
+  // check errors
+  const { errors } = validationResult(req)
+  if (!(errors.length === 0)) {
+    return res.status(400).json({
+      success: false,
+      errors
+    })
+
+  }
+
   // check if user exists
   await con
     .select("*")
@@ -103,7 +115,7 @@ export const loginUser = async (req, res) => {
         return res.status(404).json({
           message: "User does not exist",
         });
-      } else if (!bcrypt.compare(password, user[0].password)) {
+      } else if (!(bcrypt.compare(password, user[0].password))) {
         return res.status(404).json({
           message: "Invalid password",
         });
@@ -111,19 +123,19 @@ export const loginUser = async (req, res) => {
 
       // create jwt token
       const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET, {
-        expiresIn: "2",
-        algorithm:'HS256'
+        expiresIn: "2h",
       });
 
       const authUserState = {
+        id: user[0].id,
         name: user[0].name,
         email: user[0].email,
-        img : user[0].img,
+        img: user[0].img,
         token,
       };
       return res
         .status(200)
-        .json({ authUserState, token: token, expiresIn: "2" });
+        .json({ authUserState: user[0], token: token, expiresIn: "2" });
     })
     .catch((err) =>
       res.status(400).json({
@@ -134,14 +146,17 @@ export const loginUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { name, email, password } = req.body;
-  const updatedUser = { name, email, password };
+  const { name, email, birthday, bio, phone, website, gender, address } = req.body;
+  const updatedUser = { name, email, birthday, bio, phone, website, gender, address };
   await con
     .update(updatedUser)
     .from("users")
     .where("id", id)
     .then(() => {
-      res.json("User updated");
+      res.status(200).json({
+        success: true,
+        message: "User updated"
+      });
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };
@@ -170,4 +185,3 @@ export const searchUsers = async (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-export default router;

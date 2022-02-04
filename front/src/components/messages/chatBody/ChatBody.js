@@ -4,14 +4,15 @@ import ChatList from "../chatList/ChatList";
 import ChatContent from "../chatContent/ChatContent";
 import UserProfile from "../userProfile/UserProfile";
 
-export default class ChatBody extends Component {
-  render() {
-    return (
-      <div className="main__chatbody">
-        <ChatList />
-        <ChatContent />
-        <UserProfile />
-      </div>
-    );
-  }
+export default function ChatBody({ socket }) {
+
+
+  return (
+    <div className="main__chatbody">
+      <ChatList />
+      <ChatContent socket={socket} />
+      {/* <UserProfile /> */}
+    </div>
+  );
+
 }

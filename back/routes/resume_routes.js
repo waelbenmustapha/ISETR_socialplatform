@@ -12,7 +12,6 @@ import {
     getUserInfo
 }
     from "../controllers/resume_controller.js";
-import {verifyToken} from'../middlewares/user_middleware.js';
 const router = express.Router();
 
 router.get("/getEducation", getEducation);

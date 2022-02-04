@@ -6,7 +6,7 @@ import {
   faLock,
   faMailBulk,
 } from "@fortawesome/free-solid-svg-icons";
-import Loginuser from "../../api/Signin";
+// import Loginuser from "../../api/Signin";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
@@ -170,7 +170,7 @@ function Signin() {
             )}
             <div className="flex justify-center mt-5">
               <button
-                onClick={(e) => {e.preventDefault();Loginuser(formData)}
+                onClick={(e) => { e.preventDefault(); Loginuser() }
                 }
                 className="bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 px-4 rounded"
                 type="submit"
