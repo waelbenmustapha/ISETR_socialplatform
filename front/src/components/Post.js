@@ -11,6 +11,7 @@ import {
 import ConvertMinutes from "../utils/Converminutes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../styles/Post.css';
+import dots from "../images/dots.png";
 import like from "../images/like.png"
 import comment from "../images/comment.png"
 import share from "../images/share.png"
@@ -21,6 +22,7 @@ import axios from "axios";
 import { useAuthHeader, useAuthUser } from "react-auth-kit";
 
 function Post(props) {
+  
 const [minutes,setminutes]=useState(0);
   const [showcomments, setshowcomments] = useState(false);
   const [userLoading, setUserLoading] = useState(true);
@@ -133,23 +135,19 @@ setminutes(minutes);
             {ConvertMinutes(minutes)} ago 
             </p>
           </div>
-          {/* {props.post.User.id === 0 &&
+          {props.post.user_id === auth().id &&
             <div style={{ marginLeft: "auto", padding: "5px", position: 'relative' }}
             >
-              <FontAwesomeIcon
-                className="hover"
-                icon={faEllipsisH}
-                onClick={() => { setshowsettings(!showsettings) }}
-                size="2x"
-              />
+            <img className="hovercolorblue" onClick={() => { setshowsettings(!showsettings) }}
+ src={dots} style={{height:'25px',widhth:'25px'}} />
               {showsettings && <div className="postSettingsBox">
 
-                <div className="hover">Delete Post</div>
-                <div className="hover">Hide Post</div>
+                <div className="hovera" ><p>Delte Post</p></div>
+                <div className="hovera" >Hide Post</div>
 
               </div>}
             </div>
-          } */}
+          } 
         </div>
 
         <div

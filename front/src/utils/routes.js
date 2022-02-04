@@ -25,6 +25,8 @@ import Main from "../views/Main";
 import Signin from "../views/auth/Signin";
 import Jobs from "../views/Jobs";
 import Wall from "../views/Wall";
+import Groups from "../views/Groups";
+import GroupFeed from "../views/GroupFeed";
 
 export const nav_routes = [
   {
@@ -59,6 +61,12 @@ export const nav_routes = [
     icon: faUsers,
   },
   {
+    path: "/mygroups",
+    name: "My Groups",
+    component: Groups,
+    icon: faUsers,
+  },
+  {
     path: "/explore",
     name: "Explore",
     component: Explore,
@@ -75,6 +83,11 @@ export const nav_routes = [
     name: "Jobs",
     component: Jobs,
     icon: faSuitcase,
+  },
+  {
+    path: "/group/:id",
+    name: "group",
+    component: GroupFeed,
   },
   {
     path: "/settings",

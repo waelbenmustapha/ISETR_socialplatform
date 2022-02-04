@@ -73,6 +73,46 @@ body {
 
 .navshadow{box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;}
 
+.hovercolorblue:hover{
+  cursor: pointer;
+  color: #119D90; 
+  filter: invert(45%) sepia(79%) saturate(479%) hue-rotate(125deg) brightness(93%) contrast(88%);
+
+
+}
+
+.hovercolorbluenofilter:hover{
+  color: #119D90;
+  font-weight: 500;
+  border:1px solid #119D90;
+}
+.hovercolorbluenofilterr:hover{   cursor: pointer;
+  color: #119D90;
+  border:1px solid #119D90;}
+
+.disable{
+  pointer-events: none;
+  opacity: 0.5;
+}
+.hovercolorbluenofilter{
+  border: 1px solid #ccc;
+border-radius: 5px;
+padding: 15px;
+height: 100px;
+align-items: center;
+align-content: center;
+display: flex;
+}
+
+.hovera{
+  background-color: #f1f1f1;
+text-align: center;
+padding: 10px;
+}
+.hovera:hover{
+  background-color: #ddd;
+  cursor: pointer;
+}
 .hovercolororange:hover{
   cursor: pointer;
   color: #FC7900;
@@ -85,6 +125,8 @@ body {
 input:focus-visible {
   outline: 0px;
 }
+
+
 .suggestedfriend {
   margin-bottom: 25px;
 }

@@ -5,6 +5,7 @@ import networking from "../images/networking.png";
 import avatar from "../images/avatar.jpg";
 import chat from "../images/chat.png";
 import bell from "../images/bell.png";
+import group from "../images/group.png"
 import magnifier from "../images/magnifier.png";
 import suitcase from "../images/suitcase.png";
 import { useAuthUser,useSignOut } from "react-auth-kit";
@@ -77,7 +78,10 @@ function Navbar() {
        <p style={{fontWeight:'400',fontSize:'10px'}}>Home</p></div>
        
        <div onClick={()=>history.push("/my-commynity")} className={location.pathname=="/my-commynity"?'selectedico':'hovercolor'}><img src={networking} style={{height:'25px',width:'25px',margin:'0px auto'}}/>
-       <p style={{opacity:0.7,fontWeight:'400',fontSize:'10px'}}>My Community</p></div>
+       <p style={{opacity:0.7,fontWeight:'400',fontSize:'10px'}}>People</p></div>
+
+       <div onClick={()=>history.push("/mygroups")} className={location.pathname=="/mygroups"?'selectedico':'hovercolor'}><img src={group} style={{height:'25px',width:'25px',margin:'0px auto'}}/>
+       <p style={{opacity:0.7,fontWeight:'400',fontSize:'10px'}}>My Groups</p></div>
 
        <div onClick={()=>history.push("/jobs")}  className={location.pathname=="/jobs"?'selectedico':'hovercolor'}><img src={suitcase} style={{height:'25px',width:'25px',margin:'0px auto'}}/>
        <p style={{opacity:0.7,fontWeight:'400',fontSize:'10px'}}>Jobs</p></div>
