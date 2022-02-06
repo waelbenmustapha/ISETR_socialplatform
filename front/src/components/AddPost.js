@@ -1,11 +1,19 @@
 import { faImage, faImages, faSmile, faVideo } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { Oval } from  'react-loader-spinner'
+import imageUpload from "../utils/ImageUpload";
+
 import axios from 'axios';
 import React from 'react'
 import { useAuthUser } from 'react-auth-kit';
-import { useState } from 'react/cjs/react.development';
-
+import { useRef, useState } from 'react/cjs/react.development';
+import images from "../images/images.png"
 function AddPost() {
+  const hiddeninput = useRef(null);
+const [loading,setloading]=useState(false);
+  const [imgToAdd, setImgToAdd] = useState(null);
+ 
   const auth = useAuthUser()
   const postText = React.createRef();
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -17,8 +25,9 @@ function AddPost() {
       setSubmitLoading(false)
       return;
     } else {
-      await axios.post('http://localhost:5500/api/post/add', {
+      await axios.post('http://localhost:5500/api/post/', {
         text: postText.current.value,
+        image:imgToAdd,
         user_id: auth().id,
       })
         .then((res) => {
@@ -75,40 +84,43 @@ function AddPost() {
             placeholder="What's happening ?"
           />
         </div>
+        {imgToAdd&&<img
+          src={imgToAdd}
+          style={{ maxHeight: "400px", maxWidth: "400px", margin: "0 auto",padding:'20px' }}
+        />}
         <div
           style={{
             margin: '10px',
             display: "flex",
             flexDirection: "row",
-            paddingLeft: "5px",
+padding:'15px 15px 0px 15px',
             justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <span>
-            <FontAwesomeIcon
-              className="hover"
-              style={{ marginRight: "7px" }}
-              icon={faVideo}
+        
+       {loading ==false ? <span
+       className='hovercolorblue'
+            onClick={() => {
+              hiddeninput.current.click();
+            }}
+          >
+           <img src={images} style={{height:'25px',width:'25px',display:'inline'}}/>
+           <a> Photo/Video</a>
+            <input
+              ref={hiddeninput}
+              style={{ display: "none" }}
+              type="file"
+              onChange={(e) =>{ imageUpload(e.target.files,setImgToAdd,setloading)}}
             />
-            live video
-          </span>
-          <span>
-            <FontAwesomeIcon
-              className="hover"
-              style={{ marginRight: "7px" }}
-              icon={faImages}
-            />
-            Photo/Video
-          </span>
-          <span>
-            <FontAwesomeIcon
-              className="hover"
-              style={{ marginRight: "7px" }}
-              icon={faSmile}
-            />
-            Feeling
-          </span>
+          </span>:<Oval
+    heigth="40"
+    width="40"
+  
+    color='grey'
+    ariaLabel='loading'
+  />}
+         
           <p
             className="hover"
             style={{

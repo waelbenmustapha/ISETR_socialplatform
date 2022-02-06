@@ -150,14 +150,13 @@ export const getMyFeedPostsWithLimits = async (req, res) => {
       .limit(5)
       .offset(page * 5);
 
-
     return res.status(200).json({
       success: true,
       data: posts[0].concat(user_posts).sort((a, b) => {
         var a = new Date(a.date);
         var b = new Date(b.date);
         return a - b;
-      })
+      }).reverse()
     });
 
   } catch (error) {

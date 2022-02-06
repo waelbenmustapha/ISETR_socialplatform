@@ -11,7 +11,10 @@ import {
 import ConvertMinutes from "../utils/Converminutes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../styles/Post.css';
-
+import dots from "../images/dots.png";
+import like from "../images/like.png"
+import comment from "../images/comment.png"
+import share from "../images/share.png"
 import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
 import Comment_Item from "./Comment_Item";
@@ -19,17 +22,24 @@ import axios from "axios";
 import { useAuthHeader, useAuthUser } from "react-auth-kit";
 
 function Post(props) {
-
+  
+const [minutes,setminutes]=useState(0);
   const [showcomments, setshowcomments] = useState(false);
   const [userLoading, setUserLoading] = useState(true);
   const [showsettings, setshowsettings] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const authHeader = useAuthHeader();
   const auth = useAuthUser();
-
   useEffect(() => {
     const getPostUserInfo = async () => {
       console.log(props.post)
+
+      var sqldate = new Date(props.post.date);
+      var currentTime = new Date();
+
+      var difference=currentTime-sqldate;
+      var minutes = Math.floor((difference/1000)/60);
+setminutes(minutes);
       const user_id = props.post.user_id;
 
       await axios.get(`http://localhost:5500/api/user/${user_id}`, {
@@ -87,6 +97,7 @@ function Post(props) {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-around",
+              
             }}
           >
             <p
@@ -103,13 +114,13 @@ function Post(props) {
             <p
               style={{
                 fontWeight: "500",
-                fontSize: "12px",
+                fontSize: "10px",
                 opacity: "0.85",
                 paddingLeft: "10px",
                 margin: "0px",
               }}
             >
-              {/* {props.post.User.current} */}
+             Full Stack Developer
             </p>
             <p
               style={{
@@ -120,26 +131,23 @@ function Post(props) {
                 margin: "0px",
               }}
             >
-              {/* {ConvertMinutes(props.post.timeago)} ago */}
+              
+            {ConvertMinutes(minutes)} ago 
             </p>
           </div>
-          {/* {props.post.User.id === 0 &&
+          {props.post.user_id === auth().id &&
             <div style={{ marginLeft: "auto", padding: "5px", position: 'relative' }}
             >
-              <FontAwesomeIcon
-                className="hover"
-                icon={faEllipsisH}
-                onClick={() => { setshowsettings(!showsettings) }}
-                size="2x"
-              />
+            <img className="hovercolorblue" onClick={() => { setshowsettings(!showsettings) }}
+ src={dots} style={{height:'25px',widhth:'25px'}} />
               {showsettings && <div className="postSettingsBox">
 
-                <div className="hover">Delete Post</div>
-                <div className="hover">Hide Post</div>
+                <div className="hovera" ><p>Delte Post</p></div>
+                <div className="hovera" >Hide Post</div>
 
               </div>}
             </div>
-          } */}
+          } 
         </div>
 
         <div
@@ -150,17 +158,17 @@ function Post(props) {
             justifyContent: "space-between",
           }}
         >
-          <p>{props.post.text}</p>
+          <p style={{padding:'25px'}}>{props.post.text}</p>
           {
             props.post.image &&
             <img
-              src={props.post.img}
-              style={{ maxHeight: "400px", maxWidth: "400px", margin: '0 auto' }}
+              src={props.post.image}
+              style={{ maxHeight: "400px", maxWidth: "600px", margin: '0 auto' }}
             />
           }
           <div style={{ flexDirection: "row", display: "flex" }}>
             <p style={{ fontSize: "14px", fontWeight: "500" }}>
-              {props.post.likes} Like
+              {props.post.likes}74 Like
             </p>
             <p
               onClick={() => setshowcomments(!showcomments)}
@@ -174,41 +182,28 @@ function Post(props) {
               {/* {props.post.comments.length} Comments */}
             </p>
             <p style={{ fontSize: "14px", fontWeight: "500" }}>
-              {props.post.shares} Share
+             15 {props.post.shares} Share
             </p>
           </div>
           <span className="hr"></span>
           <div
             style={{
+              padding:'10px',
               display: "flex",
               justifyContent: "space-between",
               flexDirection: "row",
             }}
           >
-            <p>
-              <FontAwesomeIcon
-                className="hover"
-                style={{ marginRight: "7px" }}
-                icon={faHeart}
-              />
+            <div className="hovercolororange"  style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={like} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
               Like
-            </p>
-            <p>
-              <FontAwesomeIcon
-                className="hover"
-                style={{ marginRight: "7px" }}
-                icon={faComment}
-              />
+            </a></div>
+
+            <div className="hovercolororange"  style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={comment} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
               Comment
-            </p>
-            <p>
-              <FontAwesomeIcon
-                className="hover"
-                style={{ marginRight: "7px" }}
-                icon={faShare}
-              />
+            </a></div>
+            <div className="hovercolororange"  style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={share} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
               Share
-            </p>
+            </a></div>
           </div>
           <span className="hr"></span>
           {/* {showcomments ? props.post.comments.map((comm) => <Comment_Item comment={comm} />) : null} */}
@@ -251,23 +246,13 @@ function Post(props) {
                 }}
                 placeholder="Write a comment..."
               />
-              <FontAwesomeIcon
-                className="hover"
-                style={{ alignSelf: "center", marginRight: "8px" }}
-                icon={faFileImage}
-              />
-
-              <FontAwesomeIcon
-                className="hover"
-                style={{ alignSelf: "center", marginRight: "8px" }}
-                icon={faSmile}
-              />
+             
             </div>
             <FontAwesomeIcon
               size="2x"
               icon={faPaperPlane}
               style={{ alignSelf: "center", paddingLeft: "10px" }}
-              className="hover"
+              className="hovercolororange"
             />
           </div>
         </div>
