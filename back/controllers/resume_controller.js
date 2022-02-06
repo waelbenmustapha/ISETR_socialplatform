@@ -8,6 +8,7 @@ export const getExperience = async (req, res) => {
     await con
         .select("*")
         .from("experience")
+        .where('user_id',req.params.id)
         .then((experience) => {
             res.json(experience);
         })
@@ -36,7 +37,7 @@ export const DeleteExperience = async (req, res) => {
 export const InsertExperience = async (req, res) => {
     await con
         .from('experience')
-        .insert({ 'title': req.body.title, 'DateStart': req.body.DateStart, 'description': req.body.description,'DateEnd': req.body.DateEnd})
+        .insert({ 'title': req.body.title, 'DateStart': req.body.DateStart, 'description': req.body.description,'DateEnd': req.body.DateEnd,'user_id':req.params.id})
         .then(() => {
             res.json("Experience Added");
         })
@@ -48,6 +49,7 @@ export const getEducation = async (req, res) => {
     await con
         .select("*")
         .from("education")
+        .where('user_id',req.params.id)
         .then((education) => {
             res.json(education);
         })
@@ -76,7 +78,7 @@ export const DeleteEducation = async (req, res) => {
 export const InsertEducation = async (req, res) => {
     await con
         .from('education')
-        .insert({ 'title': req.body.title, 'DateStart': req.body.DateStart,'DateEnd': req.body.DateEnd,'description': req.body.description })
+        .insert({ 'title': req.body.title, 'DateStart': req.body.DateStart,'DateEnd': req.body.DateEnd,'description': req.body.description,'user_id':req.params.id })
         .then(() => {
             res.json("education Added");
         })
@@ -86,7 +88,7 @@ export const InsertEducation = async (req, res) => {
 export const InsertUserInfo = async (req, res) => {
     await con
         .from('userinfo')
-        .insert({ 'picture': req.body.picture, 'name': req.body.name, 'birthday': req.body.birthday,'email': req.body.description,'subtitle': req.body.subtitle,'facebook': req.body.facebook,'linkedin': req.body.github})
+        .insert({ 'picture': req.body.picture, 'name': req.body.name, 'birthday': req.body.birthday,'email': req.body.email,'subtitle': req.body.subtitle,'facebook': req.body.facebook,'linkedin': req.body.linkedin,'github': req.body.github,'user_id':req.params.id})
         .then(() => {
             res.json("Info Added");
         })
@@ -96,7 +98,7 @@ export const getUserInfo = async (req, res) => {
         await con
             .select("*")
             .from("userinfo")
-       
+            .where('user_id',req.params.id)
             .then((userinfo) => {
                 res.json(userinfo);
             })

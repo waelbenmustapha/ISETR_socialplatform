@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from "react";
 
 import "./Profile.css";
-import { Button, Grid, Icon, Typography } from "@material-ui/core";
-import resume from '../../../utils/resume'
 import axios from "axios";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import CustomButton from "../Button/Button";
+import {
+Face,
+  Work,
+  Facebook,
+  Email,
+  LinkedIn,
+  GitHub,
+  Cake,
+
+
+} from "@material-ui/icons";
+import { useAuthUser } from 'react-auth-kit';
 import ModalProfile from '../Modal/Modal_Profile'
 const Profile = (props) => {
+  const auth = useAuthUser();
   const [modalOpen, setModalOpen] = useState(false);
   const [userinfos, setUserInfo] = useState([]);
   async function getUserInfo() {
     try {
-      const res = await axios.get('http://localhost:5500/api/resume/getUserInfo')
+      const res = await axios.get(`http://localhost:5500/api/resume/getUserInfo/${auth().id}`)
         .then(res => {
           setUserInfo(res.data)
         })
@@ -27,83 +36,80 @@ const Profile = (props) => {
   }, [userinfos])
 
   return (
-    <div className="profile-container_shadow">
-      <div className="profile_name">
-      </div>
-      <figure className="profile_image">
-        <div className="user">
-          <img src="../../../images/avatar.jpg" alt="" />
-          <label for="file-input">
-          </label>
-          <input id="file-input" type="file" />
-        </div>
-      </figure>
-      <div className="border">
-        <ul className="profile_information">
+    <div>
+      <button
+        className="openModalBtn"
+        onClick={() => {
+          setModalOpen(true);
+        }} >
+        <img src="https://img.icons8.com/material/24/000000/edit--v1.png" />
+      </button>
+      {modalOpen &&
+        <ModalProfile closeModal={() => setModalOpen(false)} />}
+      {userinfos.map((userinfo) => (
 
+        <div className="profile container_shadow">
+          <div className="profile_name">
 
-          <div className="icon">
-            <button
-              className="openModalBtn"
-              onClick={() => {
-                setModalOpen(true);
-              }} >
-              <img src="https://img.icons8.com/ios/20/000000/add--v2.png" />
-            </button>
-            {modalOpen &&
-              <ModalProfile closeModal={() => setModalOpen(false)} />}
           </div>
-          {userinfos.map((userinfo) => (
-            <div>
-              <li>
-                <p>
-                  <span>Name:</span> {userinfo.name}
-                </p>
-              </li>
-              <li>
-                <p>
-                  <span>Birthday:</span> {userinfo.birthday}
-                </p>
-              </li>
-              <li>
-                <p>
-                  <span>Subtitle:</span> {userinfo.subtitle}
-                </p>
-              </li>
-              <li>
-                <p>
-                  <span>Email:</span> {userinfo.email}
-                </p>
-              </li>
-              <li>
-                <p>
-                  <span>Picture:</span> {userinfo.picture}
-                </p>
-              </li>
-              <li>
-                <p>
-                  <span>Github:</span> {userinfo.github}
-                </p>
-              </li>
-              <li>
-                <p>
-                  <span>Facebook:</span> {userinfo.facebook}
-                </p>
-              </li>
-              <li>
-                <p>
-                  <span>Linkedin:</span> {userinfo.linkedin}
-                </p>
-              </li>
+          <div class="container">
+            <div class="crop">
+              <img className="profile_img" src={userinfo.picture} alt="" />
             </div>
-          ))}
+          </div>
 
-        </ul>
+          <ul className="profile_information">
+            <li></li>
+            <li>
+              <p>
+                <Face />
+                <span>Name:</span> {userinfo.name}{" "}
+              </p>
+            </li>
+            <li>
+              <p>
+                <Cake />
+                <span>Birthday:</span> {userinfo.birthday}
+              </p>
+            </li>
+            <li>
+              <p>
+                <Work />
+                <span>Subtitle:</span> {userinfo.subtitle}
+              </p>
+            </li>
+            <li>
+              <p>
+                <Email />
+                <span>Email:</span> {userinfo.email}
+              </p>
+            </li>
+            <li >
 
-        <Grid xs={12} className="button_container">
-          <CustomButton text={"Download CV"} icon={<GetAppIcon />} />
-        </Grid>
-      </div>
+              <p>
+                <Facebook />
+                <span>Facebook:</span> {userinfo.facebook}
+              </p>
+            </li>
+            <li>
+              <p>
+                <GitHub />
+                <span>Github:</span> {userinfo.github}
+              </p>
+            </li>
+            <li>
+              <p>
+                <LinkedIn />
+                <span>Linkedin:</span> {userinfo.linkedin}
+              </p>
+            </li>
+          </ul>
+
+
+
+        </div>
+      ))}
+
     </div>
   );
 };

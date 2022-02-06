@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Modal.css';
+import { useAuthUser } from 'react-auth-kit';
+
 const AddEducation = (props) => {
   const { closeModal } = props;
   const [formData, setFormData] = useState({
@@ -8,7 +10,9 @@ const AddEducation = (props) => {
     DateStart: "",
     DateEnd: "",
     description: "",
+ 
   });
+  const auth = useAuthUser()
   const closeicon = () => (
     <img src="https://img.icons8.com/material/24/000000/close-window--v1.png"
 
@@ -23,7 +27,9 @@ const AddEducation = (props) => {
     console.log(formData);
 
     try {
-      await axios.post("http://localhost:5500/api/resume/InsertEducation", formData);
+      await axios.post(`http://localhost:5500/api/resume/InsertEducation/${auth().id}`, formData);
+
+      
       return alert("Success");
     } catch (error) {
       return alert(error.message);
