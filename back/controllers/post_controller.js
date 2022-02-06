@@ -138,28 +138,32 @@ export const getMyFeedPostsWithLimits = async (req, res) => {
 
   try {
     // get followers and my posts
-
+    const group_user = 'group-user';
     const posts = await con
-      .raw(`SELECT po.* from followers as fl
-      LEFT JOIN posts po
-      
-      on fl.user_id = ?
-      WHERE fl.follower_id = po.user_id or po.user_id = ?
-      
-      order BY po.date DESC
-      
-      LIMIT ?, 5
-      ;`, [user_id, user_id, page * 5])
+      .raw(" SELECT po.* from posts po Left  JOIN `group-user` gu  on ( gu.group_id = po.group_id and gu.user_id = " + ` ${user_id}` + ` ) where gu.group_id is not null ORDER BY po.date DESC    Limit 5 offset ${page * 5} `);
+
+    const user_posts = await con
+      .select('*')
+      .from('posts')
+      .where('user_id', user_id)
+      .andWhere('group_id', null)
+      .limit(5)
+      .offset(page * 5);
+
 
     return res.status(200).json({
       success: true,
-      data: posts[0]
+      data: posts[0].concat(user_posts).sort((a, b) => {
+        var a = new Date(a.date);
+        var b = new Date(b.date);
+        return a - b;
+      })
     });
 
   } catch (error) {
     return res.status(400).json({
       success: false,
-      error: error,
+      error: error.message,
     })
   }
 
