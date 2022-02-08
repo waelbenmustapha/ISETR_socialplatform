@@ -3,10 +3,10 @@ import React, { useEffect } from 'react';
 import { useState } from 'react/cjs/react.development';
 import GroupItem from '../../widgets/GroupItem';
 import magnifier from "../../images/magnifier.png";
-function FindGroups() {
+function FindGroups(props) {
 
 const [mygroups,setGroups]=useState([]);
-const [searchname,setSearchname]=useState(null);
+const [searchname,setSearchname]=useState("");
 function searchgroup(){
 axios.get(`http://localhost:5500/api/group/search?name=${searchname}`).then((res)=>setGroups(res.data.data));
 }
@@ -37,7 +37,7 @@ searchgroup();
         
         <div style={{display:'flex',flexDirection:'column',justifyContent:'space-around',gap:'10px',padding:'10px'}}>
 
-{mygroups.map((el)=>{return <GroupItem mygroups={false}  items={el}/>})}
+{mygroups.map((el)=>{return <GroupItem setselected={props.setselected} mygroups={false}  items={el}/>})}
 
 
   </div>

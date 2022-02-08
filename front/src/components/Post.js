@@ -22,7 +22,7 @@ import axios from "axios";
 import { useAuthHeader, useAuthUser } from "react-auth-kit";
 
 function Post(props) {
-  
+  const [deleted,setDeleted]=useState(false);
 const [minutes,setminutes]=useState(0);
   const [showcomments, setshowcomments] = useState(false);
   const [userLoading, setUserLoading] = useState(true);
@@ -30,6 +30,11 @@ const [minutes,setminutes]=useState(0);
   const [userInfo, setUserInfo] = useState(null);
   const authHeader = useAuthHeader();
   const auth = useAuthUser();
+  function deletepost(){
+
+    axios.delete(`http://localhost:5500/api/post/${props.post.id}`).then((res)=>setDeleted(true))
+
+  }
   useEffect(() => {
     const getPostUserInfo = async () => {
       console.log(props.post)
@@ -67,7 +72,9 @@ setminutes(minutes);
   }
 
 
-
+if(deleted){
+  return<div></div>
+}
 
 
   return (
@@ -142,7 +149,7 @@ setminutes(minutes);
  src={dots} style={{height:'25px',widhth:'25px'}} />
               {showsettings && <div className="postSettingsBox">
 
-                <div className="hovera" ><p>Delte Post</p></div>
+                <div className="hovera" onClick={()=>{deletepost()}} ><p>Delte Post</p></div>
                 <div className="hovera" >Hide Post</div>
 
               </div>}

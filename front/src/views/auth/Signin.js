@@ -36,7 +36,7 @@ function Signin() {
                 
               ) {
                 
-                history.push("/profile");
+                history.push("/feed");
               } else {
               }
             }

@@ -239,7 +239,7 @@ className="hover"            onClick={() => {
             <MyGroups key={change}/>
           </div>
         ) : selected == "second" ? (
-          <div style={{ padding: "15px 5px 15px 35px"}}><FindGroups/></div>
+          <div style={{ padding: "15px 5px 15px 35px"}}><FindGroups setselected={setselected}/></div>
         ) : selected == "third" ? (
           <div style={{ padding: "15px 5px 15px 35px"}}> third selected</div>
         ) : null}

@@ -214,8 +214,7 @@ export const getGroupPosts = async (req, res) => {
   await con
     .select("*")
     .from("posts")
-    .where("group_id", id)
-    .then((post) => {
+    .where("group_id", id).orderBy('date','desc').then((post) => {
       return res.status(200).json({
         success: true,
         data: post

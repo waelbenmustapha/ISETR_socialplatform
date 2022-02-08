@@ -77,6 +77,7 @@ function Navbar() {
          <div onClick={()=>history.push("/feed")}  className={location.pathname=="/feed"?'selectedico':'hovercolor'}><img src={homeico} style={{height:'25px',width:'25px',margin:'0px auto'}}/>
        <p style={{fontWeight:'400',fontSize:'10px'}}>Home</p></div>
        
+       
        <div onClick={()=>history.push("/my-commynity")} className={location.pathname=="/my-commynity"?'selectedico':'hovercolor'}><img src={networking} style={{height:'25px',width:'25px',margin:'0px auto'}}/>
        <p style={{opacity:0.7,fontWeight:'400',fontSize:'10px'}}>People</p></div>
 
@@ -136,7 +137,8 @@ function Navbar() {
 {auth().name}</p>
                   </div>
                   <div className="listacc">
-    <a onClick={()=>history.push("/settings")}>Account</a>
+                  <a onClick={()=>history.push("/settings")}>Account</a>
+                  <a onClick={()=>history.push("/profile")}>Portfolio</a>
     <a onClick={()=>history.push("/wall")}>My Wall</a>
     <a onClick={()=>signOut()}>Sign Out</a>
     </div>

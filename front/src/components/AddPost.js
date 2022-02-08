@@ -9,7 +9,7 @@ import React from 'react'
 import { useAuthUser } from 'react-auth-kit';
 import { useRef, useState } from 'react/cjs/react.development';
 import images from "../images/images.png"
-function AddPost() {
+function AddPost(props) {
   const hiddeninput = useRef(null);
 const [loading,setloading]=useState(false);
   const [imgToAdd, setImgToAdd] = useState(null);
@@ -29,11 +29,11 @@ const [loading,setloading]=useState(false);
         text: postText.current.value,
         image:imgToAdd,
         user_id: auth().id,
+        group_id:props.groupid
       })
         .then((res) => {
-          console.log(res);
-          alert("Post create successfully!!");
-
+          setImgToAdd(null);
+props.getposts(0);
         }).catch((err) => {
           alert(err);
         }).finally(() => {

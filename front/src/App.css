@@ -141,3 +141,12 @@ input:focus-visible {
   @apply: bg-green-400;
   background-color: #214ed8;
 }
+
+
+
+
+.hoverline:hover{
+  color: #FC7900;
+  text-decoration: underline;
+  cursor: pointer;
+}
