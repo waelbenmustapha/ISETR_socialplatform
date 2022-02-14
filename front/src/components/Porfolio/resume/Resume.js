@@ -12,18 +12,20 @@ import "./Resume.css";
 import { Grid } from "@material-ui/core";
 import AddExperience from "../Modal/Modal_Add_Experience";
 import AddEducation from "../Modal/Modal_Add_Education";
-import { EditText, EditTextarea } from 'react-edit-text';
+import { useAuthUser } from 'react-auth-kit';
+
 function Resume(props) {
   const [modalOpenAED, setModalOpenAED] = useState(false);
   const [modalOpenAEX, setModalOpenAEX] = useState(false);
   const [experiences, setExperience] = useState([]);
   const [educations, setEducation] = useState([]);
+  const auth = useAuthUser();
 
 
   //Get Education Data
   async function getEd() {
     try {
-      const res = await axios.get('http://localhost:5500/api/resume/getEducation')
+      const res = await axios.get(`http://localhost:5500/api/resume/getEducation/${auth().id}`)
         .then(res => {
           setEducation(res.data)
         })
@@ -39,7 +41,7 @@ function Resume(props) {
   //Get Experience Data
   async function getEx() {
     try {
-      const res = await axios.get('http://localhost:5500/api/resume/getExperience')
+      const res = await axios.get(`http://localhost:5500/api/resume/getExperience/${auth().id}`)
         .then(res => {
           setExperience(res.data)
 
@@ -122,7 +124,7 @@ function Resume(props) {
                               setModalOpenAEX(true);
                             }}
                           >
-                            <img src="https://img.icons8.com/ios/20/000000/add--v2.png" />
+                            <img src="https://img.icons8.com/material/20/add--v2.png" />
                           </button>
                         </h2>
                         {modalOpenAEX &&
@@ -143,11 +145,11 @@ function Resume(props) {
                         <Typography className="timeline_title">
                           <div class='card'>
                             <h2 className="title">
-                              {experience.title}<button class='task__remove-icon'
+                              {experience.title}<button className='task__remove-icon'
                                 onClick={(e) => {
                                   e.preventDefault();
                                   handleDeleteExperience(experience.id);
-                                }}> <img src="https://img.icons8.com/ios/20/000000/delete--v2.png" /></button>
+                                }}> <img src="https://img.icons8.com/material/20/delete--v2.png" /></button>
                             </h2>
 
                           </div>
@@ -185,7 +187,7 @@ function Resume(props) {
                               setModalOpenAED(true);
                             }}
                           >
-                            <img src="https://img.icons8.com/ios/20/000000/add--v2.png" />
+                            <img src="https://img.icons8.com/material/20/add--v2.png" />
                           </button>
                         </h2>
                         {modalOpenAED &&
@@ -210,7 +212,7 @@ function Resume(props) {
                                 onClick={(e) => {
                                   e.preventDefault();
                                   handleDeleteEducation(education.id);
-                                }}> <img src="https://img.icons8.com/ios/20/000000/delete--v2.png" /></button>
+                                }}> <img src="https://img.icons8.com/material/20/delete--v2.png" /></button>
                             </h2>
 
                           </div>
