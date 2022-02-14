@@ -3,11 +3,14 @@ import Job_Offer_Item from "../components/Job_Offer_Item";
 
 function Jobs() {
   return (
-    <div className="col-start-2 col-end-6  row-start-2 row-end-10 rounded-lg shadow-2xl bg-gray-100 p-3  overflow-y-scroll no-scrollbar">
+    <div style={{padding:'25px',
+  }}>
       <div
         style={{
           display: "flex",
           flexDirection: "row",
+          width:'1200px',
+          margin:'0px auto',
           backgroundColor: "white",
           borderRadius: "15px",
         }}

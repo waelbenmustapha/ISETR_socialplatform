@@ -61,7 +61,6 @@ function Feed() {
 
   return (
     <div style={{ padding: "25px" }}>
-      {" "}
       <div
         onScroll={(e) => handleScroll(e)}
         style={{ width: "1200px", margin: "0px auto" }}

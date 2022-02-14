@@ -19,7 +19,7 @@ const [change,setchange]=useState(false);
 
 function creategroup(){
 
-  axios.post("http://localhost:5500/api/group/",{name:grpname,description:description,image:ImgToAdd,admin_id:auth().id}).then((res)=>setchange(!change))
+  axios.post("http://localhost:5500/api/group/",{name:grpname,description:description,image:ImgToAdd,admin_id:auth().id}).then((res)=>{axios.post("http://localhost:5500/api/group/add-group-member",{user_id:auth().id,group_id:res.data.data});setchange(!change)})
 }
 
   const [loading,setloading]=useState(false);
