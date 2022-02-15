@@ -55,7 +55,7 @@ function GroupFeed() {
     return (
       <div
         style={{
-          width: "1160px",
+          width: "1100px",
           margin: "0px auto",
           marginTop: "25px",
           display: "flex",
@@ -65,7 +65,7 @@ function GroupFeed() {
       >
         <div
           style={{
-            width: "225px",
+            width: "240px",
             backgroundColor: "white",
             borderRadius: "8px",
           }}
@@ -136,7 +136,7 @@ function GroupFeed() {
         </div>
         <div
           style={{
-            width: "650px",
+            width: "600px",
             borderRadius: "8px",
           }}
         >
@@ -191,7 +191,7 @@ function GroupFeed() {
         </div>
         <div
           style={{
-            width: "250px",
+            width: "240px",
             borderRadius: "8px",
           }}
         >
