@@ -25,7 +25,6 @@ const FollowersGrid = ({ props }) => {
             setIsLoading(true);
             await axios.get(`${apiUrls[tabIndex]}${auth().id}`)
                 .then(res => {
-                    console.log(res.data);
                     setUsers(res.data.data)
                 }).catch(err => {
                     console.log(err)

@@ -47,7 +47,7 @@ function GroupFeed() {
     getmembers();
     getThisGroup();
     getMygroups();
-  }, [reload]);
+  }, [reload,params.id]);
 
   if (!thisgroup) {
     return <div>Loading...</div>;
@@ -117,13 +117,12 @@ function GroupFeed() {
             <div style={{ display: "flex", flexDirection: "column" }}>
               {mygroups.map((el) => (
                 <a
-                  rel="noopener noreferrer"
-                  href={`http://localhost:3000/group/${el.id}`}
-                  target="_blank"
+                 
+             
                   onClick={(e) => {
                     history.push(`/group/${el.id}`);
-                    setReload(!reload);
-                    e.preventDefault();
+                  
+                  
                   }}
                   className="hoverline"
                   style={{ fontSize: "14px", opacity: "0.85", padding: "3px" }}
@@ -150,8 +149,8 @@ function GroupFeed() {
                 src={thisgroup.image}
                 style={{
                   position: "absolute",
-                  height: "100px",
-                  width: "100px",
+                  height: "80px",
+                  width: "80px",
                   top: "105px",
                   left: "20px",
                 }}
@@ -182,7 +181,7 @@ function GroupFeed() {
           <div style={{ marginTop: "20px" }}>
             <AddPost groupid={params.id} getposts={groupposts} />
           </div>
-          <div style={{ backgroundColor: "white", marginTop: "20px" }}>
+          <div style={{ marginTop: "20px" }}>
             {" "}
             {posts.map((post) => {
               return <Post post={post} />;

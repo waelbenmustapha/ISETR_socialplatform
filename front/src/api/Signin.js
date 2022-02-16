@@ -14,7 +14,6 @@ function Loginuser(formData, setError) {
     .post("http://localhost:5500/api/user/login", formData)
     .then((res) => {
       if (res.status === 200) {
-        console.log(res);
         if (
           signIn({
             token: res.data.token,

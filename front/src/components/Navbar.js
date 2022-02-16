@@ -16,7 +16,6 @@ function Navbar() {
 
     const auth = useAuthUser();
     const location = useLocation();
-    console.log(location.pathname);
   return (
     <div
       className="navshadow"

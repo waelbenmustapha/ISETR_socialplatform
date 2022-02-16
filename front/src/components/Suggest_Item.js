@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 
 function Suggest_Item({ user, tabIndex }) {
-  console.log(tabIndex);
   const auth = useAuthUser();
 
   const followUser = async (e, user_id) => {
@@ -13,7 +12,6 @@ function Suggest_Item({ user, tabIndex }) {
       follower_id: user_id
     })
       .then((res) => {
-        console.log(res.data);
       }).catch((err) => {
         alert(err);
       });

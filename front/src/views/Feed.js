@@ -6,7 +6,11 @@ import Post from "../components/Post";
 import { useHistory } from "react-router-dom";
 
 function Feed() {
+
+
+
   const [limit, setlimit] = useState(3);
+  const [text,setText]=useState('');
   const auth = useAuthUser();
   let history = useHistory();
   function handleScroll(e) {
@@ -61,6 +65,7 @@ function Feed() {
 
   return (
     <div style={{ padding: "25px" }}>
+     
       <div
         onScroll={(e) => handleScroll(e)}
         style={{ width: "1200px", margin: "0px auto" }}

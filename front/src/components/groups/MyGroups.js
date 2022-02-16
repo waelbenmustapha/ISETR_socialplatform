@@ -13,8 +13,7 @@ function MyGroups() {
     const [mygroups,setMygroups]=useState(null);
   
     function getMygroups(){
-  console.log("fetching")
-      axios.get(`http://localhost:5500/api/group/${auth().id}/groups`).then((res)=>{setMygroups(res.data.data);console.log(res.data.data)})
+      axios.get(`http://localhost:5500/api/group/${auth().id}/groups`).then((res)=>{setMygroups(res.data.data);})
     }
   
     useEffect(() => {

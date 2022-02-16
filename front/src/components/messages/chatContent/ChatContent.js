@@ -154,7 +154,6 @@ export default function ChatContent({ socket }) {
     // componentDidMount()
     // // test
     socket.on("receive-message", data => {
-      console.log(data);
       setRoomMessages(old_msgs => [...old_msgs, data]);
     }
     )

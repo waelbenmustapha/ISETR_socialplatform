@@ -22,7 +22,7 @@ function Jobs() {
             borderRight: "solid 1px black",
           }}
         >
-          <p style={{ fontSize: "18px", fontWeight: "700" }}>Desired Job</p>
+          <p style={{ fontSize: "16px", fontWeight: "700" }}>Desired Job</p>
           <input
             style={{
               border: "1px solid",
@@ -35,7 +35,7 @@ function Jobs() {
             }}
             placeholder="Job title, keywords, company..."
           />
-          <p style={{ fontSize: "18px", fontWeight: "700", marginTop: "40px" }}>
+          <p style={{ fontSize: "16px", fontWeight: "700", marginTop: "40px" }}>
             Location
           </p>
           <input
@@ -49,7 +49,7 @@ function Jobs() {
             }}
             placeholder="Tunis,Ben Arous,Sousse ..."
           />
-          <p style={{ fontSize: "18px", fontWeight: "700", marginTop: "40px" }}>
+          <p style={{ fontSize: "16px", fontWeight: "700", marginTop: "40px" }}>
             Filter
           </p>
           <select
@@ -74,11 +74,12 @@ function Jobs() {
             paddingTop: "14px",
           }}
         >
-          <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}><div
+          <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:'25px'}}><div
             className="hovercursor"
             style={{
               color: "white",
-              fontSize: "18px",
+            
+              fontSize: "14px",
               width: "220px",
               textAlign: "center",
               borderRadius: "12px",
@@ -90,7 +91,7 @@ function Jobs() {
           </div><div className="hover" style={{color:'#FC7900',fontWeight:'500',borderBottom:'1px solid'}}>Saved Offers</div></div>   
           <div>
             <p
-              style={{ fontSize: "22px", fontWeight: "700", marginTop: "35px" }}
+              style={{ fontSize: "20px", fontWeight: "700", marginTop: "35px" }}
             >
               Available Job Offers
             </p>
@@ -107,7 +108,7 @@ function Jobs() {
             className="hovercursor"
             style={{
               color: "white",
-              fontSize: "25px",
+              fontSize: "22px",
               width: "300px",
               textAlign: "center",
               margin: "25px auto",

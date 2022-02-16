@@ -30,6 +30,7 @@ export const checkPostAlreadyLiked = async (post_id, user_id) => {
       user_id
     })
 
+    
   return !(likePost.length === 0)
 
 
@@ -55,6 +56,29 @@ export const getPostShares = async (post_id) => {
   return sharesCount[0]['count(*)']
 }
 
+
+export const isPostLiked = async (req, res) => {
+  const { user_id, post_id } =  req.params;
+
+
+
+ await con
+    .select('*')
+    .from('likes')
+    .where({
+      post_id,
+      user_id
+    }).then((el) => {
+      if(el.length===0){return res.status(200).json(false);
+      }else{return res.status(200).json(true);
+      }
+    })
+    .catch((err) => res.status(400).json({
+      error: err,
+    }));
+
+   
+};
 
 export const getPosts = async (req, res) => {
   await con
@@ -213,6 +237,25 @@ export const getGroupPosts = async (req, res) => {
     .select("*")
     .from("posts")
     .where("group_id", id).orderBy('date','desc').then((post) => {
+      return res.status(200).json({
+        success: true,
+        data: post
+      });
+    })
+    .catch((err) => res.status(400).json({
+      success: false,
+      error: err,
+    }));
+};
+export const getUserPosts = async (req, res) => {
+  const { id } = req.params;
+  console.log('get Posts')
+  
+
+  await con
+    .select("*")
+    .from("posts")
+    .where("user_id", id).orderBy('date','desc').then((post) => {
       return res.status(200).json({
         success: true,
         data: post
