@@ -7,6 +7,7 @@ const router = express.Router();
 import { con } from "../config/database.js";
 import { validationResult } from "express-validator";
 import { checkUserExist } from "./group_controller.js";
+import { createNotif } from "./notif_controller.js";
 
 
 export const checkCommentExist = async (comment_id) => {
@@ -102,23 +103,29 @@ export const addComment = async (req, res) => {
       errors
     })
   }
+  try {
 
 
-  const newComment = { comment, user_id, post_id };
 
-  await con
-    .insert(newComment)
-    .into("comments")
-    .then(() => {
-      return res.status(200).json({
-        message: "Comment added successfully",
-      });
+    const newComment = { comment, user_id, post_id };
+
+    await con
+      .insert(newComment)
+      .into("comments");
+
+    await createNotif(null, user_id, post_id, "c", null);
+
+
+    return res.status(200).json({
+      message: "Comment added successfully",
+    });
+
+  } catch (error) {
+    return res.status(400).json({
+      message: err,
     })
-    .catch((err) =>
-      res.status(400).json({
-        message: err,
-      })
-    );
+  }
+
 };
 
 
@@ -238,6 +245,8 @@ export const likeComment = async (req, res) => {
     })
     .into("comment-likes")
     .then((data) => {
+
+
       return res.status(201).json({
         success: true,
         message: "Comment liked successfully",
