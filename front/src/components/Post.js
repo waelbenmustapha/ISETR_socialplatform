@@ -50,14 +50,13 @@ const [minutes,setminutes]=useState(0);
   const [showsettings, setshowsettings] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const authHeader = useAuthHeader();
+
   const auth = useAuthUser();
 
 
   function isLiked(){
     console.log("wselt hné ?")
     axios.get(`http://localhost:5500/api/post/postliked/${auth().id}/${props.post.id}`).then((res)=>{setLiked(res.data)})
-
-  
   }
 function getgroup(){
 

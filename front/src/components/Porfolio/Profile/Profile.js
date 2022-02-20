@@ -69,7 +69,7 @@ const Profile = (props) => {
             <li>
               <p>
                 <Cake />
-                <span>Birthday:</span> {userinfo.birthday}
+                <span>Birthday:</span> {JSON.stringify(userinfo.birthday).substring(1,11)}
               </p>
             </li>
             <li>
