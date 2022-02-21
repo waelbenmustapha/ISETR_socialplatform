@@ -1,7 +1,19 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Job_Offer_Item from "../components/Job_Offer_Item";
 
 function Jobs() {
+
+  const [jobs,setJobs]=useState([]);
+
+function getJobs(){
+axios.get("http://localhost:5500/api/job").then((res)=>setJobs(res.data))
+}
+
+useEffect(() => {
+  getJobs();
+}, [])
+
   return (
     <div style={{padding:'25px',
   }}>
@@ -97,12 +109,10 @@ function Jobs() {
             </p>
           </div>
 
-          <p>42069 offer</p>
+          <p>{jobs.length} Offers</p>
 
-          <Job_Offer_Item bookmarked={false} />
-          <Job_Offer_Item bookmarked={true} />
-          <Job_Offer_Item bookmarked={true} />
-          <Job_Offer_Item bookmarked={false} />
+          {jobs.map((el)=><Job_Offer_Item element={el} bookmarked={false} />)}
+        
 
           <div
             className="hovercursor"

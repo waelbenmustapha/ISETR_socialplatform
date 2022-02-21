@@ -16,6 +16,8 @@ import groupRoutes from "./routes/group_routes.js";
 import { verifyToken } from "./middlewares/token_middleware.js";
 import { chatsocket } from "./controllers/room_controller.js";
 
+import jobRoutes from "./routes/job_routes.js";
+
 const PORT = process.env.PORT || 5500;
 
 const app = express();
@@ -47,7 +49,7 @@ socket.on('connection', chatsocket);
 // apis
 app.use("/api/user", userRoutes);
 app.use("/api/resume", resumeRoutes);
-
+app.use("/api/job",jobRoutes)
 app.use("/api/follow", followerRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/comment", commentRoutes);

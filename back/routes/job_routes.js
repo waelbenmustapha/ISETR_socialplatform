@@ -20,7 +20,7 @@ router.post("/favorie/job", checkFavoriTable, favorieJobApi);
 router.patch("/:id",  updatejob);
 router.delete("/:id",  deletejob);
 router.get("/search/:term",  searchjob);
-router.get("/favorie",  getFavoriejobs);
+router.get("/favorie/:id",  getFavoriejobs);
 
 
 export default router;

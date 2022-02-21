@@ -146,9 +146,12 @@ export const searchjob = async (req, res) => {
 export const getFavoriejobs = async (req, res) => {
   const { id } = req.params;
   await con
+    .join('favorie', 'jobs.id', 'favorie.job_id')
     .select("*")
     .from("jobs")
-    .where("user_id", id)
+    .where("favorie.user_id", id)
+ 
+
     .then((jobs) => {
       res.json(jobs);
     })
