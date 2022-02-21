@@ -1,0 +1,11 @@
+.joboffertitle{font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 26px;
+    line-height: 30px;
+    
+    color: #119D90;}
+
+    .hovercursor{
+        cursor: pointer;
+    }

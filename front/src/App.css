@@ -1,17 +1,24 @@
 body {
-  margin: 10px;
-  font-family: Arial, Helvetica, sans-serif;
+  /* margin: 10px; */
+  /* font-family: Arial, Helvetica, sans-serif; */
 }
 
 .hero-image {
   background-image: url("https://upload.wikimedia.org/wikipedia/commons/1/1b/Square_200x200.png");
   background-color: #cccccc;
   height: 300px;
- 
-border-radius:10px 10px 5px 5px ;
+
+  border-radius: 10px 10px 5px 5px;
   background-repeat: no-repeat;
   background-size: 100% 300px;
   position: relative;
+}
+.liked{
+  color: #119D90; 
+  filter: invert(45%) sepia(79%) saturate(479%) hue-rotate(125deg) brightness(93%) contrast(88%);
+}
+.liked:hover{
+  cursor: pointer;
 }
 
 .hero-text {
@@ -23,10 +30,130 @@ border-radius:10px 10px 5px 5px ;
   color: white;
 }
 
-.hover:hover{cursor: pointer;}
-
-.hr{  border-top: 1px solid #bbb
+.hover:hover {
+  cursor: pointer;
 }
-input:focus-visible{  outline:0px }
-.suggestedfriend{
-margin-bottom:25px;}
+
+.hovercolor{
+  opacity: 0.7;
+  text-align: center;
+}
+
+
+.showonhover:hover .toshow{
+  display: flex;
+  }
+  .toshow{
+    display: none;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  
+  }
+  
+  .listacc{
+   
+    background-color: #f1f1f1;
+    min-width: 160px;
+    z-index: 1;
+  }
+  .listacc a{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .listacc a:hover {background-color: #ddd;}
+  
+  
+
+.selectedico{
+  cursor: pointer;
+  opacity: 1;
+  text-align: center;
+  filter: invert(43%) sepia(87%) saturate(1289%) hue-rotate(3deg) brightness(103%) contrast(105%);
+}
+
+.hovercolor:hover{
+  cursor: pointer;
+  opacity: 1;
+  filter: invert(45%) sepia(81%) saturate(418%) hue-rotate(125deg) brightness(93%) contrast(98%);}
+
+.navshadow{box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;}
+
+.hovercolorblue:hover{
+  cursor: pointer;
+  color: #119D90; 
+  filter: invert(45%) sepia(79%) saturate(479%) hue-rotate(125deg) brightness(93%) contrast(88%);
+
+
+}
+
+.hovercolorbluenofilter:hover{
+  color: #119D90;
+  font-weight: 500;
+  border:1px solid #119D90;
+}
+.hovercolorbluenofilterr:hover{   cursor: pointer;
+  color: #119D90;
+  border:1px solid #119D90;}
+
+.disable{
+  pointer-events: none;
+  opacity: 0.5;
+}
+.hovercolorbluenofilter{
+  border: 1px solid #ccc;
+border-radius: 5px;
+padding: 15px;
+height: 100px;
+align-items: center;
+align-content: center;
+display: flex;
+}
+
+.hovera{
+  background-color: #f1f1f1;
+text-align: center;
+padding: 10px;
+}
+.hovera:hover{
+  background-color: #ddd;
+  cursor: pointer;
+}
+.hovercolororange:hover{
+  cursor: pointer;
+  color: #FC7900;
+  filter: invert(43%) sepia(87%) saturate(1289%) hue-rotate(3deg) brightness(103%) contrast(105%);
+
+}
+.hr {
+  border-top: 1px solid #bbb;
+}
+input:focus-visible {
+  outline: 0px;
+}
+
+
+.suggestedfriend {
+  margin-bottom: 25px;
+}
+
+/* toggle switch */
+.toggle-checkbox:checked {
+  @apply: right-0 border-green-400;
+  right: 0;
+  border-color: #214ed8;
+}
+.toggle-checkbox:checked + .toggle-label {
+  @apply: bg-green-400;
+  background-color: #214ed8;
+}
+
+
+
+
+.hoverline:hover{
+  color: #FC7900;
+  text-decoration: underline;
+  cursor: pointer;
+}
