@@ -6,7 +6,8 @@ import {
   addjob,
   updatejob,
   searchjob,
-  favorieJobApi
+  favorieJobApi,
+  getFavoriejobs
 } from "../controllers/job_controller.js";
 import { checkFavoriTable, checkJobTable } from "../middlewares/user_middleware.js";
 
@@ -19,5 +20,7 @@ router.post("/favorie/job", checkFavoriTable, favorieJobApi);
 router.patch("/:id",  updatejob);
 router.delete("/:id",  deletejob);
 router.get("/search/:term",  searchjob);
+router.get("/favorie",  getFavoriejobs);
+
 
 export default router;

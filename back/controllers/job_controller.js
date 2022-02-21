@@ -143,5 +143,16 @@ export const searchjob = async (req, res) => {
     }));
 };
 
+export const getFavoriejobs = async (req, res) => {
+  const { id } = req.params;
+  await con
+    .select("*")
+    .from("jobs")
+    .where("user_id", id)
+    .then((jobs) => {
+      res.json(jobs);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
 
 export default router; 
