@@ -5,6 +5,7 @@ import {
   getjobs,
   addjob,
   updatejob,
+  isFavorite,
   searchjob,
   favorieJobApi,
   getFavoriejobs
@@ -14,10 +15,11 @@ import { checkFavoriTable, checkJobTable } from "../middlewares/user_middleware.
 const router = express.Router();
 
 router.get("/", checkJobTable,getjobs);
-router.get("/:id",checkJobTable, getjob);
+router.get("/getjobbyid/:id",checkJobTable, getjob);
 router.post("/add", checkJobTable,addjob);
 router.post("/favorie/job", checkFavoriTable, favorieJobApi);
 router.patch("/:id",  updatejob);
+router.post("/isfavorite",isFavorite);
 router.delete("/:id",  deletejob);
 router.get("/search/:term",  searchjob);
 router.get("/favorie/:id",  getFavoriejobs);

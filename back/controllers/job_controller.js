@@ -9,7 +9,7 @@ import { con } from "../config/database.js";
 export const addjob = async (req, res ) => {
 
     await con
-      .insert({'title': req.body.title,'description': req.body.description,'image': req.body.image,"type": req.body.type})
+      .insert({'title': req.body.title,'location':req.body.location,'company':req.body.company,'description': req.body.description,'image': req.body.image,"type": req.body.type})
       .into('jobs')
       .then(data => res.json(data))
       .catch(err => res.json(err))
@@ -41,8 +41,8 @@ export const getjob = async (req, res) => {
 
 export const updatejob = async (req, res) => {
   const { id } = req.params;
-  const { title,description,image,type} = req.body;
-  const updatedjob = { title,description,image,type };
+  const { title,description,image,type,company,location} = req.body;
+  const updatedjob = { title,description,image,type,company,location };
   await con
     .update(updatedjob)
     .from("jobs")
@@ -154,6 +154,23 @@ export const getFavoriejobs = async (req, res) => {
 
     .then((jobs) => {
       res.json(jobs);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+
+export const isFavorite = async (req, res) => {
+  const { user_id,job_id } = req.body;
+  await con
+    .select('*')
+    .from('favorie')
+    .where({
+      job_id,
+      user_id
+    }).then((el) => {
+      if(el.length===0){return res.status(200).json(false);
+      }else{return res.status(200).json(true);
+      }
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };

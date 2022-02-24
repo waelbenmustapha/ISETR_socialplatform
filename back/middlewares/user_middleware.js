@@ -11,7 +11,8 @@ export const checkJobTable = async (req, res, next) => {
       table.increments("id").primary();
       table.string("title");
       table.string("description");
-
+table.string("location");
+table.string("company");
       table.string("image");
       table.string("type");
       table.dateTime("date").defaultTo(con.fn.now());

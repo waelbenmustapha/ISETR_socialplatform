@@ -20,6 +20,12 @@ body {
 .liked:hover{
   cursor: pointer;
 }
+.hoverfav{  transition: 0.3s;
+}
+.hoverfav:hover{
+  cursor: pointer;
+  transform: scale(1.2)
+}
 
 .hero-text {
   text-align: center;
