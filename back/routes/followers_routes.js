@@ -13,7 +13,7 @@ router.get("/getmyfollowers/:id", getMyFollowersApi);
 router.get("/get-users-i-follow/:id", getUsersIFollowApi);
 router.post("/send-request", sendFollowRequest);
 router.patch("/accept/:id", acceptFollowersRequest);
-router.delete("/deny/:id", denyOrDeleteFollowersRequest);
+router.delete("/delete", denyOrDeleteFollowersRequest);
 
 
 export default router;

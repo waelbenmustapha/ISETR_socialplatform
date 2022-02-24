@@ -9,9 +9,7 @@ const apiUrls = [
     'http://localhost:5500/api/follow/you-might-know/',
 ]
 
-const FollowersGrid = ({ props }) => {
-
-    const tabIndex = props;
+const FollowersGrid = ( props) => {
 
     const auth = useAuthUser();
     const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +21,7 @@ const FollowersGrid = ({ props }) => {
     useEffect(() => {
         const getUsers = async () => {
             setIsLoading(true);
-            await axios.get(`${apiUrls[tabIndex]}${auth().id}`)
+            await axios.get(`${apiUrls[props.tabIndex]}${auth().id}`)
                 .then(res => {
                     setUsers(res.data.data)
                 }).catch(err => {
@@ -35,7 +33,7 @@ const FollowersGrid = ({ props }) => {
         }
 
         getUsers();
-    }, [tabIndex])
+    }, [props.tabIndex])
 
     if (isLoading) {
         return <div>Loading...</div>
@@ -55,7 +53,7 @@ const FollowersGrid = ({ props }) => {
                     users.map((user, index) => {
 
 
-                        return <Suggest_Item key={index} user={user} tabIndex={tabIndex} />
+                        return <Suggest_Item setTabIndex={props.setTabIndex} key={index} user={user} tabIndex={props.tabIndex} />
 
                     })}
 
