@@ -245,9 +245,11 @@ export const checkNotificationsTable = async (req, res, next) => {
         // create table
         await con.schema.createTable("notifications", (table) => {
             table.increments("id").primary();
-            table.integer("user_id").notNullable().references("id").inTable("users").onDelete("CASCADE");
+            table.integer("user_id").references("id").inTable("users").onDelete("CASCADE");
+            table.integer("actioner_id").notNullable().references("id").inTable("users").onDelete("CASCADE");
             table.integer("post_id").references("id").inTable("posts").onDelete("CASCADE");
             table.text("text");
+            table.enum('type', ['l', 'c', 's']).notNullable(); // l - like, c - comment, s - share
             table.dateTime("date").defaultTo(con.fn.now());
             table.boolean("seen").defaultTo(false);
 
