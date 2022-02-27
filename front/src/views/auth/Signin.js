@@ -6,10 +6,44 @@ import {
   faLock,
   faMailBulk,
 } from "@fortawesome/free-solid-svg-icons";
+// import Loginuser from "../../api/Signin";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { useSignIn } from "react-auth-kit";
 
 function Signin() {
+  const signIn = useSignIn();
+  const history = useHistory();
+  const [err, setError] = useState(false);
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  function Loginuser(){
+    axios
+          .post("http://localhost:5500/api/user/login", formData)
+          .then((res) => {
+            if (res.status === 200) {
+              console.log(res);
+           
+              if (
+                signIn({
+                  token: res.data.token,
+                  expiresIn: 20,
+                  tokenType: "Bearer",
+                  authState: res.data.authUserState,
+                  
+                })
+                
+              ) {
+                
+                history.push("/feed");
+              } else {
+              }
+            }
+          })
+          .catch((err) => {
+            setError(true);
+          });}
   return (
     <div className="w-screen h-screen  overflow-hidden  bg-white">
       {/* Header */}
@@ -26,7 +60,7 @@ function Signin() {
           />
 
           <div className="ml-4">
-            <h1 className="text-xl font-bold">IsetR</h1>
+            <h1 className="text-xl font-bold">Alumni</h1>
           </div>
         </div>
         {/* language */}
@@ -53,6 +87,7 @@ function Signin() {
               Welcome Back
             </span>
           </div>
+
           <form className="h-full flex flex-col justify-center">
             {/* Email */}
 
@@ -71,6 +106,9 @@ function Signin() {
                 </div>
                 <input
                   type="email"
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   className="px-4 py-2 w-full"
                   placeholder="Email"
                   id="email_form"
@@ -94,6 +132,9 @@ function Signin() {
                 type="password"
                 className="px-4 py-2 w-full"
                 placeholder="Password"
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
                 id="password_form"
               />
 
@@ -115,8 +156,22 @@ function Signin() {
             </div>
 
             {/* Submit Button */}
+            {err && (
+              <p
+                style={{
+                  fontSize: "16px",
+                  margin: "10px",
+                  color: "red",
+                  textAlign: "center",
+                }}
+              >
+                Email or Password are Incorret
+              </p>
+            )}
             <div className="flex justify-center mt-5">
               <button
+                onClick={(e) => { e.preventDefault(); Loginuser() }
+                }
                 className="bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 px-4 rounded"
                 type="submit"
               >

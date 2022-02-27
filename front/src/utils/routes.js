@@ -10,6 +10,7 @@ import {
   faCog,
   faRss,
   faSignOutAlt,
+  faStream,
   faSuitcase,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
@@ -23,7 +24,10 @@ import {
 import Main from "../views/Main";
 import Signin from "../views/auth/Signin";
 import Jobs from "../views/Jobs";
-
+import Wall from "../views/Wall";
+import Groups from "../views/Groups";
+import GroupFeed from "../views/GroupFeed";
+import UserProfileView from "../views/UserProfile";
 export const nav_routes = [
   {
     path: "/feed",
@@ -32,10 +36,16 @@ export const nav_routes = [
     icon: faRss,
   },
   {
-    path: "/my-commynity",
-    name: "My Community",
-    component: My_Community,
-    icon: faUsers,
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
+    icon: faUser,
+  },
+  {
+    path: "/UserProfileView",
+    name: "UserProfile",
+    component: UserProfileView,
+    icon: faUser,
   },
   {
     path: "/messages",
@@ -50,22 +60,39 @@ export const nav_routes = [
     icon: faBell,
   },
   {
+    path: "/my-commynity",
+    name: "My Community",
+    component: My_Community,
+    icon: faUsers,
+  },
+  {
+    path: "/mygroups",
+    name: "My Groups",
+    component: Groups,
+    icon: faUsers,
+  },
+  {
     path: "/explore",
     name: "Explore",
     component: Explore,
     icon: faCompass,
   },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: Profile,
-    icon: faUser,
+   {
+    path: "/wall",
+    name: "Wall",
+    component: Wall,
+    icon: faStream,
   },
   {
     path: "/jobs",
     name: "Jobs",
     component: Jobs,
     icon: faSuitcase,
+  },
+  {
+    path: "/group/:id",
+    name: "group",
+    component: GroupFeed,
   },
   {
     path: "/settings",

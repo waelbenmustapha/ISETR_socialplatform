@@ -1,15 +1,20 @@
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import Nav_Item from "../components/Nav_Item";
+import {useAuthUser,useIsAuthenticated,useSignOut} from 'react-auth-kit'
+
 import { useHistory } from "react-router";
 import { nav_routes } from "../utils/routes";
 
 function Nav(props) {
+  const isAuthenticated = useIsAuthenticated()
+
   const pathname = window.location.pathname.split("/")[1];
   const history = useHistory();
   const [selected, setSelected] = useState(pathname);
 
   useEffect(() => {
+   
     setSelected(window.location.pathname);
   }, []);
 
@@ -18,7 +23,8 @@ function Nav(props) {
     history.push(route.name);
   };
 
-  console.log(selected);
+  console.log("again ?")
+  console.log(isAuthenticated());
   const nav_items = nav_routes.map((item, index) => {
     return (
       <Nav_Item
@@ -44,7 +50,7 @@ function Nav(props) {
         />
 
         <div className="ml-4">
-          <h1 className="text-xl font-bold">Radesbook</h1>
+          <h1 className="text-xl font-bold">Alumni</h1>
         </div>
       </div>
 

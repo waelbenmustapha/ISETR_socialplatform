@@ -5,7 +5,6 @@ import { Link, useLocation } from "react-router-dom";
 function Nav_Item(props) {
   // selected = window.location.pathname === props.title ? "selected" : "";
   let location = useLocation();
-  console.log(props.selected);
 
   return (
     <Link to={`${props.path}`}>

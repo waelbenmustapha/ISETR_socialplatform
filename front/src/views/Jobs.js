@@ -3,10 +3,18 @@ import Job_Offer_Item from "../components/Job_Offer_Item";
 
 function Jobs() {
   return (
-    <div className="col-start-2 col-end-6  row-start-2 row-end-10 rounded-lg shadow-2xl bg-gray-100 p-3  overflow-y-scroll no-scrollbar">
-      <div style={{ display: "flex", flexDirection: "row",backgroundColor: "white",borderRadius:'15px'
-
- }}>
+    <div style={{padding:'25px',
+  }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          width:'1200px',
+          margin:'0px auto',
+          backgroundColor: "white",
+          borderRadius: "15px",
+        }}
+      >
         <div
           style={{
             flex: 2,
@@ -14,7 +22,7 @@ function Jobs() {
             borderRight: "solid 1px black",
           }}
         >
-          <p style={{ fontSize: "18px", fontWeight: "700" }}>Desired Job</p>
+          <p style={{ fontSize: "16px", fontWeight: "700" }}>Desired Job</p>
           <input
             style={{
               border: "1px solid",
@@ -27,7 +35,7 @@ function Jobs() {
             }}
             placeholder="Job title, keywords, company..."
           />
-          <p style={{ fontSize: "18px", fontWeight: "700", marginTop: "40px" }}>
+          <p style={{ fontSize: "16px", fontWeight: "700", marginTop: "40px" }}>
             Location
           </p>
           <input
@@ -41,7 +49,7 @@ function Jobs() {
             }}
             placeholder="Tunis,Ben Arous,Sousse ..."
           />
-          <p style={{ fontSize: "18px", fontWeight: "700", marginTop: "40px" }}>
+          <p style={{ fontSize: "16px", fontWeight: "700", marginTop: "40px" }}>
             Filter
           </p>
           <select
@@ -58,26 +66,59 @@ function Jobs() {
             <option value="relevance">Relevance</option>
           </select>{" "}
         </div>
+
         <div
           style={{
             flex: 5,
             padding: "50px",
+            paddingTop: "14px",
           }}
         >
-          <p style={{ fontSize: "22px", fontWeight: "700" }}>
-            Available Job Offers
-          </p>
+          <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:'25px'}}><div
+            className="hovercursor"
+            style={{
+              color: "white",
+            
+              fontSize: "14px",
+              width: "220px",
+              textAlign: "center",
+              borderRadius: "12px",
+              padding: "10px",
+              backgroundColor: "#FC7900",
+            }}
+          >
+            Add Job offer
+          </div><div className="hover" style={{color:'#FC7900',fontWeight:'500',borderBottom:'1px solid'}}>Saved Offers</div></div>   
+          <div>
+            <p
+              style={{ fontSize: "20px", fontWeight: "700", marginTop: "35px" }}
+            >
+              Available Job Offers
+            </p>
+          </div>
+
           <p>42069 offer</p>
 
+          <Job_Offer_Item bookmarked={false} />
+          <Job_Offer_Item bookmarked={true} />
+          <Job_Offer_Item bookmarked={true} />
+          <Job_Offer_Item bookmarked={false} />
 
-
-          <Job_Offer_Item bookmarked={false}/>
-          <Job_Offer_Item bookmarked={true}/>
-          <Job_Offer_Item bookmarked={true}/>
-          <Job_Offer_Item bookmarked={false}/>
-        
-<div className="hovercursor" style={{color:'white',fontSize:'25px',width:'300px',textAlign:'center',margin:'25px auto',borderRadius:'25px',padding:'10px',backgroundColor:'#FC7900'}}>Next Page</div>
-
+          <div
+            className="hovercursor"
+            style={{
+              color: "white",
+              fontSize: "22px",
+              width: "300px",
+              textAlign: "center",
+              margin: "25px auto",
+              borderRadius: "25px",
+              padding: "10px",
+              backgroundColor: "#FC7900",
+            }}
+          >
+            Next Page
+          </div>
         </div>
       </div>
     </div>
