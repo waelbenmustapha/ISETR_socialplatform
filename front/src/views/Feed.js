@@ -6,7 +6,11 @@ import Post from "../components/Post";
 import { useHistory } from "react-router-dom";
 
 function Feed() {
+
+
+
   const [limit, setlimit] = useState(3);
+  const [text,setText]=useState('');
   const auth = useAuthUser();
   let history = useHistory();
   function handleScroll(e) {
@@ -61,7 +65,7 @@ function Feed() {
 
   return (
     <div style={{ padding: "25px" }}>
-      {" "}
+     
       <div
         onScroll={(e) => handleScroll(e)}
         style={{ width: "1200px", margin: "0px auto" }}
@@ -74,7 +78,7 @@ function Feed() {
             justifyContent: "center",
           }}
         >
-          <div style={{ width: "225px", backgroundColor: "white" }}>
+          <div style={{ width: "240px", backgroundColor: "white",borderRadius:'8px' }}>
             <div style={{ position: "relative" }}>
               <img
                 src="https://static-exp1.licdn.com/sc/h/55k1z8997gh8dwtihm11aajyq"
@@ -138,7 +142,7 @@ function Feed() {
           <div
             style={{
               borderRadius: "8px",
-              width: "225px",
+              width: "240px",
               backgroundColor: "white",
               display: "flex",
               flexDirection: "column",

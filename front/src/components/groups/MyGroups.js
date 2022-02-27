@@ -7,19 +7,18 @@ import { Oval } from 'react-loader-spinner';
 import GroupItem from '../../widgets/GroupItem';
 
 
-function MyGroups() {
+function MyGroups(props) {
     const auth = useAuthUser();
 
     const [mygroups,setMygroups]=useState(null);
   
     function getMygroups(){
-  console.log("fetching")
-      axios.get(`http://localhost:5500/api/group/${auth().id}/groups`).then((res)=>{setMygroups(res.data.data);console.log(res.data.data)})
+      axios.get(`http://localhost:5500/api/group/${auth().id}/groups`).then((res)=>{setMygroups(res.data.data);})
     }
   
     useEffect(() => {
      getMygroups();
-    }, []);
+    }, [props.tab]);
 
     if (mygroups==null) {
         return <Oval

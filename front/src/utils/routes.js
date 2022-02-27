@@ -27,6 +27,8 @@ import Jobs from "../views/Jobs";
 import Wall from "../views/Wall";
 import Groups from "../views/Groups";
 import GroupFeed from "../views/GroupFeed";
+import SavedJobs from "../views/SavedJobs";
+import CheckPost from "../views/CheckPost";
 
 export const nav_routes = [
   {
@@ -90,9 +92,20 @@ export const nav_routes = [
     component: GroupFeed,
   },
   {
+    path: "/post/:id",
+    name: "Post",
+    component: CheckPost,
+    icon: faCog,
+  }, 
+  {
     path: "/settings",
     name: "Settings",
     component: Settings,
+    icon: faCog,
+  }, {
+    path: "/savedJobs",
+    name: "savedJobs",
+    component: SavedJobs,
     icon: faCog,
   },
   //   {

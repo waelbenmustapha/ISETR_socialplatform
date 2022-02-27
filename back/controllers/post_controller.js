@@ -6,6 +6,7 @@ const router = express.Router();
 import { con } from "../config/database.js";
 import { checkGroupExist, checkUserExist } from "./group_controller.js";
 import { validationResult } from "express-validator";
+import { createNotif } from "./notif_controller.js";
 
 export const checkPostExist = async (post_id) => {
 
@@ -30,6 +31,7 @@ export const checkPostAlreadyLiked = async (post_id, user_id) => {
       user_id
     })
 
+    
   return !(likePost.length === 0)
 
 
@@ -55,6 +57,29 @@ export const getPostShares = async (post_id) => {
   return sharesCount[0]['count(*)']
 }
 
+
+export const isPostLiked = async (req, res) => {
+  const { user_id, post_id } =  req.params;
+
+
+
+ await con
+    .select('*')
+    .from('likes')
+    .where({
+      post_id,
+      user_id
+    }).then((el) => {
+      if(el.length===0){return res.status(200).json(false);
+      }else{return res.status(200).json(true);
+      }
+    })
+    .catch((err) => res.status(400).json({
+      error: err,
+    }));
+
+   
+};
 
 export const getPosts = async (req, res) => {
   await con
@@ -138,33 +163,31 @@ export const getMyFeedPostsWithLimits = async (req, res) => {
 
   try {
     // get followers and my posts
-
+    const group_user = 'group-user';
     const posts = await con
-      .raw(`SELECT po.* from followers as fl
-      LEFT JOIN posts po
-      
-      on fl.user_id = ?
-      WHERE fl.follower_id = po.user_id or po.user_id = ?
-      
-      order BY po.date DESC
-      
-      LIMIT ?, 5
-      ;`, [user_id, user_id, page * 5])
+      .raw(" SELECT po.* from posts po Left  JOIN `group-user` gu  on ( gu.group_id = po.group_id and gu.user_id = " + ` ${user_id}` + ` ) where gu.group_id is not null ORDER BY po.date DESC    Limit 5 offset ${page * 5} `);
 
-
-     console.log(posts)
+    const user_posts = await con
+      .select('*')
+      .from('posts')
+      .where('user_id', user_id)
+      .andWhere('group_id', null)
+      .limit(5)
+      .offset(page * 5);
 
     return res.status(200).json({
       success: true,
-      
-      data: posts[0]
-
+      data: posts[0].concat(user_posts).sort((a, b) => {
+        var a = new Date(a.date);
+        var b = new Date(b.date);
+        return a - b;
+      }).reverse()
     });
 
   } catch (error) {
     return res.status(400).json({
       success: false,
-      error: error,
+      error: error.message,
     })
   }
 
@@ -215,6 +238,25 @@ export const getGroupPosts = async (req, res) => {
     .select("*")
     .from("posts")
     .where("group_id", id).orderBy('date','desc').then((post) => {
+      return res.status(200).json({
+        success: true,
+        data: post
+      });
+    })
+    .catch((err) => res.status(400).json({
+      success: false,
+      error: err,
+    }));
+};
+export const getUserPosts = async (req, res) => {
+  const { id } = req.params;
+  console.log('get Posts')
+  
+
+  await con
+    .select("*")
+    .from("posts")
+    .where("user_id", id).orderBy('date','desc').then((post) => {
       return res.status(200).json({
         success: true,
         data: post
@@ -314,6 +356,9 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
 
+
+  // console.log('Liking post..')
+
   // check body errors
 
   const { errors } = validationResult(req);
@@ -371,6 +416,7 @@ export const likePost = async (req, res) => {
     }
   }
 
+
   // like == insert
   await con
     .insert({
@@ -378,7 +424,10 @@ export const likePost = async (req, res) => {
       post_id
     })
     .into("likes")
-    .then((post) => {
+    .then(async (post) => {
+
+      await createNotif(null, user_id, post_id, "l", null);
+
       return res.status(201).json({
         success: true,
         message: "Post liked successfully",

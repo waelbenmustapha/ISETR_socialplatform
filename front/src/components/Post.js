@@ -11,33 +11,97 @@ import {
 import ConvertMinutes from "../utils/Converminutes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../styles/Post.css';
+import { LinkPreview } from '@dhaiwat10/react-link-preview';
+
 import dots from "../images/dots.png";
 import like from "../images/like.png"
 import comment from "../images/comment.png"
 import share from "../images/share.png"
-import React from "react";
-import { useEffect, useState } from "react/cjs/react.development";
+import React, { useEffect, useState,useRef } from "react";
 import Comment_Item from "./Comment_Item";
 import axios from "axios";
 import { useAuthHeader, useAuthUser } from "react-auth-kit";
 
 function Post(props) {
+
+
+  const [urlFound,setUrlFound]=useState(false);
+  const [elurl,setElUrl]=useState(null);
+    function linkify(text) {
+      var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+      if(urlRegex.test(text)){setUrlFound(true)}else{setUrlFound(false)}
+      
+      return text.replace(urlRegex, function(url) {
+        setElUrl(url);
+          return `"${url}"`
+      });
+  }
+
   const [deleted,setDeleted]=useState(false);
 const [minutes,setminutes]=useState(0);
   const [showcomments, setshowcomments] = useState(false);
   const [userLoading, setUserLoading] = useState(true);
+  const [comments,setComments]=useState([]);
+  const ref = useRef(null);
+  const [liked,setLiked]=useState(false);
+  const [elgroup,setElgroup]=useState(null);
+  const [lmao,setLmao]=useState(null);
+  const [commentToAdd,setCommentToAdd]=useState("");
   const [showsettings, setshowsettings] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const authHeader = useAuthHeader();
+
   const auth = useAuthUser();
+
+
+  function isLiked(){
+    console.log("wselt hné ?")
+    axios.get(`http://localhost:5500/api/post/postliked/${auth().id}/${props.post.id}`).then((res)=>{setLiked(res.data)})
+  }
+function getgroup(){
+
+  axios.get(`http://localhost:5500/api/group/${props.post.group_id}`).then((res)=>{setElgroup(res.data.data)})
+}
+
+  function getpostlmao(){
+    axios.get(`http://localhost:5500/api/post/${props.post.id}`).then((res)=>{setLmao(res.data.data)})
+
+    
+  }
+ function getcomments(){
+
+    axios.get(`http://localhost:5500/api/comment/post-comments/${props.post.id}`).then((res)=>{setComments(res.data);})
+  
+  }
+
+  function sendnotif(type){
+    axios.post(`http://localhost:5500/api/notif`,{
+      "user_id":props.post.user_id, "actioner_id":auth().id, "post_id":props.post.id, "type":type, "text":"liked"
+  }).then((res)=>{console.log(res)})
+
+  }
+  function likePost(){
+    axios.post(`http://localhost:5500/api/post/like`,{"post_id":props.post.id,"user_id":auth().id}).then((res)=>{getpostlmao();sendnotif("l");})
+    
+  }
+  function addComment(){
+    axios.post(`http://localhost:5500/api/comment/`,{"post_id":props.post.id,"user_id":auth().id,"comment":commentToAdd}).then((res)=>{getcomments();setCommentToAdd("");setshowcomments(true);ref.current.focus();sendnotif("c")})
+
+  }
   function deletepost(){
 
     axios.delete(`http://localhost:5500/api/post/${props.post.id}`).then((res)=>setDeleted(true))
 
   }
   useEffect(() => {
+  
+        isLiked();
+    linkify(props.post.text);
+setshowcomments(false)
+   if(props.post.group_id!=null){ getgroup();}
+    getpostlmao();
+    getcomments();
     const getPostUserInfo = async () => {
-      console.log(props.post)
 
       var sqldate = new Date(props.post.date);
       var currentTime = new Date();
@@ -65,10 +129,10 @@ setminutes(minutes);
 
     getPostUserInfo();
 
-  }, [])
+  }, [props])
 
-  if (userLoading) {
-    return <div></div>
+  if (userLoading||userInfo==null||lmao==null) {
+    return <div><p>Loading</p></div>
   }
 
 
@@ -83,6 +147,7 @@ if(deleted){
         style={{
           backgroundColor: "white",
           borderRadius: "10px",
+          border:'1px solid #119D90',
           marginTop: "10px",
           padding: "10px",
         }}
@@ -116,8 +181,9 @@ if(deleted){
                 margin: "0px",
               }}
             >
-              {userInfo.name}
+              {userInfo.name} {elgroup&&<a style={{fontSize:'13px',fontWeight:'500',color:'#119D90'}}>{" > "} {elgroup.name}</a>}
             </p>
+          
             <p
               style={{
                 fontWeight: "500",
@@ -173,9 +239,11 @@ if(deleted){
               style={{ maxHeight: "400px", maxWidth: "600px", margin: '0 auto' }}
             />
           }
+                {urlFound&&<LinkPreview url={elurl} width='350px' margin={"10px auto"} />}
+
           <div style={{ flexDirection: "row", display: "flex" }}>
             <p style={{ fontSize: "14px", fontWeight: "500" }}>
-              {props.post.likes}74 Like
+              {lmao.likes} Like
             </p>
             <p
               onClick={() => setshowcomments(!showcomments)}
@@ -186,10 +254,10 @@ if(deleted){
                 marginRight: "10px",
               }}
             >
-              {/* {props.post.comments.length} Comments */}
+               {comments.length} Comments 
             </p>
             <p style={{ fontSize: "14px", fontWeight: "500" }}>
-             15 {props.post.shares} Share
+            {lmao.shares} Share
             </p>
           </div>
           <span className="hr"></span>
@@ -201,11 +269,11 @@ if(deleted){
               flexDirection: "row",
             }}
           >
-            <div className="hovercolororange"  style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={like} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
+            <div className={liked?"liked":"hovercolororange"}  onClick={()=>{likePost();setLiked(!liked)}} style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={like} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
               Like
             </a></div>
 
-            <div className="hovercolororange"  style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={comment} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
+            <div className="hovercolororange" onClick={() => setshowcomments(!showcomments)} style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={comment} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
               Comment
             </a></div>
             <div className="hovercolororange"  style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={share} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
@@ -213,7 +281,8 @@ if(deleted){
             </a></div>
           </div>
           <span className="hr"></span>
-          {/* {showcomments ? props.post.comments.map((comm) => <Comment_Item comment={comm} />) : null} */}
+           {showcomments ? comments.map((comm) => <Comment_Item comment={comm} />) : null} 
+           <div ref={ref}></div>
           <div
             style={{
               display: "flex",
@@ -243,6 +312,8 @@ if(deleted){
               }}
             >
               <input
+              onChange={(e)=>setCommentToAdd(e.target.value)}
+              value={commentToAdd}
                 style={{
                   border: "0px",
                   width: "100%",
@@ -257,6 +328,7 @@ if(deleted){
             </div>
             <FontAwesomeIcon
               size="2x"
+              onClick={()=>addComment()}
               icon={faPaperPlane}
               style={{ alignSelf: "center", paddingLeft: "10px" }}
               className="hovercolororange"

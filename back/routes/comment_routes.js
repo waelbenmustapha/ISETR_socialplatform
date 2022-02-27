@@ -8,13 +8,13 @@ import { commentPostValidator, likeCommentValidator } from "../validators/validt
 
 const router = express.Router();
 router.get("/", checkCommentsTable, getComments);
-router.get("/limit/:id", checkCommentsTable, verifyToken, getCommentsWithLimits);
-router.get("/:id", verifyToken, getComment);
-router.post("/", verifyToken, commentPostValidator, addComment);
-router.put("/:id", verifyToken, updateComment);
-router.delete("/:id", verifyToken, deleteComment);
-router.post("/like", verifyToken, checkCommentsLikesTable, likeCommentValidator, likeComment);
-router.get("/post-comments/:id", verifyToken, getPostComments);
+router.get("/limit/:id", checkCommentsTable, getCommentsWithLimits);
+router.get("/:id", getComment);
+router.post("/", commentPostValidator, addComment);
+router.put("/:id",  updateComment);
+router.delete("/:id",  deleteComment);
+router.post("/like",  checkCommentsLikesTable, likeCommentValidator, likeComment);
+router.get("/post-comments/:id",  getPostComments);
 
 
 export default router;

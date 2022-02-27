@@ -2,9 +2,19 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 
-function Suggest_Item({ user, tabIndex }) {
-  console.log(tabIndex);
+function Suggest_Item({ user, tabIndex,setTabIndex }) {
   const auth = useAuthUser();
+
+  function unfollow(){
+   
+    axios.delete("http://localhost:5500/api/follow/delete", {
+      headers: {
+      },
+      data: {
+        user_id:auth().id,follower_id:user.id
+      }
+    }).then((res)=>setTabIndex(2))
+}
 
   const followUser = async (e, user_id) => {
     e.preventDefault();
@@ -12,8 +22,7 @@ function Suggest_Item({ user, tabIndex }) {
       user_id: auth().id,
       follower_id: user_id
     })
-      .then((res) => {
-        console.log(res.data);
+      .then((res) => {setTabIndex(1)
       }).catch((err) => {
         alert(err);
       });
@@ -53,7 +62,7 @@ function Suggest_Item({ user, tabIndex }) {
           tabIndex === 1 ?
             <div className=" flex justify-around items-center gap-3 col-span-3 row-span-2">
 
-              <button class="w-full h-11 px-6 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800">
+              <button onClick={()=>unfollow()} class="w-full h-11 px-6 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800">
                 unfollow
               </button>
 

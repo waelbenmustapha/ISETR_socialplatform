@@ -146,8 +146,8 @@ export const loginUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { name, email, birthday, bio, phone, website, gender, address } = req.body;
-  const updatedUser = { name, email, birthday, bio, phone, website, gender, address };
+  const { name, email, birthday,avatar, bio, phone, website, gender, address } = req.body;
+  const updatedUser = { name, email, birthday,avatar, bio, phone, website, gender, address };
   await con
     .update(updatedUser)
     .from("users")

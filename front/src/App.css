@@ -13,6 +13,19 @@ body {
   background-size: 100% 300px;
   position: relative;
 }
+.liked{
+  color: #119D90; 
+  filter: invert(45%) sepia(79%) saturate(479%) hue-rotate(125deg) brightness(93%) contrast(88%);
+}
+.liked:hover{
+  cursor: pointer;
+}
+.hoverfav{  transition: 0.3s;
+}
+.hoverfav:hover{
+  cursor: pointer;
+  transform: scale(1.2)
+}
 
 .hero-text {
   text-align: center;
