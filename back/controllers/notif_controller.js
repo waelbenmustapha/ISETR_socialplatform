@@ -33,8 +33,12 @@ export const checkShareAlreadyLiked = async (share_id, user_id) => {
 }
 
 export const createNotif = async (user_id, actioner_id, post_id, type, text) => {
-
+if(user_id==null){ return {
+    success: false,
+    error: "error"
+}}
     try {
+        console.log("inserting")
         await con.insert({
             user_id,
             actioner_id,
@@ -96,18 +100,18 @@ export const getMyNotifs = async (user_id) => {
     try {
         const notifs = await con
             .raw(`
-        select no.id, no.seen, no.type, no.date,
-         po.id as post_id,
-          us.id as user_id,
-          us.name,
-          us.avatar
-           from notifications no 
-        left join posts po 
-        on po.id = no.id
-        LEFT JOIN users us
-        on po.user_id = us.id
-        where no.actioner_id != us.id 
-        and po.user_id = ?
+            select no.id, no.seen, no.type, no.date,
+            po.id as post_id,
+             us.id as user_id,
+             us.name,
+             us.avatar
+              from notifications no 
+           left join posts po 
+           on po.id = no.post_id
+           LEFT JOIN users us
+           on no.actioner_id = us.id
+           where po.user_id != us.id 
+           and  po.user_id = ? and no.user_id IS NOT null order by no.date desc
 `, [user_id])
 
 

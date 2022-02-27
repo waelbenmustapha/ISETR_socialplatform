@@ -34,12 +34,16 @@ const [ImgToAdd,setImgToAdd]=useState("https://waterfountain.no/wp-content/uploa
     setShow(false);
   }
 
+  
+  
+
   const wrapperRef = useRef(null);
   useOutsideClick(wrapperRef, hidemodal);
 
   function selectTab(tab) {
     setselected(tab);
   }
+
 
   return (
     <div>
@@ -236,10 +240,10 @@ className="hover"            onClick={() => {
         {selected == "first" ? (
           <div style={{ padding: "15px 5px 15px 35px" }}>
            
-            <MyGroups key={change}/>
+            <MyGroups tab={selected} key={change}/>
           </div>
         ) : selected == "second" ? (
-          <div style={{ padding: "15px 5px 15px 35px"}}><FindGroups setselected={setselected}/></div>
+          <div style={{ padding: "15px 5px 15px 35px"}}><FindGroups  setselected={setselected}/></div>
         ) : selected == "third" ? (
           <div style={{ padding: "15px 5px 15px 35px"}}> third selected</div>
         ) : null}

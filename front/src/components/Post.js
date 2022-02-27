@@ -73,12 +73,19 @@ function getgroup(){
     axios.get(`http://localhost:5500/api/comment/post-comments/${props.post.id}`).then((res)=>{setComments(res.data);})
   
   }
+
+  function sendnotif(type){
+    axios.post(`http://localhost:5500/api/notif`,{
+      "user_id":props.post.user_id, "actioner_id":auth().id, "post_id":props.post.id, "type":type, "text":"liked"
+  }).then((res)=>{console.log(res)})
+
+  }
   function likePost(){
-    axios.post(`http://localhost:5500/api/post/like`,{"post_id":props.post.id,"user_id":auth().id}).then((res)=>{getpostlmao()})
+    axios.post(`http://localhost:5500/api/post/like`,{"post_id":props.post.id,"user_id":auth().id}).then((res)=>{getpostlmao();sendnotif("l");})
     
   }
   function addComment(){
-    axios.post(`http://localhost:5500/api/comment/`,{"post_id":props.post.id,"user_id":auth().id,"comment":commentToAdd}).then((res)=>{getcomments();setCommentToAdd("");setshowcomments(true);ref.current.focus()})
+    axios.post(`http://localhost:5500/api/comment/`,{"post_id":props.post.id,"user_id":auth().id,"comment":commentToAdd}).then((res)=>{getcomments();setCommentToAdd("");setshowcomments(true);ref.current.focus();sendnotif("c")})
 
   }
   function deletepost(){
@@ -87,7 +94,8 @@ function getgroup(){
 
   }
   useEffect(() => {
-    isLiked();
+  
+        isLiked();
     linkify(props.post.text);
 setshowcomments(false)
    if(props.post.group_id!=null){ getgroup();}

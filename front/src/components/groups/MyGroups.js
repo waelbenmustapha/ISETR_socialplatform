@@ -7,7 +7,7 @@ import { Oval } from 'react-loader-spinner';
 import GroupItem from '../../widgets/GroupItem';
 
 
-function MyGroups() {
+function MyGroups(props) {
     const auth = useAuthUser();
 
     const [mygroups,setMygroups]=useState(null);
@@ -18,7 +18,7 @@ function MyGroups() {
   
     useEffect(() => {
      getMygroups();
-    }, []);
+    }, [props.tab]);
 
     if (mygroups==null) {
         return <Oval
