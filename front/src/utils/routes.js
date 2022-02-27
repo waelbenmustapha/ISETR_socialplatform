@@ -28,6 +28,9 @@ import Wall from "../views/Wall";
 import Groups from "../views/Groups";
 import GroupFeed from "../views/GroupFeed";
 import UserProfileView from "../views/UserProfile";
+import SavedJobs from "../views/SavedJobs";
+import CheckPost from "../views/CheckPost";
+
 export const nav_routes = [
   {
     path: "/feed",
@@ -47,6 +50,7 @@ export const nav_routes = [
     component: UserProfileView,
     icon: faUser,
   },
+  
   {
     path: "/messages",
     name: "Messages",
@@ -95,9 +99,17 @@ export const nav_routes = [
     component: GroupFeed,
   },
   {
+    path: "/post/:id",
+    icon: faCog,
+  }, 
+  {
     path: "/settings",
     name: "Settings",
-    component: Settings,
+    icon: faCog,
+  }, {
+    path: "/savedJobs",
+    name: "savedJobs",
+    component: SavedJobs,
     icon: faCog,
   },
   //   {

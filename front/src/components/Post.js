@@ -17,83 +17,88 @@ import dots from "../images/dots.png";
 import like from "../images/like.png"
 import comment from "../images/comment.png"
 import share from "../images/share.png"
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import Comment_Item from "./Comment_Item";
 import axios from "axios";
 import { useAuthHeader, useAuthUser } from "react-auth-kit";
-import { useHistory, Link } from 'react-router-dom';
 
 function Post(props) {
 
-  let history = useHistory();
 
-  const [urlFound, setUrlFound] = useState(false);
-  const [elurl, setElUrl] = useState(null);
-  function linkify(text) {
-    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-    if (urlRegex.test(text)) { setUrlFound(true) } else { setUrlFound(false) }
-
-    return text.replace(urlRegex, function (url) {
-      setElUrl(url);
-      return `"${url}"`
-    });
+  const [urlFound,setUrlFound]=useState(false);
+  const [elurl,setElUrl]=useState(null);
+    function linkify(text) {
+      var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+      if(urlRegex.test(text)){setUrlFound(true)}else{setUrlFound(false)}
+      
+      return text.replace(urlRegex, function(url) {
+        setElUrl(url);
+          return `"${url}"`
+      });
   }
 
-  const [deleted, setDeleted] = useState(false);
-  const [minutes, setminutes] = useState(0);
+  const [deleted,setDeleted]=useState(false);
+const [minutes,setminutes]=useState(0);
   const [showcomments, setshowcomments] = useState(false);
   const [userLoading, setUserLoading] = useState(true);
-  const [comments, setComments] = useState([]);
+  const [comments,setComments]=useState([]);
   const ref = useRef(null);
-  const [liked, setLiked] = useState(false);
-  const [elgroup, setElgroup] = useState(null);
-  const [lmao, setLmao] = useState(null);
-  const [commentToAdd, setCommentToAdd] = useState("");
+  const [liked,setLiked]=useState(false);
+  const [elgroup,setElgroup]=useState(null);
+  const [lmao,setLmao]=useState(null);
+  const [commentToAdd,setCommentToAdd]=useState("");
   const [showsettings, setshowsettings] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const authHeader = useAuthHeader();
+
   const auth = useAuthUser();
 
 
-  function isLiked() {
+  function isLiked(){
     console.log("wselt hné ?")
-    axios.get(`http://localhost:5500/api/post/postliked/${auth().id}/${props.post.id}`).then((res) => { setLiked(res.data) })
+    axios.get(`http://localhost:5500/api/post/postliked/${auth().id}/${props.post.id}`).then((res)=>{setLiked(res.data)})
+  }
+function getgroup(){
 
+  axios.get(`http://localhost:5500/api/group/${props.post.group_id}`).then((res)=>{setElgroup(res.data.data)})
+}
+
+  function getpostlmao(){
+    axios.get(`http://localhost:5500/api/post/${props.post.id}`).then((res)=>{setLmao(res.data.data)})
+
+    
+  }
+ function getcomments(){
+
+    axios.get(`http://localhost:5500/api/comment/post-comments/${props.post.id}`).then((res)=>{setComments(res.data);})
+  
+  }
+
+  function sendnotif(type){
+    axios.post(`http://localhost:5500/api/notif`,{
+      "user_id":props.post.user_id, "actioner_id":auth().id, "post_id":props.post.id, "type":type, "text":"liked"
+  }).then((res)=>{console.log(res)})
 
   }
-  function getgroup() {
-
-    axios.get(`http://localhost:5500/api/group/${props.post.group_id}`).then((res) => { setElgroup(res.data.data) })
+  function likePost(){
+    axios.post(`http://localhost:5500/api/post/like`,{"post_id":props.post.id,"user_id":auth().id}).then((res)=>{getpostlmao();sendnotif("l");})
+    
   }
-
-  function getpostlmao() {
-    axios.get(`http://localhost:5500/api/post/${props.post.id}`).then((res) => { setLmao(res.data.data) })
-
+  function addComment(){
+    axios.post(`http://localhost:5500/api/comment/`,{"post_id":props.post.id,"user_id":auth().id,"comment":commentToAdd}).then((res)=>{getcomments();setCommentToAdd("");setshowcomments(true);ref.current.focus();sendnotif("c")})
 
   }
-  function getcomments() {
+  function deletepost(){
 
-    axios.get(`http://localhost:5500/api/comment/post-comments/${props.post.id}`).then((res) => { setComments(res.data); })
-
-  }
-  function likePost() {
-    axios.post(`http://localhost:5500/api/post/like`, { "post_id": props.post.id, "user_id": auth().id }).then((res) => { getpostlmao() })
-
-  }
-  function addComment() {
-    axios.post(`http://localhost:5500/api/comment/`, { "post_id": props.post.id, "user_id": auth().id, "comment": commentToAdd }).then((res) => { getcomments(); setCommentToAdd(""); setshowcomments(true); ref.current.focus() })
-
-  }
-  function deletepost() {
-
-    axios.delete(`http://localhost:5500/api/post/${props.post.id}`).then((res) => setDeleted(true))
+    axios.delete(`http://localhost:5500/api/post/${props.post.id}`).then((res)=>setDeleted(true))
 
   }
   useEffect(() => {
-    isLiked();
+  
+        isLiked();
     linkify(props.post.text);
-    setshowcomments(false)
-    if (props.post.group_id != null) { getgroup(); }
+setshowcomments(false)
+   if(props.post.group_id!=null){ getgroup();}
     getpostlmao();
     getcomments();
     const getPostUserInfo = async () => {
@@ -101,9 +106,9 @@ function Post(props) {
       var sqldate = new Date(props.post.date);
       var currentTime = new Date();
 
-      var difference = currentTime - sqldate;
-      var minutes = Math.floor((difference / 1000) / 60);
-      setminutes(minutes);
+      var difference=currentTime-sqldate;
+      var minutes = Math.floor((difference/1000)/60);
+setminutes(minutes);
       const user_id = props.post.user_id;
 
       await axios.get(`http://localhost:5500/api/user/${user_id}`, {
@@ -126,14 +131,14 @@ function Post(props) {
 
   }, [props])
 
-  if (userLoading || userInfo == null || lmao == null) {
+  if (userLoading||userInfo==null||lmao==null) {
     return <div><p>Loading</p></div>
   }
 
 
-  if (deleted) {
-    return <div></div>
-  }
+if(deleted){
+  return<div></div>
+}
 
 
   return (
@@ -142,7 +147,7 @@ function Post(props) {
         style={{
           backgroundColor: "white",
           borderRadius: "10px",
-          border: '1px solid #119D90',
+          border:'1px solid #119D90',
           marginTop: "10px",
           padding: "10px",
         }}
@@ -164,7 +169,7 @@ function Post(props) {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-around",
-
+              
             }}
           >
             <p
@@ -193,7 +198,7 @@ function Post(props) {
                 margin: "0px",
               }}
             >
-              Full Stack Developer
+             Full Stack Developer
             </p>
             <p
               style={{
@@ -204,23 +209,23 @@ function Post(props) {
                 margin: "0px",
               }}
             >
-
-              {ConvertMinutes(minutes)} ago
+              
+            {ConvertMinutes(minutes)} ago 
             </p>
           </div>
           {props.post.user_id === auth().id &&
             <div style={{ marginLeft: "auto", padding: "5px", position: 'relative' }}
             >
-              <img className="hovercolorblue" onClick={() => { setshowsettings(!showsettings) }}
-                src={dots} style={{ height: '25px', widhth: '25px' }} />
+            <img className="hovercolorblue" onClick={() => { setshowsettings(!showsettings) }}
+ src={dots} style={{height:'25px',widhth:'25px'}} />
               {showsettings && <div className="postSettingsBox">
 
-                <div className="hovera" onClick={() => { deletepost() }} ><p>Delte Post</p></div>
+                <div className="hovera" onClick={()=>{deletepost()}} ><p>Delte Post</p></div>
                 <div className="hovera" >Hide Post</div>
 
               </div>}
             </div>
-          }
+          } 
         </div>
 
         <div
@@ -231,7 +236,7 @@ function Post(props) {
             justifyContent: "space-between",
           }}
         >
-          <p style={{ padding: '25px' }}>{props.post.text}</p>
+          <p style={{padding:'25px'}}>{props.post.text}</p>
           {
             props.post.image &&
             <img
@@ -239,7 +244,7 @@ function Post(props) {
               style={{ maxHeight: "400px", maxWidth: "600px", margin: '0 auto' }}
             />
           }
-          {urlFound && <LinkPreview url={elurl} width='350px' margin={"10px auto"} />}
+                {urlFound&&<LinkPreview url={elurl} width='350px' margin={"10px auto"} />}
 
           <div style={{ flexDirection: "row", display: "flex" }}>
             <p style={{ fontSize: "14px", fontWeight: "500" }}>
@@ -254,35 +259,35 @@ function Post(props) {
                 marginRight: "10px",
               }}
             >
-              {comments.length} Comments
+               {comments.length} Comments 
             </p>
             <p style={{ fontSize: "14px", fontWeight: "500" }}>
-              {lmao.shares} Share
+            {lmao.shares} Share
             </p>
           </div>
           <span className="hr"></span>
           <div
             style={{
-              padding: '10px',
+              padding:'10px',
               display: "flex",
               justifyContent: "space-between",
               flexDirection: "row",
             }}
           >
-            <div className={liked ? "liked" : "hovercolororange"} onClick={() => { likePost(); setLiked(!liked) }} style={{ display: 'flex', flexDirection: 'row', alignContent: 'center', alignItems: 'center' }}><img src={like} style={{ height: '20px', width: '20px' }} /><a style={{ opacity: '0.8', fontSize: '13px', marginLeft: '5px' }}>
+            <div className={liked?"liked":"hovercolororange"}  onClick={()=>{likePost();setLiked(!liked)}} style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={like} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
               Like
             </a></div>
 
-            <div className="hovercolororange" onClick={() => setshowcomments(!showcomments)} style={{ display: 'flex', flexDirection: 'row', alignContent: 'center', alignItems: 'center' }}><img src={comment} style={{ height: '20px', width: '20px' }} /><a style={{ opacity: '0.8', fontSize: '13px', marginLeft: '5px' }}>
+            <div className="hovercolororange" onClick={() => setshowcomments(!showcomments)} style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={comment} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
               Comment
             </a></div>
-            <div className="hovercolororange" style={{ display: 'flex', flexDirection: 'row', alignContent: 'center', alignItems: 'center' }}><img src={share} style={{ height: '20px', width: '20px' }} /><a style={{ opacity: '0.8', fontSize: '13px', marginLeft: '5px' }}>
+            <div className="hovercolororange"  style={{display:'flex',flexDirection:'row',alignContent:'center',alignItems:'center'}}><img src={share} style={{height:'20px',width:'20px'}}/><a  style={{opacity:'0.8',fontSize:'13px',marginLeft:'5px'}}>
               Share
             </a></div>
           </div>
           <span className="hr"></span>
-          {showcomments ? comments.map((comm) => <Comment_Item comment={comm} />) : null}
-          <div ref={ref}></div>
+           {showcomments ? comments.map((comm) => <Comment_Item comment={comm} />) : null} 
+           <div ref={ref}></div>
           <div
             style={{
               display: "flex",
@@ -312,8 +317,8 @@ function Post(props) {
               }}
             >
               <input
-                onChange={(e) => setCommentToAdd(e.target.value)}
-                value={commentToAdd}
+              onChange={(e)=>setCommentToAdd(e.target.value)}
+              value={commentToAdd}
                 style={{
                   border: "0px",
                   width: "100%",
@@ -324,11 +329,11 @@ function Post(props) {
                 }}
                 placeholder="Write a comment..."
               />
-
+             
             </div>
             <FontAwesomeIcon
               size="2x"
-              onClick={() => addComment()}
+              onClick={()=>addComment()}
               icon={faPaperPlane}
               style={{ alignSelf: "center", paddingLeft: "10px" }}
               className="hovercolororange"

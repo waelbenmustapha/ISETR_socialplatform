@@ -9,7 +9,7 @@ const ModalProfile = (props) => {
   const auth = useAuthUser()
   const [data, setData] = useState({
     name: "",
-    picture: "",
+    picture:"",
     birthday: "",
     subtitle: "",
     email: "",
@@ -26,7 +26,7 @@ const ModalProfile = (props) => {
     try {
       await axios.post('https://api.cloudinary.com/v1_1/katakuri740/image/upload', formData)
         .then((res) => {
-          axios.post(`http://localhost:5500/api/resume/InsertUserInfo/${auth().id}`, { name: data.name, birthday: data.birthday, subtitle: data.subtitle, email: data.email, facebook: data.facebook, github: data.github, linkedin: data.linkedin, picture: res.data.url });
+         axios.post(`http://localhost:5500/api/resume/InsertUserInfo/${auth().id}`, {name:data.name,birthday:data.birthday,subtitle:data.subtitle,email:data.email,facebook:data.facebook,github:data.github,linkedin:data.linkedin,picture:res.data.url});
           return alert("Success");
         })
     } catch (error) {

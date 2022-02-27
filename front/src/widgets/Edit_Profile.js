@@ -34,7 +34,7 @@ function Edit_Profile() {
   const [usr, setUsr] = useState({
     name: auth().name,
     email: auth().email,
-    birthday: auth().birthday,
+    birthday: JSON.stringify(auth().birthday).substring(1,11) ,
     avatar:imgToAdd,
     bio: auth().bio,
     phone: auth().phone,
@@ -108,7 +108,7 @@ function Edit_Profile() {
             class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
             type="date"
             onChange={(e) => setUsr({ ...usr, birthday: e.target.value })}
-            value={usr.birthday}
+            value={JSON.stringify(usr.birthday).substring(1,11)}
             id="forms-labelOverInputCode"
           />
         </div>

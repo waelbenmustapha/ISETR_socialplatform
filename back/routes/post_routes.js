@@ -19,7 +19,7 @@ router.get("/:id", getPost);
 router.patch("/:id", updatePost);
 router.delete("/:id", deletePost);
 
-router.post("/like", likePostValidator, checkLikesTable, likePost);
+router.post("/like", checkLikesTable, likePost);
 router.get("/search/post", searchPosts);
 router.get("/likes/:id", searchPosts);
 

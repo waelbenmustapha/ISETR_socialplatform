@@ -35,7 +35,7 @@ function My_Community() {
         </button>
       </div>
       {/* Suggest */}
-      <FollowersGrid props={tabIndex} />
+      <FollowersGrid setTabIndex={setTabIndex} tabIndex={tabIndex} />
       
     </div>
   );

@@ -6,6 +6,7 @@ const router = express.Router();
 import { con } from "../config/database.js";
 import { checkGroupExist, checkUserExist } from "./group_controller.js";
 import { validationResult } from "express-validator";
+import { createNotif } from "./notif_controller.js";
 
 export const checkPostExist = async (post_id) => {
 
@@ -355,6 +356,9 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
 
+
+  // console.log('Liking post..')
+
   // check body errors
 
   const { errors } = validationResult(req);
@@ -419,7 +423,10 @@ export const likePost = async (req, res) => {
       post_id
     })
     .into("likes")
-    .then((post) => {
+    .then(async (post) => {
+
+      await createNotif(null, user_id, post_id, "l", null);
+
       return res.status(201).json({
         success: true,
         message: "Post liked successfully",

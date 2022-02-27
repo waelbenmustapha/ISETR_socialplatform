@@ -65,7 +65,6 @@ props.getposts(0);
 
   return (
     <div>
-      <p>{text}</p>
       <div
         style={{
           backgroundColor: "white",

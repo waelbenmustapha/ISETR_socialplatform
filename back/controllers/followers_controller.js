@@ -185,11 +185,11 @@ export const acceptFollowersRequest = async (req, res) => {
 
 
 export const denyOrDeleteFollowersRequest = async (req, res) => {
-    const { id } = req.params;
+    const { user_id,follower_id } = req.body;
     await con
         .delete()
         .from("followers")
-        .where("id", id)
+        .where("user_id", user_id).andWhere("follower_id",follower_id)
         .then(() => {
             return res.status(201).json({
                 message: "Followers request deleted successfully",
