@@ -12,7 +12,7 @@ import ConvertMinutes from "../utils/Converminutes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../styles/Post.css';
 import { LinkPreview } from '@dhaiwat10/react-link-preview';
-
+import {Link} from "react-router-dom";
 import dots from "../images/dots.png";
 import like from "../images/like.png"
 import comment from "../images/comment.png"

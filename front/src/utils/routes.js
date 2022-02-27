@@ -100,11 +100,13 @@ export const nav_routes = [
   },
   {
     path: "/post/:id",
+    component:CheckPost,
     icon: faCog,
   }, 
   {
     path: "/settings",
     name: "Settings",
+    component:Settings,
     icon: faCog,
   }, {
     path: "/savedJobs",

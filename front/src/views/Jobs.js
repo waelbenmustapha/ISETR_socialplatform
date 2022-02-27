@@ -37,6 +37,17 @@ axios.post("http://localhost:5500/api/job/add",{ ...newJob, image:ImgToAdd }).th
     setJobs(filteredData);
   }
  
+  const handleSearchLocation  = (searchInput) => {
+    const filteredData = Initialjobs.filter(value => {
+      const searchStr = searchInput.toLowerCase();
+      
+      const locationmatch = value.location.toLowerCase().includes(searchStr);
+      return locationmatch;
+    });
+    console.log(filteredData)
+
+    setJobs(filteredData);
+  }
   const handleSearchTime  = (searchInput) => {
     const filteredData = Initialjobs.filter(value => {
       const searchStr = searchInput;
