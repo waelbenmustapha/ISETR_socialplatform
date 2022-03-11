@@ -8,13 +8,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
+import { useHistory } from "react-router-dom";
 import "../styles/Joboffers.css";
 import ConvertMinutes from "../utils/Converminutes";
 function Job_Offer_Item(props) {
   const [isLiked, setIsliked] = useState(false);
   const [minutes, setminutes] = useState(0);
   const auth = useAuthUser();
-
+  const history = useHistory();
   function getmins() {
     var sqldate = new Date(props.element.date);
     var currentTime = new Date();
@@ -28,17 +29,22 @@ function Job_Offer_Item(props) {
     axios
       .post(`http://localhost:5500/api/job/favorie/job`, {
         user_id: auth().id,
-        job_id: (props.element.job_id==undefined?props.element.id:props.element.job_id),
+        job_id:
+          props.element.job_id == undefined
+            ? props.element.id
+            : props.element.job_id,
       })
       .then((res) => console.log(res));
   }
 
   function getisLiked() {
-
     axios
       .post("http://localhost:5500/api/job/isfavorite", {
         user_id: auth().id,
-        job_id: (props.element.job_id==undefined?props.element.id:props.element.job_id),
+        job_id:
+          props.element.job_id == undefined
+            ? props.element.id
+            : props.element.job_id,
       })
       .then((res) => {
         setIsliked(res.data);
@@ -47,7 +53,6 @@ function Job_Offer_Item(props) {
       });
   }
   useEffect(() => {
-   
     getisLiked();
     getmins();
   }, []);
@@ -68,15 +73,18 @@ function Job_Offer_Item(props) {
           padding: "30px 0px 30px 0px",
         }}
       >
-        <img
+        <img  onClick={()=>history.push({
+      pathname: '/jobpage',
+      state: { job: props.element,ago:ConvertMinutes(minutes) }
+    })}
           style={{ width: "150px", maxWidth: "150px", maxHeight: "150px" }}
           src={props.element.image}
         />
       </div>
       <div
         style={{
-          flex:1,
-          marginLeft:'50px',
+          flex: 1,
+          marginLeft: "50px",
           borderBottom: "1px solid #ddd",
           padding: "30px",
         }}
@@ -104,18 +112,30 @@ function Job_Offer_Item(props) {
             <FontAwesomeIcon icon={faregbook} size="2x" />
           </span>
         )}
-        <p className="joboffertitle hover">{props.element.title}</p>
+        <p  onClick={()=>history.push({
+      pathname: '/jobpage',
+      state: { job: props.element,ago:ConvertMinutes(minutes) }
+    })} className="joboffertitle hover">{props.element.title}</p>
 
-        <p className="hover">{props.element.company}</p>
+        <p  onClick={()=>history.push({
+      pathname: '/jobpage',
+      state: { job: props.element,ago:ConvertMinutes(minutes) }
+    })} className="hover">{props.element.company}</p>
         <FontAwesomeIcon
           className="hover"
           icon={faMapMarkerAlt}
           color="#FC7900"
         />
-        <span className="hover" style={{ margin: "7px" }}>
+        <span  onClick={()=>history.push({
+      pathname: '/jobpage',
+      state: { job: props.element,ago:ConvertMinutes(minutes) }
+    })} className="hover" style={{ margin: "7px" }}>
           {props.element.location}
         </span>
-        <p className="hover" style={{ marginLeft: "20px" }}>
+        <p  onClick={()=>history.push({
+      pathname: '/jobpage',
+      state: { job: props.element,ago:ConvertMinutes(minutes) }
+    })} className="hover maxlines" style={{ marginLeft: "20px" }}>
           {props.element.description}
         </p>
         {props.element.type == "Full" ? (

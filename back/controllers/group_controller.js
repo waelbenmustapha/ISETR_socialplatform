@@ -81,7 +81,7 @@ export const addGroup = async (payload) => {
 
 export const getUserGroups = async (user_id) => {
     try {
-        const groups = await con.
+       const groups = await con.
             select("groups.id", "groups.name", "groups.description", "groups.image", "groups.created_at", "groups.admin_id").
             from("groups").
             innerJoin("group-user", "groups.id", "group-user.group_id").

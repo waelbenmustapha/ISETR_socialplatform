@@ -19,7 +19,7 @@ const [change,setchange]=useState(false);
 
 function creategroup(){
 
-  axios.post("http://localhost:5500/api/group/",{name:grpname,description:description,image:ImgToAdd,admin_id:auth().id}).then((res)=>{axios.post("http://localhost:5500/api/group/add-group-member",{user_id:auth().id,group_id:res.data.data});setchange(!change)})
+  axios.post("http://localhost:5500/api/group/",{name:grpname,description:description,image:ImgToAdd,admin_id:auth().id}).then((res)=>{axios.post("http://localhost:5500/api/group/add-group-member",{user_id:auth().id,group_id:res.data.data}).then((res)=>setchange(!change))})
 }
 
   const [loading,setloading]=useState(false);
@@ -43,6 +43,9 @@ const [ImgToAdd,setImgToAdd]=useState("https://waterfountain.no/wp-content/uploa
   function selectTab(tab) {
     setselected(tab);
   }
+useEffect(() => {
+ 
+}, [selected])
 
   return (
     <div>
@@ -242,7 +245,7 @@ className="hover"            onClick={() => {
             <MyGroups tab={selected} key={change}/>
           </div>
         ) : selected == "second" ? (
-          <div style={{ padding: "15px 5px 15px 35px"}}><FindGroups  setselected={setselected}/></div>
+          <div style={{ padding: "15px 5px 15px 35px"}}><FindGroups setchange={setchange} change={change} setselected={setselected}/></div>
         ) : selected == "third" ? (
           <div style={{ padding: "15px 5px 15px 35px"}}> third selected</div>
         ) : null}

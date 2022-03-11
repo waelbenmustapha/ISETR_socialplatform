@@ -10,7 +10,7 @@ let history = useHistory();
      
 function joingroup(){
 
-    axios.post(`http://localhost:5500/api/group/add-group-member`,{user_id:auth().id,group_id:props.items.id}).then(props.setselected("first"))
+    axios.post(`http://localhost:5500/api/group/add-group-member`,{user_id:auth().id,group_id:props.items.id}).then((res)=>props.setselected("first"))
 
 }
 

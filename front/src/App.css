@@ -26,6 +26,11 @@ body {
   cursor: pointer;
   transform: scale(1.2)
 }
+.hoverevent{transition:0.3s;}
+.hoverevent:hover{
+  cursor: pointer;
+  transform: scale(1.1)
+}
 
 .hero-text {
   text-align: center;
@@ -35,7 +40,14 @@ body {
   transform: translate(-50%, -50%);
   color: white;
 }
-
+.maxlines {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+          line-clamp: 3; 
+  -webkit-box-orient: vertical;
+}
 .hover:hover {
   cursor: pointer;
 }
@@ -86,6 +98,9 @@ body {
 
 .navshadow{box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;}
 
+.shadowevent{
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+}
 .hovercolorblue:hover{
   cursor: pointer;
   color: #119D90; 

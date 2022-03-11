@@ -39,7 +39,7 @@ function Post(props) {
 
   const [deleted,setDeleted]=useState(false);
 const [minutes,setminutes]=useState(0);
-  const [showcomments, setshowcomments] = useState(false);
+  const [showcomments, setshowcomments] = useState(props.showcomments);
   const [userLoading, setUserLoading] = useState(true);
   const [comments,setComments]=useState([]);
   const ref = useRef(null);
@@ -97,7 +97,6 @@ function getgroup(){
   
         isLiked();
     linkify(props.post.text);
-setshowcomments(false)
    if(props.post.group_id!=null){ getgroup();}
     getpostlmao();
     getcomments();
@@ -128,7 +127,7 @@ setminutes(minutes);
 
 
     getPostUserInfo();
-
+console.log(props.showcomments)
   }, [props])
 
   if (userLoading||userInfo==null||lmao==null) {
@@ -241,7 +240,7 @@ if(deleted){
             props.post.image &&
             <img
               src={props.post.image}
-              style={{ maxHeight: "400px", maxWidth: "600px", margin: '0 auto' }}
+              style={{ maxHeight: "400px", maxWidth: "550px",padding:'5px', margin: '0 auto' }}
             />
           }
                 {urlFound&&<LinkPreview url={elurl} width='350px' margin={"10px auto"} />}

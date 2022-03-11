@@ -20,7 +20,7 @@ if(post==null){
 }
 else{
   return (<div>
-    <div style={{width:'1200px',margin:'0px auto'}}><Post post={post}/></div></div>
+    <div style={{width:'1200px',margin:'0px auto'}}><Post showcomments={true} post={post}/></div></div>
   )
 }
 }

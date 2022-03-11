@@ -30,6 +30,7 @@ import GroupFeed from "../views/GroupFeed";
 import UserProfileView from "../views/UserProfile";
 import SavedJobs from "../views/SavedJobs";
 import CheckPost from "../views/CheckPost";
+import JobPage from "../views/JobPage";
 
 export const nav_routes = [
   {
@@ -79,6 +80,12 @@ export const nav_routes = [
     path: "/explore",
     name: "Explore",
     component: Explore,
+    icon: faCompass,
+  },
+  {
+    path: "/jobpage",
+    name: "jobpage",
+    component: JobPage,
     icon: faCompass,
   },
    {

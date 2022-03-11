@@ -37,7 +37,7 @@ searchgroup();
         
         <div style={{display:'flex',flexDirection:'column',justifyContent:'space-around',gap:'10px',padding:'10px'}}>
 
-{mygroups.map((el)=>{return <GroupItem setselected={props.setselected} mygroups={false}  items={el}/>})}
+{mygroups.map((el)=>{return <GroupItem setselected={props.setselected} mygroups={false} items={el}/>})}
 
 
   </div>
